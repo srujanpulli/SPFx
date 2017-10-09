@@ -1,0 +1,20 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "hide-quick-launch-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/hideQuickLaunch/HideQuickLaunchWebPart.js",
+          "manifest": "./src/webparts/hideQuickLaunch/HideQuickLaunchWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "jQuery":"https://code.jquery.com/jquery-3.2.1.min.js"
+  },
+  "localizedResources": {
+    "HideQuickLaunchWebPartStrings": "lib/webparts/hideQuickLaunch/loc/{locale}.js"
+  }
+}
