@@ -21,8 +21,8 @@ export default class HideQuickLaunchWebPartWebPart extends BaseClientSideWebPart
   public render(): void {
     require('./App.js');    
     
-    // --> Comment this during actual deployment.
-    this.domElement.innerHTML = `<div>Webpart loaded</div>`;
+    // --> Code to fix issue to unhide quicklaunch when navigating to another page without this webpart.
+    this.domElement.innerHTML = `<div id="divHideQuickLaunch" style="display:none">Webpart loaded</div>`;
 
     // spulli --> comment sample code
     //   <div class="${styles.hideQuickLaunch}">
