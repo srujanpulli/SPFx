@@ -2,4 +2,4 @@
 > gulp --ship
 
 #Package the solution
->gulp package-solution --ship
+> gulp package-solution --ship
