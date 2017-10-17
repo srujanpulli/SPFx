@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "hide-an-element-client-side-solution",
+    "id": "777216c1-14af-4db6-92d6-0864038db3d3",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/hide-an-element.sppkg"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "version": "1.3.2",
+    "libraryName": "hide-an-element",
+    "libraryId": "777216c1-14af-4db6-92d6-0864038db3d3",
+    "environment": "spo"
+  }
+}
