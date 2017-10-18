@@ -11,8 +11,16 @@ import styles from './HideAnElementWebPart.module.scss';
 import * as strings from 'HideAnElementWebPartStrings';
 
 export interface IHideAnElementWebPartProps {
-  description: string;
-  hideQuickLaunchLabelProperty: boolean;
+  // description: string;
+  hideQuickLaunchProperty: boolean;
+  hideSiteLogoProperty: boolean;
+  hideSiteTitleProperty: boolean;
+  hideSiteDescriptionProperty: boolean;
+  hideSiteMembersProperty: boolean;
+  hideTopNavProperty: boolean;
+  hideTitleRowProperty: boolean;
+  hideCommandBarItemsProperty: boolean;
+  hidePageTitleProperty: boolean
 }
 
 import 'jQuery';
@@ -25,32 +33,62 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
     require('./App.js');
 
     var tmpHideAnElementPlaceHolder = '';
-
-    if(this.properties.hideQuickLaunchLabelProperty)
+    if(window.location.href.indexOf("?Mode=Edit") > -1)
     {
-      tmpHideAnElementPlaceHolder += `<div id="divHideQuickLaunch" style="display:block">Webpart loaded</div>`;
+      tmpHideAnElementPlaceHolder += `<div id="divWPLoaded"><strong>hide An Element</strong> webpart is loaded</div>`;
+    }    
+
+    if(this.properties.hideQuickLaunchProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideQuickLaunch" style="display:none">Webpart loaded</div>`;
     }
-    // this.properties.hideQuickLaunchLabelProperty = false;
-    // this.context.propertyPane.refresh();
-    
-    // escape(this.properties.hideQuickLaunchLabelProperty.toString())
-    this.domElement.innerHTML = tmpHideAnElementPlaceHolder + `
-      <div class="${styles.hideAnElement}">
-        <div class="${styles.container}">
-          <div class="ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}">
-            <div class="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
-              <span class="ms-font-xl ms-fontColor-white">Welcome to SharePoint!</span>
-              <p class="ms-font-l ms-fontColor-white">Customize SharePoint experiences using Web Parts.</p>
-              <p class="ms-font-l ms-fontColor-white">${this.properties.hideQuickLaunchLabelProperty}</p>
-              <a href="https://aka.ms/spfx" class="${styles.button}">
-                <span class="${styles.label}">Learn more</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>`;
+    if(this.properties.hideSiteLogoProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideSiteLogo" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hideSiteTitleProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideSiteTitle" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hideSiteDescriptionProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideSiteDescription" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hideSiteMembersProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideSiteMembers" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hideTopNavProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideTopNav" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hideTitleRowProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideTitleRow" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hideCommandBarItemsProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHideCommandBarItems" style="display:none">Webpart loaded</div>`;
+    }
+    if(this.properties.hidePageTitleProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divHidePageTitle" style="display:none">Webpart loaded</div>`;
+    }
+
+
+    this.domElement.innerHTML = tmpHideAnElementPlaceHolder;
       
-      $().hideAnElement();      
+      $().hideAnElement({
+        hideQuickLaunchProperty: this.properties.hideQuickLaunchProperty,
+        hideSiteLogoProperty: this.properties.hideSiteLogoProperty,
+        hideSiteTitleProperty: this.properties.hideSiteTitleProperty,
+        hideSiteDescriptionProperty: this.properties.hideSiteDescriptionProperty,
+        hideSiteMembersProperty: this.properties.hideSiteMembersProperty,
+        hideTopNavProperty: this.properties.hideTopNavProperty,
+        hideTitleRowProperty: this.properties.hideTitleRowProperty,
+        hideCommandBarItemsProperty: this.properties.hideCommandBarItemsProperty,    
+        hidePageTitleProperty: this.properties.hidePageTitleProperty
+      });      
   }
 
   protected get dataVersion(): Version {
@@ -68,11 +106,51 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                }),
-                PropertyPaneCheckbox('hideQuickLaunchLabelProperty', { 
+                // PropertyPaneTextField('description', {
+                //   label: strings.DescriptionFieldLabel
+                // }),
+                PropertyPaneCheckbox('hideQuickLaunchProperty', { 
                   text: strings.hideQuickLaunchLabel,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideSiteLogoProperty', { 
+                  text: strings.hideSiteLogoLabel,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideSiteTitleProperty', { 
+                  text: strings.hideSiteTitle,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideSiteDescriptionProperty', { 
+                  text: strings.hideSiteDescription,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideSiteMembersProperty', { 
+                  text: strings.hideSiteMembers,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideTopNavProperty', { 
+                  text: strings.hideTopNav,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideTitleRowProperty', { 
+                  text: strings.hideTitleRow,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hideCommandBarItemsProperty', { 
+                  text: strings.hideCommandBarItems,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hidePageTitleProperty', { 
+                  text: strings.hidePageTitle,  
                   checked: false, 
                   disabled: false,
                 })

@@ -1,8 +1,16 @@
 declare interface IHideAnElementWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
-  DescriptionFieldLabel: string;
+  // DescriptionFieldLabel: string;
   hideQuickLaunchLabel: string;
+  hideSiteLogoLabel: string,
+  hideSiteTitle: string,
+  hideSiteDescription: string,
+  hideSiteMembers: string,
+  hideTopNav: string,
+  hideTitleRow: string,
+  hideCommandBarItems: string,    
+  hidePageTitle: string
 }
 
 declare module 'HideAnElementWebPartStrings' {
