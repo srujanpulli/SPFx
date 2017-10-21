@@ -9,78 +9,151 @@ $.fn.hideAnElement = function (options)
         hideSiteMembersProperty: false,
         hideTitleRowProperty: false,
         hideCommandBarItemsProperty: false,    
-        hidePageTitleProperty: false
+        hidePageTitleProperty: false,
+        hideSearchBoxProperty:false
     }, options);
     //hide QuickLaunch
     function hideQuickLaunch()
     {
-        $( "nav[role='navigation']" ).hide();
-        $("div[class^='searchBox_']").hide();
-        $("div[class^='pageContainer_']").css( "left", "0px" );
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#sideNavBox").hide();
+            $("#contentBox").css("margin-left","5px")            
+        }
+        else
+        {
+            $( "nav[role='navigation']" ).hide();
+            $("div[class^='searchBox_']").hide();
+            $("div[class^='pageContainer_']").css( "left", "0px" );
+        }        
     }
     function showQuickLaunch()
     {
-        $( "nav[role='navigation']" ).show();
-        $("div[class^='searchBox_']").show();
-        $("div[class^='pageContainer_']").css( "left", $( "nav[role='navigation']" ).css("width"));                
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#sideNavBox").show();
+            $("#contentBox").css("margin-left","220px")                        
+        }
+        else
+        {
+            $( "nav[role='navigation']" ).show();
+            $("div[class^='searchBox_']").show();
+            $("div[class^='pageContainer_']").css( "left", $( "nav[role='navigation']" ).css("width"));                  
+        } 
     }
     //hide Site Top Navigation bar
     function hideTopNav()
     {
-        $(".ms-compositeHeader-topWrapper").hide();                        
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $(".ms-breadcrumb-top").hide();
+        }
+        else
+        {
+            $(".ms-compositeHeader-topWrapper").hide();                            
+        }         
     }
     function showTopNav()
     {
-        $(".ms-compositeHeader-topWrapper").show();                        
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $(".ms-breadcrumb-top").show();
+        }
+        else
+        {
+            $(".ms-compositeHeader-topWrapper").show();                            
+        }         
     }    
     //hide Site Logo
     function hideSiteLogo()
     {
-        $(".ms-siteHeader-siteLogo").hide();
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#siteIcon").hide()
+        }
+        else
+        {
+            $(".ms-siteHeader-siteLogo").hide();    
+        } 
     }
     function showSiteLogo()
     {
-        $(".ms-siteHeader-siteLogo").show();
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#siteIcon").show()
+        }
+        else
+        {
+            $(".ms-siteHeader-siteLogo").show();            
+        } 
     }
     //hide Site Title
     function hideSiteTitle()
     {
-        $(".ms-siteHeader-siteName").hide();        
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#pageTitle").hide();
+        }
+        else
+        {
+            $(".ms-siteHeader-siteName").hide();                    
+        } 
     }
     function showSiteTitle()
     {
-        $(".ms-siteHeader-siteName").show();        
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#pageTitle").show();
+        }
+        else
+        {
+            $(".ms-siteHeader-siteName").show();                    
+        } 
     }
     //hide Site Description
     function hideSiteDescription()
     {
-        $(".ms-siteHeader-groupInfo").hide();        
+            $(".ms-siteHeader-groupInfo").hide();                    
     }
     function showSiteDescription()
     {
-        $(".ms-siteHeader-groupInfo").show();        
+            $(".ms-siteHeader-groupInfo").show();                    
     }
     //hide Site Members
     function hideSiteMembers()
     {
-        $(".ms-compositeHeader-peopleInfo").hide();                
+            $(".ms-compositeHeader-peopleInfo").hide();                                    
     }
     function showSiteMembers()
     {
-        $(".ms-compositeHeader-peopleInfo").show();        
+            $(".ms-compositeHeader-peopleInfo").show();                    
     }
     //hide Site Title row
     function hideTitleRow()
     {
-        $(".ms-compositeHeader").hide();                
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#s4-titlerow").hide();            
+        }
+        else
+        {
+            $(".ms-compositeHeader").hide();                            
+        } 
     }
     function showTitleRow()
     {
-        $(".ms-compositeHeader").show();                
+        if($('#s4-bodyContainer').length > 0)
+        {
+            $("#s4-titlerow").show();            
+        }
+        else
+        {
+            $(".ms-compositeHeader").show();                            
+        } 
     }
     //hide Site Title row
     function hideCommandBarItems()
-    {
+    { 
         $(".ms-CommandBarItem-link").hide();
     }
     function showCommandBarItems()
@@ -96,7 +169,15 @@ $.fn.hideAnElement = function (options)
     function showPageTitle()
     {
         $("div[class^='pageTitle_']").show();
-    }    
+    }  
+    function hideSearchBox()
+    {
+        $("#DeltaPlaceHolderSearchArea").hide();        
+    }
+    function showSearchBox()
+    {
+        $("#DeltaPlaceHolderSearchArea").show();
+    }   
     
 
     // css updates to hide on page load.
@@ -117,6 +198,8 @@ $.fn.hideAnElement = function (options)
             hideSiteDescription();   
         if(options.hideSiteMembersProperty)
             hideSiteMembers(); 
+        if(options.hideSearchBoxProperty)
+            hideSearchBox();
     }   
     if(options.hideCommandBarItemsProperty)
         hideCommandBarItems();   
@@ -126,7 +209,15 @@ $.fn.hideAnElement = function (options)
         
  
     $( "body" ).bind("DOMSubtreeModified",function() {
-        
+        if(window.location.href.indexOf("?Mode=Edit") > -1)
+        {
+            $("#divWPLoaded").show();
+        }
+        else
+        {
+          $("#divWPLoaded").hide();
+        }
+
         if($("#divHideQuickLaunch").length == 0)//check divHideQuickLaunch doesn't exist on the page
             showQuickLaunch();
         else
@@ -159,6 +250,10 @@ $.fn.hideAnElement = function (options)
                 showSiteMembers();
             else
                 hideSiteMembers(); 
+            if($("#divHideSearchBox").length == 0)
+                showSearchBox();
+            else
+                hideSearchBox();
         }
         else
             hideTitleRow();           

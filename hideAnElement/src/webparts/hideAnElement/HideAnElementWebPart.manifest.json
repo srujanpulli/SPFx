@@ -16,9 +16,9 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
     "group": { "default": "Other" },
-    "title": { "default": "HideAnElement" },
+    "title": { "default": "Hide An Element" },
     "description": { "default": "Use this webpart to hide an element e.g. QuickLaunch or Title or Logo" },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "Unfavorite",
     "properties": {
       "description": "HideAnElement"
     }

@@ -11,6 +11,7 @@ define([], function() {
     "hideTopNav": "hide Top Navigation",    
     "hideTitleRow": "hide Title row",
     "hideCommandBarItems": "hide Command bar items",    
-    "hidePageTitle": "hide Page Title (in read view)"
+    "hidePageTitle": "hide Page Title (in read view)",
+    "hideSearchBox": "hide Search box"    
   }
 });

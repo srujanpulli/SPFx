@@ -1,4 +1,4 @@
-import { Version } from '@microsoft/sp-core-library';
+import { Version, DisplayMode } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -20,7 +20,8 @@ export interface IHideAnElementWebPartProps {
   hideTopNavProperty: boolean;
   hideTitleRowProperty: boolean;
   hideCommandBarItemsProperty: boolean;
-  hidePageTitleProperty: boolean
+  hidePageTitleProperty: boolean,
+  hideSearchBoxProperty: boolean
 }
 
 import 'jQuery';
@@ -32,11 +33,16 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
 
     require('./App.js');
 
-    var tmpHideAnElementPlaceHolder = '';
-    if(window.location.href.indexOf("?Mode=Edit") > -1)
+    var tmpHideAnElementPlaceHolder = "";
+
+    if((window.location.href.indexOf("?Mode=Edit") > -1))
     {
-      tmpHideAnElementPlaceHolder += `<div id="divWPLoaded"><strong>hide An Element</strong> webpart is loaded</div>`;
-    }    
+      tmpHideAnElementPlaceHolder += '<div id="divWPLoaded"><strong>hide An Element</strong> webpart is loaded</div>';
+    }
+    else
+    {
+      $("#divWPLoaded").hide();
+    }
 
     if(this.properties.hideQuickLaunchProperty)
     {
@@ -74,8 +80,11 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
     {
       tmpHideAnElementPlaceHolder += `<div id="divHidePageTitle" style="display:none">Webpart loaded</div>`;
     }
-
-
+    if(this.properties.hideSearchBoxProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divhideSearchBox" style="display:none">Webpart loaded</div>`;
+    }
+    
     this.domElement.innerHTML = tmpHideAnElementPlaceHolder;
       
       $().hideAnElement({
@@ -87,12 +96,20 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
         hideTopNavProperty: this.properties.hideTopNavProperty,
         hideTitleRowProperty: this.properties.hideTitleRowProperty,
         hideCommandBarItemsProperty: this.properties.hideCommandBarItemsProperty,    
-        hidePageTitleProperty: this.properties.hidePageTitleProperty
+        hidePageTitleProperty: this.properties.hidePageTitleProperty,
+        hideSearchBoxProperty: this.properties.hideSearchBoxProperty
       });      
   }
 
   protected get dataVersion(): Version {
     return Version.parse('1.0');
+  }
+  protected onPropertyPaneConfigurationStart(): void {
+    // Not needed for now
+  }
+
+  protected onPropertyPaneFieldChanged(): void{
+    // Not needed for now
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -104,7 +121,32 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: "Modern page only options",
+              groupFields: [
+                PropertyPaneCheckbox('hideSiteDescriptionProperty', { 
+                  text: strings.hideSiteDescription,  
+                  checked: false, 
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
+                }),
+                PropertyPaneCheckbox('hideSiteMembersProperty', { 
+                  text: strings.hideSiteMembers,  
+                  checked: false, 
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
+                }),
+                PropertyPaneCheckbox('hideCommandBarItemsProperty', { 
+                  text: strings.hideCommandBarItems,  
+                  checked: false, 
+                  disabled: false,
+                }),
+                PropertyPaneCheckbox('hidePageTitleProperty', { 
+                  text: strings.hidePageTitle,  
+                  checked: false, 
+                  disabled: false,
+                })
+              ] 
+            },
+            {
+              groupName: "Modern and Classic page options",
               groupFields: [
                 // PropertyPaneTextField('description', {
                 //   label: strings.DescriptionFieldLabel
@@ -117,45 +159,40 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
                 PropertyPaneCheckbox('hideSiteLogoProperty', { 
                   text: strings.hideSiteLogoLabel,  
                   checked: false, 
-                  disabled: false,
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
                 }),
                 PropertyPaneCheckbox('hideSiteTitleProperty', { 
                   text: strings.hideSiteTitle,  
                   checked: false, 
-                  disabled: false,
-                }),
-                PropertyPaneCheckbox('hideSiteDescriptionProperty', { 
-                  text: strings.hideSiteDescription,  
-                  checked: false, 
-                  disabled: false,
-                }),
-                PropertyPaneCheckbox('hideSiteMembersProperty', { 
-                  text: strings.hideSiteMembers,  
-                  checked: false, 
-                  disabled: false,
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
                 }),
                 PropertyPaneCheckbox('hideTopNavProperty', { 
                   text: strings.hideTopNav,  
                   checked: false, 
-                  disabled: false,
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
                 }),
                 PropertyPaneCheckbox('hideTitleRowProperty', { 
                   text: strings.hideTitleRow,  
                   checked: false, 
                   disabled: false,
-                }),
-                PropertyPaneCheckbox('hideCommandBarItemsProperty', { 
-                  text: strings.hideCommandBarItems,  
-                  checked: false, 
-                  disabled: false,
-                }),
-                PropertyPaneCheckbox('hidePageTitleProperty', { 
-                  text: strings.hidePageTitle,  
-                  checked: false, 
-                  disabled: false,
                 })
-              ]
-            }
+              ] 
+            },
+            {
+              groupName: "Classic page only options",
+              groupFields: [
+                PropertyPaneCheckbox('hideSearchBoxProperty', { 
+                  text: strings.hideSearchBox,  
+                  checked: false, 
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
+                })
+              ] 
+            },
+            // {
+            //   groupName: strings.BasicGroupName,
+            //   groupFields: [
+            //   ]
+            // }
           ]
         }
       ]
