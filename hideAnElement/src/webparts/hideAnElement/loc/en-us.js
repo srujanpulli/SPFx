@@ -12,6 +12,7 @@ define([], function() {
     "hideTitleRow": "hide Title row",
     "hideCommandBarItems": "hide Command bar items",    
     "hidePageTitle": "hide Page Title (in read view)",
-    "hideSearchBox": "hide Search box"    
+    "hideSearchBox": "hide Search box",
+    "hideShareButton": "hide Share Button"
   }
 });

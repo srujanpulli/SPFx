@@ -11,7 +11,8 @@ declare interface IHideAnElementWebPartStrings {
   hideTitleRow: string,
   hideCommandBarItems: string,    
   hidePageTitle: string,
-  hideSearchBox:string
+  hideSearchBox:string,
+  hideShareButton:string
 }
 
 declare module 'HideAnElementWebPartStrings' {

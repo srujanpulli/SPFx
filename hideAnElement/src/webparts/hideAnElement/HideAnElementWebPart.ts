@@ -21,7 +21,8 @@ export interface IHideAnElementWebPartProps {
   hideTitleRowProperty: boolean;
   hideCommandBarItemsProperty: boolean;
   hidePageTitleProperty: boolean,
-  hideSearchBoxProperty: boolean
+  hideSearchBoxProperty: boolean,
+  hideShareButtonProperty: boolean  
 }
 
 import 'jQuery';
@@ -84,7 +85,11 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
     {
       tmpHideAnElementPlaceHolder += `<div id="divhideSearchBox" style="display:none">Webpart loaded</div>`;
     }
-    
+    if(this.properties.hideShareButtonProperty)
+    {
+      tmpHideAnElementPlaceHolder += `<div id="divhideShareButton" style="display:none">Webpart loaded</div>`;
+    }
+   
     this.domElement.innerHTML = tmpHideAnElementPlaceHolder;
       
       $().hideAnElement({
@@ -97,7 +102,8 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
         hideTitleRowProperty: this.properties.hideTitleRowProperty,
         hideCommandBarItemsProperty: this.properties.hideCommandBarItemsProperty,    
         hidePageTitleProperty: this.properties.hidePageTitleProperty,
-        hideSearchBoxProperty: this.properties.hideSearchBoxProperty
+        hideSearchBoxProperty: this.properties.hideSearchBoxProperty,
+        hideShareButtonProperty: this.properties.hideShareButtonProperty
       });      
   }
 
@@ -156,6 +162,11 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
                   checked: false, 
                   disabled: false,
                 }),
+                PropertyPaneCheckbox('hideSearchBoxProperty', { 
+                  text: strings.hideSearchBox,  
+                  checked: false, 
+                  disabled: (this.properties.hideTitleRowProperty || this.properties.hideQuickLaunchProperty == true )== true ? true : false,
+                }),
                 PropertyPaneCheckbox('hideSiteLogoProperty', { 
                   text: strings.hideSiteLogoLabel,  
                   checked: false, 
@@ -171,6 +182,11 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
                   checked: false, 
                   disabled: this.properties.hideTitleRowProperty == true ? true : false,
                 }),
+                PropertyPaneCheckbox('hideShareButtonProperty', { 
+                  text: strings.hideShareButton,  
+                  checked: false, 
+                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
+                }),
                 PropertyPaneCheckbox('hideTitleRowProperty', { 
                   text: strings.hideTitleRow,  
                   checked: false, 
@@ -178,16 +194,16 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
                 })
               ] 
             },
-            {
-              groupName: "Classic page only options",
-              groupFields: [
-                PropertyPaneCheckbox('hideSearchBoxProperty', { 
-                  text: strings.hideSearchBox,  
-                  checked: false, 
-                  disabled: this.properties.hideTitleRowProperty == true ? true : false,
-                })
-              ] 
-            },
+            // {
+            //   groupName: "Classic page only options",
+            //   groupFields: [
+            //     PropertyPaneCheckbox('hideSearchBoxProperty', { 
+            //       text: strings.hideSearchBox,  
+            //       checked: false, 
+            //       disabled: this.properties.hideTitleRowProperty == true ? true : false,
+            //     })
+            //   ] 
+            // },
             // {
             //   groupName: strings.BasicGroupName,
             //   groupFields: [

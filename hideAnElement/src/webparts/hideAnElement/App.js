@@ -10,7 +10,8 @@ $.fn.hideAnElement = function (options)
         hideTitleRowProperty: false,
         hideCommandBarItemsProperty: false,    
         hidePageTitleProperty: false,
-        hideSearchBoxProperty:false
+        hideSearchBoxProperty:false,
+        hideShareButtonProperty:false
     }, options);
     //hide QuickLaunch
     function hideQuickLaunch()
@@ -23,7 +24,7 @@ $.fn.hideAnElement = function (options)
         else
         {
             $( "nav[role='navigation']" ).hide();
-            $("div[class^='searchBox_']").hide();
+            hideSearchBox();
             $("div[class^='pageContainer_']").css( "left", "0px" );
         }        
     }
@@ -37,8 +38,12 @@ $.fn.hideAnElement = function (options)
         else
         {
             $( "nav[role='navigation']" ).show();
-            $("div[class^='searchBox_']").show();
-            $("div[class^='pageContainer_']").css( "left", $( "nav[role='navigation']" ).css("width"));                  
+            // $("div[class^='searchBox_']").show();
+            $("div[class^='pageContainer_']").css( "left", $( "nav[role='navigation']" ).css("width")); 
+            if(!($("#divhideSearchBox").length == 0))
+                hideSearchBox();
+            else
+                showSearchBox();
         } 
     }
     //hide Site Top Navigation bar
@@ -51,7 +56,8 @@ $.fn.hideAnElement = function (options)
         else
         {
             $(".ms-compositeHeader-topWrapper").hide();                            
-        }         
+        }
+        hideSearchBox();
     }
     function showTopNav()
     {
@@ -62,7 +68,11 @@ $.fn.hideAnElement = function (options)
         else
         {
             $(".ms-compositeHeader-topWrapper").show();                            
-        }         
+        }
+        if(!($("#divhideSearchBox").length == 0))
+            hideSearchBox();
+        else
+            showSearchBox();         
     }    
     //hide Site Logo
     function hideSiteLogo()
@@ -169,27 +179,53 @@ $.fn.hideAnElement = function (options)
     function showPageTitle()
     {
         $("div[class^='pageTitle_']").show();
-    }  
+    } 
+    // Hide Search box 
     function hideSearchBox()
     {
-        $("#DeltaPlaceHolderSearchArea").hide();        
+            if($('#s4-bodyContainer').length > 0)
+                $("#DeltaPlaceHolderSearchArea").hide();
+            else
+                $("div[class^='searchBox_']").hide();
     }
     function showSearchBox()
     {
-        $("#DeltaPlaceHolderSearchArea").show();
+        if($("#divHideTitleRow").length == 0 && $("#divHideQuickLaunch").length == 0)
+        {
+            if($('#s4-bodyContainer').length > 0)      
+                $("#DeltaPlaceHolderSearchArea").show();
+            else
+                $("div[class^='searchBox_']").show();
+        }
     }   
     
+    //Hide Share Button
+    function hideShareButton()
+    {
+        $("span:contains('Share')").filter(function(){
+            return $(this).text() === "Share" ? true : false;
+        }).closest("button").hide();  
+    }
+    function showShareButton()
+    {
+        $("span:contains('Share')").filter(function(){
+            return $(this).text() === "Share" ? true : false;
+        }).closest("button").show();
+    }
 
     // css updates to hide on page load.
     if(options.hideQuickLaunchProperty)
         hideQuickLaunch();
   
     if(options.hideTitleRowProperty)
+    {
         hideTitleRow();
+        hideSearchBox();
+    }
     else
     {
         if(options.hideTopNavProperty)
-        hideTopNav();      
+            hideTopNav();      
         if(options.hideSiteLogoProperty)
             hideSiteLogo();   
         if(options.hideSiteTitleProperty)
@@ -200,6 +236,8 @@ $.fn.hideAnElement = function (options)
             hideSiteMembers(); 
         if(options.hideSearchBoxProperty)
             hideSearchBox();
+        if(options.hideShareButtonProperty)
+            hideShareButton;
     }   
     if(options.hideCommandBarItemsProperty)
         hideCommandBarItems();   
@@ -216,13 +254,7 @@ $.fn.hideAnElement = function (options)
         else
         {
           $("#divWPLoaded").hide();
-        }
-
-        if($("#divHideQuickLaunch").length == 0)//check divHideQuickLaunch doesn't exist on the page
-            showQuickLaunch();
-        else
-            hideQuickLaunch();
-        
+        }        
         if($("#divHideTitleRow").length == 0)
         {
             showTitleRow();
@@ -255,9 +287,16 @@ $.fn.hideAnElement = function (options)
                 showSearchBox();
             else
                 hideSearchBox();
+
+            if($("#divhideShareButton").length == 0)
+                showShareButton();
+            else
+                hideShareButton();
         }
         else
+        {
             hideTitleRow();           
+        }
 
         if($("#divHideCommandBarItems").length == 0)
             showCommandBarItems();
@@ -268,6 +307,9 @@ $.fn.hideAnElement = function (options)
             showPageTitle();
         else
             hidePageTitle();            
-
+        if($("#divHideQuickLaunch").length == 0)//check divHideQuickLaunch doesn't exist on the page
+            showQuickLaunch();
+        else
+            hideQuickLaunch();
     });
 }

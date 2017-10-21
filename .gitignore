@@ -31,5 +31,5 @@ obj
 # Styles Generated Code
 *.scss.ts
 
-#local files
-PowerShell\Local\*
+#Custom
+Exclude
