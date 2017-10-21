@@ -35,7 +35,7 @@ export default class HideAnElementWebPartWebPart extends BaseClientSideWebPart<I
 
     var tmpHideAnElementPlaceHolder = "";
 
-    if((window.location.href.indexOf("?Mode=Edit") > -1))
+    if((window.location.href.indexOf("?Mode=Edit") > -1) || (DisplayMode.Edit == 2))
     {
       tmpHideAnElementPlaceHolder += '<div id="divWPLoaded"><strong>hide An Element</strong> webpart is loaded</div>';
     }

@@ -250,7 +250,8 @@ $.fn.hideAnElement = function (options)
                 showSiteMembers();
             else
                 hideSiteMembers(); 
-            if($("#divHideSearchBox").length == 0)
+                
+            if($("#divhideSearchBox").length == 0)
                 showSearchBox();
             else
                 hideSearchBox();
