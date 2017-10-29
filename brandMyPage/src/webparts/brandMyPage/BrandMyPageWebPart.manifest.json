@@ -18,7 +18,7 @@
     "group": { "default": "Other" },
     "title": { "default": "BrandMyPage" },
     "description": { "default": "Use this webpart to apply simple customizations including hiding an element, applying colors, compact mode etc.." },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "ClearFormatting",
     "properties": {
       "description": "BrandMyPage"
     }

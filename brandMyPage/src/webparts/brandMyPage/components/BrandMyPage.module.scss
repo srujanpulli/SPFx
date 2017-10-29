@@ -1,4 +1,10 @@
 .brandMyPage {
+  .show{
+    display: block;
+  }
+  .hide{
+    display: none !important;
+  }
   .container {
     max-width: 700px;
     margin: 0px auto;
