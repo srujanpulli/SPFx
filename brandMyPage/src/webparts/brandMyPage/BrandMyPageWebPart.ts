@@ -153,7 +153,25 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
             //   ]
             // }
           ]
-        }
+        },
+        {
+          header: {
+            description: "add some Colors"
+          },
+          groups: [
+            {
+              groupName: "Look and feel",
+              groupFields: [
+                PropertyPaneTextField('description', {
+                  label: "Web part description"
+                }),
+                PropertyPaneTextField('noResultsMsg', {
+                  label: "No results message"
+                })
+              ]
+            }
+          ]
+        },
       ]
     };
   }

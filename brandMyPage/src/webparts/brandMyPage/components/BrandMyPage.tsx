@@ -13,6 +13,7 @@ export default class BrandMyPage extends React.Component<IBrandMyPageProps, {}> 
     // This binding is necessary to make `this` work in the callback
     this.showPane = this.showPane.bind(this);
   }
+  
   public showPane()
   {
     this.props.StartConfigurations;
@@ -401,10 +402,30 @@ $( "body" ).bind("DOMSubtreeModified",function() {
         </div>
       </div></div>);
     }
+
+    function HideAnElementControlSet(props)
+    {
+      return (<span>
+        <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
+        <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
+        <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
+        <IsSiteDescriptionHidden isHidden={this.props.hideSiteDescriptionProperty}/>
+        <IsSiteMembersHidden isHidden={this.props.hideSiteMembersProperty}/>
+        <IsTopNavHidden isHidden={this.props.hideTopNavProperty}/>
+        <IsTitleRowHidden isHidden={this.props.hideTitleRowProperty}/>
+        <IsCommandBarItemsHidden isHidden={this.props.hideCommandBarItemsProperty}/>
+        <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
+        <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
+        <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/>
+        </span>
+      );
+    }
       if( this.props.editMode ==2)
       {
         return(
-          <span><EditModeText />
+          <span>
+            <EditModeText />
+            {/* <HideAnElementControlSet  /> */}
             <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
             <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
             <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
@@ -415,28 +436,27 @@ $( "body" ).bind("DOMSubtreeModified",function() {
             <IsCommandBarItemsHidden isHidden={this.props.hideCommandBarItemsProperty}/>
             <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
             <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
-            <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/>
+            <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/>            
           </span>
         )      
       }
       else
       {
         // return (null); if you want to return null
-        return(
-          <span>
-            <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
-            <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
-            <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
-            <IsSiteDescriptionHidden isHidden={this.props.hideSiteDescriptionProperty}/>
-            <IsSiteMembersHidden isHidden={this.props.hideSiteMembersProperty}/>
-            <IsTopNavHidden isHidden={this.props.hideTopNavProperty}/>
-            <IsTitleRowHidden isHidden={this.props.hideTitleRowProperty}/>
-            <IsCommandBarItemsHidden isHidden={this.props.hideCommandBarItemsProperty}/>
-            <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
-            <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
-            <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/>
-          </span>
-        )
+        return(<span>
+        // <HideAnElementControlSet />
+        <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
+        <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
+        <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
+        <IsSiteDescriptionHidden isHidden={this.props.hideSiteDescriptionProperty}/>
+        <IsSiteMembersHidden isHidden={this.props.hideSiteMembersProperty}/>
+        <IsTopNavHidden isHidden={this.props.hideTopNavProperty}/>
+        <IsTitleRowHidden isHidden={this.props.hideTitleRowProperty}/>
+        <IsCommandBarItemsHidden isHidden={this.props.hideCommandBarItemsProperty}/>
+        <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
+        <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
+        <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/></span>
+    )
       }
 
   }//end of render
