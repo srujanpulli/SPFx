@@ -8,9 +8,13 @@ export interface IBrandMyPageProps {
   hideTopNavProperty: boolean;
   hideTitleRowProperty: boolean;
   hideCommandBarItemsProperty: boolean;
-  hidePageTitleProperty: boolean,
-  hideSearchBoxProperty: boolean,
-  hideShareButtonProperty: boolean,
-  StartConfigurations,
+  hidePageTitleProperty: boolean;
+  hideSearchBoxProperty: boolean;
+  hideShareButtonProperty: boolean;
+  configureWebPart: () => void;
   editMode: number
+}
+export interface IEditModeTextProps {
+  configAction: () => void;
+
 }

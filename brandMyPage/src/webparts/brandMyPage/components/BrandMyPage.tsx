@@ -1,7 +1,9 @@
 import * as React from 'react';
 import styles from './BrandMyPage.module.scss';
-import { IBrandMyPageProps } from './IBrandMyPageProps';
+import { IBrandMyPageProps, IEditModeTextProps } from './IBrandMyPageProps';
 import { escape } from '@microsoft/sp-lodash-subset';
+
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 import 'jQuery';
 declare var $;
@@ -10,13 +12,6 @@ export default class BrandMyPage extends React.Component<IBrandMyPageProps, {}> 
   constructor(props) {
     super(props);
     this.state;
-    // This binding is necessary to make `this` work in the callback
-    this.showPane = this.showPane.bind(this);
-  }
-  
-  public showPane()
-  {
-    this.props.StartConfigurations;
   }
 
   public componentDidMount() 
@@ -390,42 +385,38 @@ $( "body" ).bind("DOMSubtreeModified",function() {
       else { return (null);}}
                                                                                                 
 
-    function EditModeText(props)
+    // function EditModeText(props)
+     class EditModeText extends React.Component<IEditModeTextProps, {}>
     {
-      return (<div><div className={styles.brandMyPage}>
-        <div className={styles.container}>
-          <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
-            <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
-              <p className="ms-font-l ms-fontColor-white"><strong>Brand My Page:</strong><br/> Use Webpart property pane brand this page.</p>
-            </div>
-          </div>
-        </div>
-      </div></div>);
+        public render():JSX.Element {
+            return(<div><div className={styles.brandMyPage}>
+                <div className={styles.container}>
+                  <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
+                    <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
+                      <p className="ms-font-l ms-fontColor-white"><strong>Brand My Page:</strong><br/> Use Webpart property pane brand this page.</p>
+                      <DefaultButton description='configure webpart properties' onClick={this.props.configAction}>Start configuring ...</DefaultButton>
+                    </div>
+                  </div>
+                </div>
+              </div></div>);
+    }
     }
 
-    function HideAnElementControlSet(props)
-    {
-      return (<span>
-        <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
-        <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
-        <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
-        <IsSiteDescriptionHidden isHidden={this.props.hideSiteDescriptionProperty}/>
-        <IsSiteMembersHidden isHidden={this.props.hideSiteMembersProperty}/>
-        <IsTopNavHidden isHidden={this.props.hideTopNavProperty}/>
-        <IsTitleRowHidden isHidden={this.props.hideTitleRowProperty}/>
-        <IsCommandBarItemsHidden isHidden={this.props.hideCommandBarItemsProperty}/>
-        <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
-        <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
-        <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/>
-        </span>
-      );
-    }
       if( this.props.editMode ==2)
       {
         return(
           <span>
-            <EditModeText />
-            {/* <HideAnElementControlSet  /> */}
+            <EditModeText configAction={this.props.configureWebPart} />
+            {/* <div><div className={styles.brandMyPage}>
+                <div className={styles.container}>
+                <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
+                    <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
+                    <p className="ms-font-l ms-fontColor-white"><strong>Brand My Page:</strong><br/> Use Webpart property pane brand this page.</p>
+                    <DefaultButton description='configure webpart properties' onClick={this.props.configureWebPart}>Start configuring</DefaultButton>
+                    </div>
+                </div>
+                </div>
+            </div></div> */}
             <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
             <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
             <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
@@ -444,7 +435,6 @@ $( "body" ).bind("DOMSubtreeModified",function() {
       {
         // return (null); if you want to return null
         return(<span>
-        // <HideAnElementControlSet />
         <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
         <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
         <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>

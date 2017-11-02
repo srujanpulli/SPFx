@@ -15,6 +15,8 @@ define([], function() {
     "hideCommandBarItems": "hide Command bar items",    
     "hidePageTitle": "hide Page Title (in read view)",
     "hideSearchBox": "hide Search box",
-    "hideShareButton": "hide Share Button"
+    "hideShareButton": "hide Share Button",
+    "compactMode": "Remove extra padding around webparts",
+    "pageBGColor": "Page background color"
   }
 });

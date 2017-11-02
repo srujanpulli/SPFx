@@ -5,8 +5,11 @@ import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
-  PropertyPaneCheckbox
+  PropertyPaneCheckbox,
+  PropertyPaneToggle
 } from '@microsoft/sp-webpart-base';
+
+import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
 
 import * as strings from 'BrandMyPageWebPartStrings';
 import BrandMyPage from './components/BrandMyPage';
@@ -33,6 +36,11 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
   // public showPropertyPaneMethod(): void {
   //   this.context.propertyPane.open()
   // }
+  protected onInit(): Promise<void> {
+    this.configureWebPart = this.configureWebPart.bind(this);
+    return super.onInit();
+  }
+
   public render(): void {
     const element: React.ReactElement<IBrandMyPageProps > = React.createElement(
       BrandMyPage,
@@ -49,7 +57,7 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
         hidePageTitleProperty: this.properties.hidePageTitleProperty,
         hideSearchBoxProperty: this.properties.hideSearchBoxProperty,
         hideShareButtonProperty: this.properties.hideShareButtonProperty,
-        StartConfigurations: function() {this.context.propertyPane.open();},
+        configureWebPart: this.configureWebPart,
         editMode: this.displayMode
       }
     );
@@ -134,19 +142,9 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
                   text: strings.hideTitleRow,  
                   checked: false, 
                   disabled: false,
-                })
+                }),
               ] 
             },
-            // {
-            //   groupName: "Classic page only options",
-            //   groupFields: [
-            //     PropertyPaneCheckbox('hideSearchBoxProperty', { 
-            //       text: strings.hideSearchBox,  
-            //       checked: false, 
-            //       disabled: this.properties.hideTitleRowProperty == true ? true : false,
-            //     })
-            //   ] 
-            // },
             // {
             //   groupName: strings.BasicGroupName,
             //   groupFields: [
@@ -160,6 +158,12 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
           },
           groups: [
             {
+              groupName: "Compact mode",
+              groupFields: [
+                PropertyPaneToggle('compactMode',{label : strings.compactMode})                
+              ] 
+            },
+            {
               groupName: "Look and feel",
               groupFields: [
                 PropertyPaneTextField('description', {
@@ -167,12 +171,15 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
                 }),
                 PropertyPaneTextField('noResultsMsg', {
                   label: "No results message"
-                })
+                }),
               ]
             }
           ]
         },
       ]
     };
+  }
+  private configureWebPart(): void {
+    this.context.propertyPane.open();
   }
 }
