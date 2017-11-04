@@ -5,6 +5,8 @@ import { escape } from '@microsoft/sp-lodash-subset';
 
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
+import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
+
 import 'jQuery';
 declare var $;
 
@@ -394,11 +396,13 @@ $( "body" ).bind("DOMSubtreeModified",function() {
                   <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
                     <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
                       <p className="ms-font-l ms-fontColor-white"><strong>Brand My Page:</strong><br/> Use Webpart property pane brand this page.</p>
-                      <DefaultButton description='configure webpart properties' onClick={this.props.configAction}>Start configuring ...</DefaultButton>
+                      <DefaultButton description='configure webpart properties' onClick={this.props.configAction}>Start configuring ......</DefaultButton>
                     </div>
                   </div>
                 </div>
-              </div></div>);
+              </div> 
+              {/* <ColorPicker color='#FFFFFF' /> */}
+              </div>);
     }
     }
 

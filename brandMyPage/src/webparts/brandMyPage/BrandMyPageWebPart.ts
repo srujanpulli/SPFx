@@ -25,10 +25,11 @@ export interface IBrandMyPageWebPartProps {
   hideTopNavProperty: boolean;
   hideTitleRowProperty: boolean;
   hideCommandBarItemsProperty: boolean;
-  hidePageTitleProperty: boolean,
-  hideSearchBoxProperty: boolean,
-  hideShareButtonProperty: boolean,
-  StartConfigurations,
+  hidePageTitleProperty: boolean;
+  hideSearchBoxProperty: boolean;
+  hideShareButtonProperty: boolean;
+  StartConfigurations;
+  compactMode : boolean;
 }
 
 export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPageWebPartProps> {

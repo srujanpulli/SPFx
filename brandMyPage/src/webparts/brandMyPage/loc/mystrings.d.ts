@@ -13,6 +13,8 @@ declare interface IBrandMyPageWebPartStrings {
   hidePageTitle: string,
   hideSearchBox:string,
   hideShareButton:string
+  compactMode : string;
+  
 }
 
 declare module 'BrandMyPageWebPartStrings' {

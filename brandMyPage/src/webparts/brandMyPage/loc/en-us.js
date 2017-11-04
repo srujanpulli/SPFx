@@ -18,5 +18,6 @@ define([], function() {
     "hideShareButton": "hide Share Button",
     "compactMode": "Remove extra padding around webparts",
     "pageBGColor": "Page background color"
+    
   }
 });
