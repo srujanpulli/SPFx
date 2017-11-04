@@ -1,11 +1,16 @@
 import * as React from 'react';
 import styles from './BrandMyPage.module.scss';
-import { IBrandMyPageProps, IEditModeTextProps } from './IBrandMyPageProps';
+import { IBrandMyPageProps, IEditModeTextProps, IEditModeTextState } from './IBrandMyPageProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 
 import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
+
+// import { autobind } from '../../../Utilities';
+import { autobind } from 'office-ui-fabric-react/lib/Utilities';
+import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
+
 
 import 'jQuery';
 declare var $;
@@ -13,7 +18,8 @@ declare var $;
 export default class BrandMyPage extends React.Component<IBrandMyPageProps, {}> {
   constructor(props) {
     super(props);
-    this.state;
+    this.state = { 
+    };
   }
 
   public componentDidMount() 
@@ -388,15 +394,42 @@ $( "body" ).bind("DOMSubtreeModified",function() {
                                                                                                 
 
     // function EditModeText(props)
-     class EditModeText extends React.Component<IEditModeTextProps, {}>
+     class EditModeText extends React.Component<IEditModeTextProps, IEditModeTextState>
     {
-        public render():JSX.Element {
+        constructor(props) {
+            super(props);
+            this.state = {   
+                    hideDialog: true
+            };
+          }
+          
+        public render() {
             return(<div><div className={styles.brandMyPage}>
                 <div className={styles.container}>
                   <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
                     <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
                       <p className="ms-font-l ms-fontColor-white"><strong>Brand My Page:</strong><br/> Use Webpart property pane brand this page.</p>
                       <DefaultButton description='configure webpart properties' onClick={this.props.configAction}>Start configuring ......</DefaultButton>
+                      <DefaultButton description='Opens the Sample Dialog' onClick={ this._showDialog }>Add Color</DefaultButton>
+                        <Dialog
+                            hidden={ this.state.hideDialog }
+                            onDismiss={ this._closeDialog }
+                            dialogContentProps={ {
+                                type: DialogType.largeHeader,
+                                title: 'Select a color',
+                                // subText: 'Select a color'
+                            } }
+                            modalProps={ {
+                                isBlocking: false,
+                                containerClassName: 'ms-dialogMainOverride'
+                            } }
+                            >
+                            <ColorPicker color='#FFFFFF' />
+                            <DialogFooter>
+                                <PrimaryButton onClick={ this._closeDialog } text='Save' />
+                                <DefaultButton onClick={ this._closeDialog } text='Cancel' />
+                            </DialogFooter>
+                        </Dialog>
                     </div>
                   </div>
                 </div>
@@ -404,6 +437,16 @@ $( "body" ).bind("DOMSubtreeModified",function() {
               {/* <ColorPicker color='#FFFFFF' /> */}
               </div>);
     }
+    @autobind
+    private _showDialog() {
+      this.setState({ hideDialog: false });
+    }
+  
+    @autobind
+    private _closeDialog() {
+      this.setState({ hideDialog: true });
+    }
+  
     }
 
       if( this.props.editMode ==2)
@@ -452,7 +495,7 @@ $( "body" ).bind("DOMSubtreeModified",function() {
         <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/></span>
     )
       }
-
+      
   }//end of render
-
+  
 }

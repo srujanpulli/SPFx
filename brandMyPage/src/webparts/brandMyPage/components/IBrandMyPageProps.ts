@@ -16,5 +16,7 @@ export interface IBrandMyPageProps {
 }
 export interface IEditModeTextProps {
   configAction: () => void;
-
+}
+export interface IEditModeTextState {
+  hideDialog: boolean;
 }
