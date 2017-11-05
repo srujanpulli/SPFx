@@ -6,7 +6,8 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
   PropertyPaneCheckbox,
-  PropertyPaneToggle
+  PropertyPaneToggle,
+  PropertyPaneButton
 } from '@microsoft/sp-webpart-base';
 
 import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
@@ -167,6 +168,12 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
             {
               groupName: "Look and feel",
               groupFields: [
+                PropertyPaneButton('addColor', {
+                  buttonType: 0,
+                  text: 'Generate Theme',
+                  icon: 'Color',
+                  onClick: this.SimpleAlert
+                }),                
                 PropertyPaneTextField('description', {
                   label: "Web part description"
                 }),
@@ -182,5 +189,8 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
   }
   private configureWebPart(): void {
     this.context.propertyPane.open();
+  }
+  private SimpleAlert():void {
+    alert();
   }
 }
