@@ -16,6 +16,8 @@ import * as strings from 'BrandMyPageWebPartStrings';
 import BrandMyPage from './components/BrandMyPage';
 import { IBrandMyPageProps } from './components/IBrandMyPageProps';
 
+import { PropertyPaneColorButton } from '../../controls/PropertyPaneColorPicker/PropertyPaneColorButton';
+
 export interface IBrandMyPageWebPartProps {
   // description: string;
   hideQuickLaunchProperty: boolean;
@@ -35,6 +37,8 @@ export interface IBrandMyPageWebPartProps {
 
 export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPageWebPartProps> {
 
+  private colorPickerButton: PropertyPaneColorButton;
+  
   // public showPropertyPaneMethod(): void {
   //   this.context.propertyPane.open()
   // }
@@ -168,18 +172,27 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
             {
               groupName: "Look and feel",
               groupFields: [
-                PropertyPaneButton('addColor', {
-                  buttonType: 0,
-                  text: 'Generate Theme',
-                  icon: 'Color',
-                  onClick: this.SimpleAlert
-                }),                
-                PropertyPaneTextField('description', {
-                  label: "Web part description"
-                }),
-                PropertyPaneTextField('noResultsMsg', {
-                  label: "No results message"
-                }),
+                // PropertyPaneButton('addColor', {
+                //   buttonType: 0,
+                //   text: 'Generate Theme',
+                //   icon: 'Color',
+                //   onClick: this.SimpleAlert
+                // }),                
+                // PropertyPaneTextField('description', {
+                //   label: "Web part description"
+                // }),
+                // PropertyPaneTextField('noResultsMsg', {
+                //   label: "No results message"
+                // }),
+                new PropertyPaneColorButton(
+                  'BGColor', {
+                  key: "BGColor",
+                  label: "Add colors",
+                  selectedColor: "#ffffff",
+                  disabled: false,
+                  showColorDialog: false,
+                  onClick() : void {}                 
+                }),this.colorPickerButton
               ]
             }
           ]
