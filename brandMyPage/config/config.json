@@ -11,7 +11,9 @@
       ]
     }
   },
-  "externals": {},
+  "externals": {
+    "jQuery":"https://code.jquery.com/jquery-3.2.1.min.js"    
+  },
   "localizedResources": {
     "BrandMyPageWebPartStrings": "lib/webparts/brandMyPage/loc/{locale}.js"
   }

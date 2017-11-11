@@ -8,20 +8,19 @@ import {
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'BrandMyPageWebPartStrings';
-import BrandMyPage from './components/BrandMyPage';
-import { IBrandMyPageProps } from './components/IBrandMyPageProps';
+import {IBrandMyPageWebPartProps} from './IBrandMyPageWebPartProps'
 
-export interface IBrandMyPageWebPartProps {
-  description: string;
-}
+import ConfigLanding from './components/Config/ConfigLanding';
+import { IConfigLandingProps } from './components/Config/IConfigLandingProps';
 
 export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPageWebPartProps> {
 
   public render(): void {
-    const element: React.ReactElement<IBrandMyPageProps > = React.createElement(
-      BrandMyPage,
+    const element: React.ReactElement<IConfigLandingProps > = React.createElement(
+      ConfigLanding,
       {
-        description: this.properties.description
+        configureWebPart: this.configureWebPart,
+        editMode: this.displayMode
       }
     );
 
@@ -43,14 +42,17 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                })
+                // PropertyPaneTextField('description', {
+                //   label: strings.DescriptionFieldLabel
+                // })
               ]
             }
           ]
         }
       ]
     };
+  }
+  private configureWebPart(): void {
+    this.context.propertyPane.open();
   }
 }
