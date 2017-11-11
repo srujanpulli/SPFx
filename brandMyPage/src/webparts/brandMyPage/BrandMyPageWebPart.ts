@@ -15,6 +15,11 @@ import { IConfigLandingProps } from './components/Config/IConfigLandingProps';
 
 export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPageWebPartProps> {
 
+  protected onInit(): Promise<void> {
+    this.configureWebPart = this.configureWebPart.bind(this);
+    return super.onInit();
+  }
+  
   public render(): void {
     const element: React.ReactElement<IConfigLandingProps > = React.createElement(
       ConfigLanding,

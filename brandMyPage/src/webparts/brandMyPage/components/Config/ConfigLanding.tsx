@@ -9,10 +9,9 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import { autobind } from 'office-ui-fabric-react/lib/Utilities';
 // import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 
-import HideUnhide from './../HideUnhide/HideUnhide'
+import HideUnhide from './../HideUnhide/HideUnhide';
 import {IHideUnhideProps} from './../HideUnhide/IHideUnhideProps'
 import {IHideUnhideState} from './../HideUnhide/IHideUnhideState'
-
 
 import 'jQuery';
 declare var $;
@@ -44,7 +43,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       {
         return(
           <span>
-             <div><div className={styles.brandMyPage}>
+             <div><div className={styles.configLanding}>
                 <div className={styles.container}>
                 <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
                     <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
