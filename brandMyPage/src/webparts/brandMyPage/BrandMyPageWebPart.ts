@@ -25,7 +25,18 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
       ConfigLanding,
       {
         configureWebPart: this.configureWebPart,
-        editMode: this.displayMode
+        editMode: this.displayMode,
+        hideQuickLaunchProperty: this.properties.hideQuickLaunchProperty,
+        hideSiteLogoProperty: this.properties.hideSiteLogoProperty,
+        hideSiteTitleProperty: this.properties.hideSiteTitleProperty,
+        hideSiteDescriptionProperty: this.properties.hideSiteDescriptionProperty,
+        hideSiteMembersProperty: this.properties.hideSiteMembersProperty,
+        hideTopNavProperty: this.properties.hideTopNavProperty,
+        hideTitleRowProperty: this.properties.hideTitleRowProperty,
+        hideCommandBarItemsProperty: this.properties.hideCommandBarItemsProperty,
+        hidePageTitleProperty: this.properties.hidePageTitleProperty,
+        hideSearchBoxProperty: this.properties.hideSearchBoxProperty,
+        hideShareButtonProperty: this.properties.hideShareButtonProperty,
       }
     );
 

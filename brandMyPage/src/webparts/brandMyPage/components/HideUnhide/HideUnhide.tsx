@@ -389,7 +389,9 @@ $( "body" ).bind("DOMSubtreeModified",function() {
       if (props.isHidden) { return (<div hidden={true} id="divhideShareButton" className={styles.hide}>hide share button</div>);}
       else { return (null);}}
         // return (null); if you want to return null
-        
+        console.log("HideUnHide - React component is loaded");
+
+
         return(<span>
         <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
         <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>

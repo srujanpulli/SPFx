@@ -41,6 +41,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
 
       if( this.props.editMode ==2)
       {
+        console.log("Config - React component - Edit is loaded");        
         return(
           <span>
              <div><div className={styles.configLanding}>
@@ -53,18 +54,43 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                 </div>
                 </div>
             </div></div> 
+            {/* Include in edit mode as well */}
+        <HideUnhide hideQuickLaunchProperty = {this.props.hideQuickLaunchProperty} 
+         hideSiteLogoProperty = {this.props.hideSiteLogoProperty}
+         hideSiteTitleProperty = {this.props.hideSiteTitleProperty}
+         hideSiteDescriptionProperty = {this.props.hideSiteDescriptionProperty}
+         hideSiteMembersProperty = {this.props.hideSiteMembersProperty}
+         hideTopNavProperty = {this.props.hideTopNavProperty}
+         hideTitleRowProperty = {this.props.hideTitleRowProperty}
+         hideCommandBarItemsProperty = {this.props.hideCommandBarItemsProperty}
+         hidePageTitleProperty = {this.props.hidePageTitleProperty}
+         hideSearchBoxProperty = {this.props.hideSearchBoxProperty}
+         hideShareButtonProperty = {this.props.hideShareButtonProperty} />
+
           </span>
-        )      
+        )
       }
       else
       {
+        console.log("Config - React component - Read only is loaded");
         // return (null); if you want to return null
         return(<span>
-        
+        <HideUnhide hideQuickLaunchProperty = {this.props.hideQuickLaunchProperty} 
+         hideSiteLogoProperty = {this.props.hideQuickLaunchProperty}
+         hideSiteTitleProperty = {this.props.hideQuickLaunchProperty}
+         hideSiteDescriptionProperty = {this.props.hideQuickLaunchProperty}
+         hideSiteMembersProperty = {this.props.hideQuickLaunchProperty}
+         hideTopNavProperty = {this.props.hideQuickLaunchProperty}
+         hideTitleRowProperty = {this.props.hideQuickLaunchProperty}
+         hideCommandBarItemsProperty = {this.props.hideQuickLaunchProperty}
+         hidePageTitleProperty = {this.props.hideQuickLaunchProperty}
+         hideSearchBoxProperty = {this.props.hideQuickLaunchProperty}
+         hideShareButtonProperty = {this.props.hideQuickLaunchProperty} />
         </span>
     )
       }
       
+
   }//end of render
   
 }

@@ -20,7 +20,18 @@
     "description": { "default": "Use this webpart to brand your page including hiding, unhiding elements or add colors." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "BrandMyPage"
+      "description": "BrandMyPage",
+      "hideQuickLaunchProperty": false,
+      "hideSiteLogoProperty": false,
+      "hideSiteTitleProperty": false,
+      "hideSiteDescriptionProperty": false,
+      "hideSiteMembersProperty": false,
+      "hideTopNavProperty": false,
+      "hideTitleRowProperty": false,
+      "hideCommandBarItemsProperty": false,
+      "hidePageTitleProperty": false,
+      "hideSearchBoxProperty": false,
+      "hideShareButtonProperty": false
     }
   }]
 }
