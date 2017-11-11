@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "brand-my-page-client-side-solution",
+    "id": "0629d6af-73b5-4ed5-9c29-30fcb1cc3df6",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/brand-my-page.sppkg"
+  }
+}
