@@ -38,7 +38,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         if($('#s4-bodyContainer').length > 0)
         {
             $("#sideNavBox").hide();
-            $("#contentBox").css("margin-left","5px")            
+            $("#contentBox").css("margin-left","5px");       
         }
         else
         {
@@ -52,7 +52,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         if($('#s4-bodyContainer').length > 0)
         {
             $("#sideNavBox").show();
-            $("#contentBox").css("margin-left","220px")                        
+            $("#contentBox").css("margin-left","220px");                     
         }
         else
         {
@@ -246,7 +246,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
       else
       {
           showTitleRow();
-          showSearchBox;
+          showSearchBox();
 
           if(this.props.hideTopNavProperty)
               hideTopNav(); 
@@ -287,7 +287,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
           showPageTitle();
 
 //Start page navigation triggers
-$( "body" ).bind("DOMSubtreeModified",function() {
+$( "body" ).bind("DOMSubtreeModified",() => {
   if(window.location.href.indexOf("?Mode=Edit") > -1)
   {
       $("#divWPLoaded").show();
@@ -392,7 +392,7 @@ $( "body" ).bind("DOMSubtreeModified",function() {
         console.log("HideUnHide - React component is loaded");
 
 
-        return(<span>
+        return(<span hidden={true} className={styles.hideUnhide}>
         <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
         <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
         <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>

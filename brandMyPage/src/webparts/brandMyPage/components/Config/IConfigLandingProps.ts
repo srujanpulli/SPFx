@@ -1,6 +1,6 @@
 export interface IConfigLandingProps {
   configureWebPart: () => void;
-  editMode: number
+  editMode: number;
 
   //add all other props
   hideQuickLaunchProperty: boolean;
@@ -14,5 +14,9 @@ export interface IConfigLandingProps {
   hidePageTitleProperty: boolean;
   hideSearchBoxProperty: boolean;
   hideShareButtonProperty: boolean;
-  }
+  
+  //state props
+  pivotToDisplay: number;
+
+}
   

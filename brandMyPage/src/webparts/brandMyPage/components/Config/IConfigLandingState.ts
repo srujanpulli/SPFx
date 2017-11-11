@@ -1,3 +1,5 @@
 export interface IConfigLandingState {
-    hideDialog: boolean;
+    // hideDialog: boolean;
+    pivotToDisplay: number;
+    selectedKey: number;    
   }

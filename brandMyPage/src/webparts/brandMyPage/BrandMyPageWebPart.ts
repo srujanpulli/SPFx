@@ -8,7 +8,7 @@ import {
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'BrandMyPageWebPartStrings';
-import {IBrandMyPageWebPartProps} from './IBrandMyPageWebPartProps'
+import {IBrandMyPageWebPartProps} from './IBrandMyPageWebPartProps';
 
 import ConfigLanding from './components/Config/ConfigLanding';
 import { IConfigLandingProps } from './components/Config/IConfigLandingProps';
