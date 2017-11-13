@@ -40,43 +40,61 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     
     this.state = {
       pivotToDisplay : 1,
-      selectedKey: 0
+      selectedKey: 0,
+      isChecked:false,
+      configOptions : this.props.configOptions,
+      // hideQuickLaunchProperty: this.props.configOptions.hideQuickLaunchProperty,
+      // hideSiteLogoProperty: this.props.configOptions.hideSiteLogoProperty,
+      // hideSiteTitleProperty: this.props.configOptions.hideSiteTitleProperty,
+      // hideSiteDescriptionProperty: this.props.configOptions.hideSiteDescriptionProperty,
+      // hideSiteMembersProperty: this.props.configOptions.hideSiteMembersProperty,
+      // hideTopNavProperty: this.props.configOptions.hideTopNavProperty,
+      // hideTitleRowProperty: this.props.configOptions.hideTitleRowProperty,
+      // hideCommandBarItemsProperty: this.props.configOptions.hideCommandBarItemsProperty,
+      // hidePageTitleProperty: this.props.configOptions.hidePageTitleProperty,
+      // hideSearchBoxProperty: this.props.configOptions.hideSearchBoxProperty,
+      // hideShareButtonProperty: this.props.configOptions.hideShareButtonProperty,
     };
     this._takeMetoNextPage = this._takeMetoNextPage.bind(this);    
+    this._onhideUnhideChange = this._onhideUnhideChange.bind(this);    
   }
 
   public componentDidMount() {
+    console.log("Config - React component is loaded");    
   }
   public componentWillUnmount() {
   }
   public render(){//: React.ReactElement<IConfigLandingProps> 
+
+    // let { isChecked } = this.state;    
     
-    let rStyles: ICheckboxStyles = {
-      root: {
-        marginTop: '10px'
-      }
-    };
+    // let rStyles: ICheckboxStyles = {
+    //   root: {
+    //     marginTop: '10px'
+    //   }
+    // };
 
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
 
     if (this.state.pivotToDisplay >= 1) {
       pivotArray.push(
-        <PivotItem linkText='Hide elments' itemKey='0' key='0'>
+        <PivotItem linkText='1. Hide elments' itemKey='0' key='0'>
           {/* <h1>Hide or Unhide different options.</h1> */}
           <h2>Modern page only options</h2>
           {/* <Checkbox label='Controlled checkbox' checked={ isChecked } onChange={ this._onControlledCheckboxChange }/> */}
-          <Checkbox styles={ rStyles } label='Hide Site Description' checked={ this.props.hideSiteDescriptionProperty } disabled = {this.props.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox styles={ rStyles } label='Hide Site Members' checked={ this.props.hideSiteMembersProperty }  disabled = {this.props.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox styles={ rStyles } label='Hide Command bar items' checked={ this.props.hideCommandBarItemsProperty }/>
-          <Checkbox styles={ rStyles } label='Hide Page Title' checked={ this.props.hidePageTitleProperty }/>
+          <Checkbox ariaDescribedBy="hideSiteDescriptionProperty" onChange={this._onhideUnhideChange} className={styles.top10Margin} label='Hide Site Description' checked={ this.state.configOptions.hideSiteDescriptionProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox className={styles.top10Margin} label='Hide Site Members' checked={ this.state.configOptions.hideSiteMembersProperty }  disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox className={styles.top10Margin} label='Hide Command bar items' checked={ this.state.configOptions.hideCommandBarItemsProperty }/>
+          {/* <Checkbox onChange={ this.state._onhideUnhideChange(this.state.configOptions.hideCommandBarItemsProperty) } styles={ rStyles } label='Hide Command bar items' checked={ this.state.configOptions.hideCommandBarItemsProperty }/> */}
+          <Checkbox className={styles.top10Margin} label='Hide Page Title' checked={ this.state.configOptions.hidePageTitleProperty }/>
           <h2>Modern and classic Page options</h2>
-          <Checkbox styles={ rStyles } label='Hide quick launch' checked={ this.props.hideQuickLaunchProperty }/>
-          <Checkbox styles={ rStyles } label='Hide Title row' checked={ this.props.hideTitleRowProperty }/>
-          <Checkbox styles={ rStyles } label='Hide Search box' checked={ this.props.hideSearchBoxProperty }  disabled = {(this.props.hideTitleRowProperty || this.props.hideQuickLaunchProperty == true )== true ? true : false} />
-          <Checkbox styles={ rStyles } label='Hide Site Logo' checked={ this.props.hideSiteLogoProperty } disabled = {this.props.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox styles={ rStyles } label='Hide Site Title' checked={ this.props.hideSiteTitleProperty } disabled = {this.props.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox styles={ rStyles } label='Hide Top Navigation' checked={ this.props.hideTopNavProperty } disabled = {this.props.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox styles={ rStyles } label='Hide Share button' checked={ this.props.hideShareButtonProperty } disabled = {this.props.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox className={styles.top10Margin} label='Hide quick launch' checked={ this.state.configOptions.hideQuickLaunchProperty }/>
+          <Checkbox className={styles.top10Margin} label='Hide Title row' checked={ this.state.configOptions.hideTitleRowProperty }/>
+          <Checkbox className={styles.top10Margin} label='Hide Search box' checked={ this.state.configOptions.hideSearchBoxProperty }  disabled = {(this.state.configOptions.hideTitleRowProperty || this.state.configOptions.hideQuickLaunchProperty == true )== true ? true : false} />
+          <Checkbox className={styles.top10Margin} label='Hide Site Logo' checked={ this.state.configOptions.hideSiteLogoProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox className={styles.top10Margin} label='Hide Site Title' checked={ this.state.configOptions.hideSiteTitleProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox className={styles.top10Margin} label='Hide Top Navigation' checked={ this.state.configOptions.hideTopNavProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox className={styles.top10Margin} label='Hide Share button' checked={ this.state.configOptions.hideShareButtonProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
           
           {/* show next button */}
           <div hidden={this.state.pivotToDisplay > 1} className={styles.right}>
@@ -86,7 +104,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     }
     if (this.state.pivotToDisplay >= 2) {
       pivotArray.push(
-        <PivotItem linkText='Add colors' itemKey='1' key='1'>
+        <PivotItem linkText='2. Add colors' itemKey='1' key='1'>
           <Label>2 Click the button below to show/hide this pivot item.</Label>
           <Label>The selected item will not change when the number of pivot items changes.</Label>
           <Label>If the selected item was removed, the new first item will be selected.</Label>
@@ -97,7 +115,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     }
     if (this.state.pivotToDisplay >= 3) {
       pivotArray.push(
-        <PivotItem linkText='Miscellaneous' itemKey='2' key='2'>
+        <PivotItem linkText='3. Miscellaneous' itemKey='2' key='2'>
           <Label>3 Click the button below to show/hide this pivot item.</Label>
           <Label>The selected item will not change when the number of pivot items changes.</Label>
           <Label>If the selected item was removed, the new first item will be selected.</Label>
@@ -105,7 +123,6 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       );
     }
     if (this.props.editMode == 2) {
-      console.log("Config - React component - Edit is loaded");
       return (
         <span className={styles.configLanding}>
           <Pivot linkFormat={PivotLinkFormat.tabs} linkSize={PivotLinkSize.large}  selectedKey={ `${this.state.selectedKey}` }>
@@ -113,36 +130,35 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
           </Pivot>
 
           {/* Include in edit mode as well */}
-          <HideUnhide hideQuickLaunchProperty={this.props.hideQuickLaunchProperty}
-            hideSiteLogoProperty={this.props.hideSiteLogoProperty}
-            hideSiteTitleProperty={this.props.hideSiteTitleProperty}
-            hideSiteDescriptionProperty={this.props.hideSiteDescriptionProperty}
-            hideSiteMembersProperty={this.props.hideSiteMembersProperty}
-            hideTopNavProperty={this.props.hideTopNavProperty}
-            hideTitleRowProperty={this.props.hideTitleRowProperty}
-            hideCommandBarItemsProperty={this.props.hideCommandBarItemsProperty}
-            hidePageTitleProperty={this.props.hidePageTitleProperty}
-            hideSearchBoxProperty={this.props.hideSearchBoxProperty}
-            hideShareButtonProperty={this.props.hideShareButtonProperty} />
+          <HideUnhide hideQuickLaunchProperty={this.state.configOptions.hideQuickLaunchProperty}
+            hideSiteLogoProperty={this.state.configOptions.hideSiteLogoProperty}
+            hideSiteTitleProperty={this.state.configOptions.hideSiteTitleProperty}
+            hideSiteDescriptionProperty={this.state.configOptions.hideSiteDescriptionProperty}
+            hideSiteMembersProperty={this.state.configOptions.hideSiteMembersProperty}
+            hideTopNavProperty={this.state.configOptions.hideTopNavProperty}
+            hideTitleRowProperty={this.state.configOptions.hideTitleRowProperty}
+            hideCommandBarItemsProperty={this.state.configOptions.hideCommandBarItemsProperty}
+            hidePageTitleProperty={this.state.configOptions.hidePageTitleProperty}
+            hideSearchBoxProperty={this.state.configOptions.hideSearchBoxProperty}
+            hideShareButtonProperty={this.state.configOptions.hideShareButtonProperty} />
 
         </span>
       )
     }
     else {
-      console.log("Config - React component - Read only is loaded");
       // return (null); if you want to return null
       return (<span className={styles.configLanding}>
-        <HideUnhide hideQuickLaunchProperty={this.props.hideQuickLaunchProperty}
-          hideSiteLogoProperty={this.props.hideQuickLaunchProperty}
-          hideSiteTitleProperty={this.props.hideQuickLaunchProperty}
-          hideSiteDescriptionProperty={this.props.hideQuickLaunchProperty}
-          hideSiteMembersProperty={this.props.hideQuickLaunchProperty}
-          hideTopNavProperty={this.props.hideQuickLaunchProperty}
-          hideTitleRowProperty={this.props.hideQuickLaunchProperty}
-          hideCommandBarItemsProperty={this.props.hideQuickLaunchProperty}
-          hidePageTitleProperty={this.props.hideQuickLaunchProperty}
-          hideSearchBoxProperty={this.props.hideQuickLaunchProperty}
-          hideShareButtonProperty={this.props.hideQuickLaunchProperty} />
+        <HideUnhide hideQuickLaunchProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideSiteLogoProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideSiteTitleProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideSiteDescriptionProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideSiteMembersProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideTopNavProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideTitleRowProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideCommandBarItemsProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hidePageTitleProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideSearchBoxProperty={this.state.configOptions.hideQuickLaunchProperty}
+          hideShareButtonProperty={this.state.configOptions.hideQuickLaunchProperty} />
       </span>
       )
     }
@@ -156,5 +172,17 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       selectedKey: (this.state.selectedKey + 1) % 3
     });
   }
+  
+  // @autobind
+  // private _onhideUnhideChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
+  //   // this.setState({ hideSiteDescriptionProperty : checked! });
+  //   alert(ariaDescribedBy);
+  // }
 
+  _onhideUnhideChange = (e) => {
+    console.log('this is:', e.currentTarget.getAttribute('aria-describedby'));
+    // this.state.{e.currentTarget.getAttribute('aria-describedby')} = false;
+    // this.setState(e.currentTarget.getAttribute('aria-describedby'):true)
+    this.setState(e.currentTarget.getAttribute('aria-describedby'):true)
+  }
 }

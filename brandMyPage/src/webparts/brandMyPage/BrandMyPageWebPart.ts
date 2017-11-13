@@ -19,24 +19,30 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
     this.configureWebPart = this.configureWebPart.bind(this);
     return super.onInit();
   }
-  
+  public save: (configOptions) => void = (configOptions) => {
+    this.properties.configOptions = configOptions;
+    this.render();
+  }
   public render(): void {
     const element: React.ReactElement<IConfigLandingProps > = React.createElement(
       ConfigLanding,
       {
         configureWebPart: this.configureWebPart,
         editMode: this.displayMode,
-        hideQuickLaunchProperty: this.properties.hideQuickLaunchProperty,
-        hideSiteLogoProperty: this.properties.hideSiteLogoProperty,
-        hideSiteTitleProperty: this.properties.hideSiteTitleProperty,
-        hideSiteDescriptionProperty: this.properties.hideSiteDescriptionProperty,
-        hideSiteMembersProperty: this.properties.hideSiteMembersProperty,
-        hideTopNavProperty: this.properties.hideTopNavProperty,
-        hideTitleRowProperty: this.properties.hideTitleRowProperty,
-        hideCommandBarItemsProperty: this.properties.hideCommandBarItemsProperty,
-        hidePageTitleProperty: this.properties.hidePageTitleProperty,
-        hideSearchBoxProperty: this.properties.hideSearchBoxProperty,
-        hideShareButtonProperty: this.properties.hideShareButtonProperty,
+        // hideQuickLaunchProperty: this.properties.hideQuickLaunchProperty,
+        // hideSiteLogoProperty: this.properties.hideSiteLogoProperty,
+        // hideSiteTitleProperty: this.properties.hideSiteTitleProperty,
+        // hideSiteDescriptionProperty: this.properties.hideSiteDescriptionProperty,
+        // hideSiteMembersProperty: this.properties.hideSiteMembersProperty,
+        // hideTopNavProperty: this.properties.hideTopNavProperty,
+        // hideTitleRowProperty: this.properties.hideTitleRowProperty,
+        // hideCommandBarItemsProperty: this.properties.hideCommandBarItemsProperty,
+        // hidePageTitleProperty: this.properties.hidePageTitleProperty,
+        // hideSearchBoxProperty: this.properties.hideSearchBoxProperty,
+        // hideShareButtonProperty: this.properties.hideShareButtonProperty,
+        configOptions:this.properties.configOptions,
+        // Save method
+        save: this.save        
       }
     );
 
