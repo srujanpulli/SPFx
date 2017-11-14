@@ -30,6 +30,7 @@ export interface IConfigLandingProps {
   };  
   //state props
   pivotToDisplay: number;
+  save(configOptions: object): void;  
 
 }
   

@@ -20,6 +20,7 @@ export default class BrandMyPageWebPart extends BaseClientSideWebPart<IBrandMyPa
     return super.onInit();
   }
   public save: (configOptions) => void = (configOptions) => {
+    // alert();
     this.properties.configOptions = configOptions;
     this.render();
   }

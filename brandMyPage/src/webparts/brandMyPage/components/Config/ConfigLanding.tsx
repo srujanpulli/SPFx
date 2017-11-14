@@ -31,12 +31,11 @@ declare var $;
 export default class ConfigLanding extends React.Component<IConfigLandingProps, IConfigLandingState> {
   private _pivotToDisplay: number;  
   private _selectedKey: number;  
-  
   constructor(props) {
-    super(props);
+    super(props);//props
 
-    this._pivotToDisplay = 1;
-    this._selectedKey = 0;
+    // this._pivotToDisplay = 1;
+    // this._selectedKey = 0;
     
     this.state = {
       pivotToDisplay : 1,
@@ -55,8 +54,9 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       // hideSearchBoxProperty: this.props.configOptions.hideSearchBoxProperty,
       // hideShareButtonProperty: this.props.configOptions.hideShareButtonProperty,
     };
-    this._takeMetoNextPage = this._takeMetoNextPage.bind(this);    
-    this._onhideUnhideChange = this._onhideUnhideChange.bind(this);    
+    
+    // this._takeMetoNextPage = this._takeMetoNextPage.bind(this);    
+    // this._onhideUnhideChange = this._onhideUnhideChange.bind(this);    
   }
 
   public componentDidMount() {
@@ -64,56 +64,43 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   public componentWillUnmount() {
   }
-  public render(){//: React.ReactElement<IConfigLandingProps> 
-
-    // let { isChecked } = this.state;    
-    
-    // let rStyles: ICheckboxStyles = {
-    //   root: {
-    //     marginTop: '10px'
-    //   }
-    // };
+  public render(): React.ReactElement<IConfigLandingProps>{ 
 
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
-
-    if (this.state.pivotToDisplay >= 1) {
       pivotArray.push(
         <PivotItem linkText='1. Hide elments' itemKey='0' key='0'>
           {/* <h1>Hide or Unhide different options.</h1> */}
           <h2>Modern page only options</h2>
-          {/* <Checkbox label='Controlled checkbox' checked={ isChecked } onChange={ this._onControlledCheckboxChange }/> */}
-          <Checkbox ariaDescribedBy="hideSiteDescriptionProperty" onChange={this._onhideUnhideChange} className={styles.top10Margin} label='Hide Site Description' checked={ this.state.configOptions.hideSiteDescriptionProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox className={styles.top10Margin} label='Hide Site Members' checked={ this.state.configOptions.hideSiteMembersProperty }  disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox className={styles.top10Margin} label='Hide Command bar items' checked={ this.state.configOptions.hideCommandBarItemsProperty }/>
+          <Checkbox inputProps={{value: "hideSiteDescriptionProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Site Description' checked={ this.state.configOptions.hideSiteDescriptionProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox inputProps={{value: "hideSiteMembersProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Site Members' checked={ this.state.configOptions.hideSiteMembersProperty }  disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox inputProps={{value: "hideCommandBarItemsProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Command bar items' checked={ this.state.configOptions.hideCommandBarItemsProperty }/>
           {/* <Checkbox onChange={ this.state._onhideUnhideChange(this.state.configOptions.hideCommandBarItemsProperty) } styles={ rStyles } label='Hide Command bar items' checked={ this.state.configOptions.hideCommandBarItemsProperty }/> */}
-          <Checkbox className={styles.top10Margin} label='Hide Page Title' checked={ this.state.configOptions.hidePageTitleProperty }/>
+          <Checkbox inputProps={{value: "hidePageTitleProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Page Title' checked={ this.state.configOptions.hidePageTitleProperty }/>
           <h2>Modern and classic Page options</h2>
-          <Checkbox className={styles.top10Margin} label='Hide quick launch' checked={ this.state.configOptions.hideQuickLaunchProperty }/>
-          <Checkbox className={styles.top10Margin} label='Hide Title row' checked={ this.state.configOptions.hideTitleRowProperty }/>
-          <Checkbox className={styles.top10Margin} label='Hide Search box' checked={ this.state.configOptions.hideSearchBoxProperty }  disabled = {(this.state.configOptions.hideTitleRowProperty || this.state.configOptions.hideQuickLaunchProperty == true )== true ? true : false} />
-          <Checkbox className={styles.top10Margin} label='Hide Site Logo' checked={ this.state.configOptions.hideSiteLogoProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox className={styles.top10Margin} label='Hide Site Title' checked={ this.state.configOptions.hideSiteTitleProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox className={styles.top10Margin} label='Hide Top Navigation' checked={ this.state.configOptions.hideTopNavProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
-          <Checkbox className={styles.top10Margin} label='Hide Share button' checked={ this.state.configOptions.hideShareButtonProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox inputProps={{value: "hideQuickLaunchProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide quick launch' checked={ this.state.configOptions.hideQuickLaunchProperty }/>
+          <Checkbox inputProps={{value: "hideTitleRowProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Title row' checked={ this.state.configOptions.hideTitleRowProperty }/>
+          <Checkbox inputProps={{value: "hideSearchBoxProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Search box' checked={ this.state.configOptions.hideSearchBoxProperty }  disabled = {(this.state.configOptions.hideTitleRowProperty || this.state.configOptions.hideQuickLaunchProperty == true )== true ? true : false} />
+          <Checkbox inputProps={{value: "hideSiteLogoProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Site Logo' checked={ this.state.configOptions.hideSiteLogoProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox inputProps={{value: "hideSiteTitleProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Site Title' checked={ this.state.configOptions.hideSiteTitleProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox inputProps={{value: "hideTopNavProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Top Navigation' checked={ this.state.configOptions.hideTopNavProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
+          <Checkbox inputProps={{value: "hideShareButtonProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Share button' checked={ this.state.configOptions.hideShareButtonProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
           
           {/* show next button */}
           <div hidden={this.state.pivotToDisplay > 1} className={styles.right}>
-          <PrimaryButton description='NEXT > Add some colors' onClick={this._takeMetoNextPage}>NEXT > Add some colors</PrimaryButton></div>
+          {/* <PrimaryButton description='NEXT > Add some colors' onClick={this._takeMetoNextPage}>NEXT > Add some colors</PrimaryButton> */}
+          </div>
         </PivotItem>
       );
-    }
-    if (this.state.pivotToDisplay >= 2) {
       pivotArray.push(
         <PivotItem linkText='2. Add colors' itemKey='1' key='1'>
           <Label>2 Click the button below to show/hide this pivot item.</Label>
           <Label>The selected item will not change when the number of pivot items changes.</Label>
           <Label>If the selected item was removed, the new first item will be selected.</Label>
           <div hidden={this.state.pivotToDisplay > 2} className={styles.right}>
-          <PrimaryButton description='NEXT > Add Misc items' onClick={this._takeMetoNextPage}>NEXT > Add Misc items</PrimaryButton></div>
+          {/* <PrimaryButton description='NEXT > Add Misc items' onClick={this._takeMetoNextPage}>NEXT > Add Misc items</PrimaryButton> */}
+          </div>
         </PivotItem>
       );
-    }
-    if (this.state.pivotToDisplay >= 3) {
       pivotArray.push(
         <PivotItem linkText='3. Miscellaneous' itemKey='2' key='2'>
           <Label>3 Click the button below to show/hide this pivot item.</Label>
@@ -121,7 +108,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
           <Label>If the selected item was removed, the new first item will be selected.</Label>
         </PivotItem>
       );
-    }
+
     if (this.props.editMode == 2) {
       return (
         <span className={styles.configLanding}>
@@ -165,24 +152,33 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
 
 
   }//end of render
-  private _takeMetoNextPage(): void {
-    this._pivotToDisplay += 1;
-    this.setState({
-      pivotToDisplay: this._pivotToDisplay,
-      selectedKey: (this.state.selectedKey + 1) % 3
-    });
-  }
-  
-  // @autobind
-  // private _onhideUnhideChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
-  //   // this.setState({ hideSiteDescriptionProperty : checked! });
-  //   alert(ariaDescribedBy);
+  // private _takeMetoNextPage(): void {
+  //   this._pivotToDisplay += 1;
+  //   this.setState({
+  //     pivotToDisplay: this._pivotToDisplay,
+  //     selectedKey: (this.state.selectedKey + 1) % 3
+  //   });
   // }
 
-  _onhideUnhideChange = (e) => {
-    console.log('this is:', e.currentTarget.getAttribute('aria-describedby'));
-    // this.state.{e.currentTarget.getAttribute('aria-describedby')} = false;
-    // this.setState(e.currentTarget.getAttribute('aria-describedby'):true)
-    this.setState(e.currentTarget.getAttribute('aria-describedby'):true)
+  @autobind
+  private _onhideUnhideChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
+    var checkBoxID = ev.currentTarget.attributes.getNamedItem('value').value.toString();
+    var _configOptions = {
+      "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideSiteLogoProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideSiteTitleProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideSiteDescriptionProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideSiteMembersProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideTopNavProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideTitleRowProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideCommandBarItemsProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hidePageTitleProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideSearchBoxProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideShareButtonProperty": this.state.configOptions.hideQuickLaunchProperty
+    }
+    _configOptions[checkBoxID] = checked!;
+    // this.setState({configOptions: _configOptions});
+    this.props.save(_configOptions);
+    this.render();    
   }
 }
