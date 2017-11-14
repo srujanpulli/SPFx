@@ -165,20 +165,20 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     var checkBoxID = ev.currentTarget.attributes.getNamedItem('value').value.toString();
     var _configOptions = {
       "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteLogoProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteTitleProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteDescriptionProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteMembersProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideTopNavProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideTitleRowProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideCommandBarItemsProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hidePageTitleProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSearchBoxProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideShareButtonProperty": this.state.configOptions.hideQuickLaunchProperty
+      "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
+      "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
+      "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
+      "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
+      "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
+      "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
+      "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
+      "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
+      "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
+      "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
     }
     _configOptions[checkBoxID] = checked!;
-    // this.setState({configOptions: _configOptions});
+    this.setState({configOptions: _configOptions});
+    // this.render();        
     this.props.save(_configOptions);
-    this.render();    
   }
 }
