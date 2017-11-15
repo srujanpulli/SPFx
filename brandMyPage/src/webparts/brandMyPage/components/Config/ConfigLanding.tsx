@@ -21,7 +21,7 @@ declare var $;
 
 export default class ConfigLanding extends React.Component<IConfigLandingProps, IConfigLandingState> {
   // private _pivotToDisplay: number;  
-  // private _selectedKey: number;
+  // public _selectedKey: number;
   constructor(props) {
     super(props);//props
 
@@ -29,11 +29,10 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     // this._selectedKey = 0;
     
     this.state = {
-      pivotToDisplay : 1,
-      selectedKey: 0,
       isChecked:false,
       hideFinishDialog: true,      
       configOptions : this.props.configOptions,
+      selectedKey: 0,
       // hideQuickLaunchProperty: this.props.configOptions.hideQuickLaunchProperty,
       // hideSiteLogoProperty: this.props.configOptions.hideSiteLogoProperty,
       // hideSiteTitleProperty: this.props.configOptions.hideSiteTitleProperty,
@@ -61,7 +60,8 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   public componentWillUnmount() {
   }
   public render(): React.ReactElement<IConfigLandingProps>{ 
-
+    console.log("ConfigLanding - React component is loaded");
+    
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
     
     pivotArray.push(
@@ -74,7 +74,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
           <div className="ms-Grid-row">
             <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"></div>
             <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><div className={styles.right}>
-            <div hidden={this.state.pivotToDisplay > 1} className={styles.right}>
+            <div className={styles.right}>
             <PrimaryButton description='Next' iconProps={ { iconName: 'Forward' }} onClick={this._takeMetoNextPage}>NEXT</PrimaryButton>
             </div>
           </div></div>
@@ -98,7 +98,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
               <h2>Modern and classic Page options</h2>
                 <Checkbox inputProps={{value: "hideQuickLaunchProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide quick launch' checked={ this.state.configOptions.hideQuickLaunchProperty }/>
                 <Checkbox inputProps={{value: "hideTitleRowProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Title row' checked={ this.state.configOptions.hideTitleRowProperty }/>
-                <Checkbox inputProps={{value: "hideSearchBoxProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Search box' checked={ this.state.configOptions.hideSearchBoxProperty }  disabled = {(this.state.configOptions.hideTitleRowProperty || this.state.configOptions.hideQuickLaunchProperty == true )== true ? true : false} />
+                <Checkbox inputProps={{value: "hideSearchBoxProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Search box' checked={ this.state.configOptions.hideSearchBoxProperty }  disabled = {(this.state.configOptions.hideTitleRowProperty || this.state.configOptions.hideQuickLaunchProperty )== true ? true : false} />
                 <Checkbox inputProps={{value: "hideSiteLogoProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Site Logo' checked={ this.state.configOptions.hideSiteLogoProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
                 <Checkbox inputProps={{value: "hideSiteTitleProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Site Title' checked={ this.state.configOptions.hideSiteTitleProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
                 <Checkbox inputProps={{value: "hideTopNavProperty"}} onChange={this._onhideUnhideChange.bind(this)} className={styles.top10Margin} label='Hide Top Navigation' checked={ this.state.configOptions.hideTopNavProperty } disabled = {this.state.configOptions.hideTitleRowProperty == true ? true : false}/>
@@ -128,7 +128,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><DefaultButton description='Back' iconProps={ { iconName: 'Back' }} onClick={this._takeMetoPrevPage}>BACK</DefaultButton></div>
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><div className={styles.right}>
-              <div hidden={this.state.pivotToDisplay > 1} className={styles.right}>
+              <div className={styles.right}>
               <PrimaryButton description='Next' iconProps={ { iconName: 'Forward' }} onClick={this._takeMetoNextPage}>NEXT</PrimaryButton>
               </div>
             </div></div>
@@ -145,7 +145,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><DefaultButton description='Back' iconProps={ { iconName: 'Back' }} onClick={this._takeMetoPrevPage}>BACK</DefaultButton></div>
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><div className={styles.right}>
-              <div hidden={this.state.pivotToDisplay > 1} className={styles.right}>
+              <div className={styles.right}>
               <PrimaryButton description='Finish' iconProps={ { iconName: 'Accept' }} onClick={this._finishChanges}>FINISH</PrimaryButton>
               </div>
             </div></div></div></div>
@@ -179,50 +179,44 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
           { pivotArray }
           </Pivot>            
           {/* Include in edit mode as well */}
-          <HideUnhide hideQuickLaunchProperty={this.state.configOptions.hideQuickLaunchProperty}
-            hideSiteLogoProperty={this.state.configOptions.hideSiteLogoProperty}
-            hideSiteTitleProperty={this.state.configOptions.hideSiteTitleProperty}
-            hideSiteDescriptionProperty={this.state.configOptions.hideSiteDescriptionProperty}
-            hideSiteMembersProperty={this.state.configOptions.hideSiteMembersProperty}
-            hideTopNavProperty={this.state.configOptions.hideTopNavProperty}
-            hideTitleRowProperty={this.state.configOptions.hideTitleRowProperty}
-            hideCommandBarItemsProperty={this.state.configOptions.hideCommandBarItemsProperty}
-            hidePageTitleProperty={this.state.configOptions.hidePageTitleProperty}
-            hideSearchBoxProperty={this.state.configOptions.hideSearchBoxProperty}
-            hideShareButtonProperty={this.state.configOptions.hideShareButtonProperty} />
+          <HideUnhide hideQuickLaunchProperty={this.props.configOptions.hideQuickLaunchProperty}
+            hideSiteLogoProperty={this.props.configOptions.hideSiteLogoProperty}
+            hideSiteTitleProperty={this.props.configOptions.hideSiteTitleProperty}
+            hideSiteDescriptionProperty={this.props.configOptions.hideSiteDescriptionProperty}
+            hideSiteMembersProperty={this.props.configOptions.hideSiteMembersProperty}
+            hideTopNavProperty={this.props.configOptions.hideTopNavProperty}
+            hideTitleRowProperty={this.props.configOptions.hideTitleRowProperty}
+            hideCommandBarItemsProperty={this.props.configOptions.hideCommandBarItemsProperty}
+            hidePageTitleProperty={this.props.configOptions.hidePageTitleProperty}
+            hideSearchBoxProperty={this.props.configOptions.hideSearchBoxProperty}
+            hideShareButtonProperty={this.props.configOptions.hideShareButtonProperty} />
 
         </span>
-      )
+      );
     }
     else {
       // return (null); if you want to return null
       return (<span className={styles.configLanding}>
-        <HideUnhide hideQuickLaunchProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideSiteLogoProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideSiteTitleProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideSiteDescriptionProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideSiteMembersProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideTopNavProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideTitleRowProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideCommandBarItemsProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hidePageTitleProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideSearchBoxProperty={this.state.configOptions.hideQuickLaunchProperty}
-          hideShareButtonProperty={this.state.configOptions.hideQuickLaunchProperty} />
+            <HideUnhide hideQuickLaunchProperty={this.props.configOptions.hideQuickLaunchProperty}
+            hideSiteLogoProperty={this.props.configOptions.hideSiteLogoProperty}
+            hideSiteTitleProperty={this.props.configOptions.hideSiteTitleProperty}
+            hideSiteDescriptionProperty={this.props.configOptions.hideSiteDescriptionProperty}
+            hideSiteMembersProperty={this.props.configOptions.hideSiteMembersProperty}
+            hideTopNavProperty={this.props.configOptions.hideTopNavProperty}
+            hideTitleRowProperty={this.props.configOptions.hideTitleRowProperty}
+            hideCommandBarItemsProperty={this.props.configOptions.hideCommandBarItemsProperty}
+            hidePageTitleProperty={this.props.configOptions.hidePageTitleProperty}
+            hideSearchBoxProperty={this.props.configOptions.hideSearchBoxProperty}
+            hideShareButtonProperty={this.props.configOptions.hideShareButtonProperty} />
       </span>
-      )
+      );
     }
 
 
   }//end of render
-  // private _takeMetoNextPage(): void {
-  //   this._pivotToDisplay += 1;
-  //   this.setState({
-  //     pivotToDisplay: this._pivotToDisplay,
-  //     selectedKey: (this.state.selectedKey + 1) % 3
-  //   });
-  // }
 
-  @autobind
+
+  // @autobind
   private _onhideUnhideChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
     var checkBoxID = ev.currentTarget.attributes.getNamedItem('value').value.toString();
     var _configOptions = {
@@ -237,17 +231,18 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
       "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
       "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
-    }
+    };
     _configOptions[checkBoxID] = checked!;
+    this.props.save(_configOptions);    
     this.setState({configOptions: _configOptions});
     // this.render();        
   }
   
   private _takeMetoNextPage(): void {
-    this.setState({ selectedKey: (this.state.selectedKey + 1) % 4 });
+    this.setState({selectedKey: (this.state.selectedKey + 1) % 4})
   }
   private _takeMetoPrevPage(): void {
-    this.setState({ selectedKey: (this.state.selectedKey - 1) % 4 });
+    this.setState({selectedKey: (this.state.selectedKey - 1) % 4})    
   }
   private _finishChanges(): void {
     var _configOptions = {
@@ -262,7 +257,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
       "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
       "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
-    }
+    };
     this.props.save(_configOptions);
     this.setState({ hideFinishDialog: false });    
   }

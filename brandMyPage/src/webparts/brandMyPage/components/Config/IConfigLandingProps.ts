@@ -29,7 +29,6 @@ export interface IConfigLandingProps {
     "hideShareButtonProperty": boolean
   };  
   //state props
-  pivotToDisplay: number;
   save(configOptions: object): void;  
 
 }

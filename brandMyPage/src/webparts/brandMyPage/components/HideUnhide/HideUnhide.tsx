@@ -98,7 +98,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
     {
         if($('#s4-bodyContainer').length > 0)
         {
-            $("#siteIcon").hide()
+            $("#siteIcon").hide();
         }
         else
         {
@@ -109,7 +109,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
     {
         if($('#s4-bodyContainer').length > 0)
         {
-            $("#siteIcon").show()
+            $("#siteIcon").show();
         }
         else
         {
@@ -404,7 +404,7 @@ $( "body" ).bind("DOMSubtreeModified",() => {
         <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
         <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
         <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/></span>
-    )
+    );
       
   }//end of render
   
