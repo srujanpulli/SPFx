@@ -3,6 +3,7 @@ export interface IConfigLandingState {
     pivotToDisplay: number;
     selectedKey: number;
     isChecked:boolean;
+    hideFinishDialog: boolean;
     // _onhideUnhideChange: (boolean) => boolean;
 
     // hideQuickLaunchProperty: boolean;
