@@ -16,6 +16,7 @@ export interface IConfigLandingProps {
   // hideShareButtonProperty: boolean;
   
   configOptions:{
+    "cachedTabKey": number,
     "hideQuickLaunchProperty": boolean,
     "hideSiteLogoProperty": boolean,
     "hideSiteTitleProperty": boolean,

@@ -10,6 +10,7 @@ import { Icon }                                                               fr
 import { DefaultButton, PrimaryButton }                                       from 'office-ui-fabric-react/lib/Button';
 import { Dialog, DialogType, DialogFooter }                                   from 'office-ui-fabric-react/lib/Dialog';
 import { autobind }                                                           from 'office-ui-fabric-react/lib/Utilities';
+import { MessageBar, MessageBarType }                                         from 'office-ui-fabric-react/lib/MessageBar';
 // import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 
 import HideUnhide             from './../HideUnhide/HideUnhide';
@@ -20,37 +21,21 @@ import 'jQuery';
 declare var $;
 
 export default class ConfigLanding extends React.Component<IConfigLandingProps, IConfigLandingState> {
-  // private _pivotToDisplay: number;  
-  // public _selectedKey: number;
   constructor(props) {
-    super(props);//props
-
-    // this._pivotToDisplay = 1;
-    // this._selectedKey = 0;
+    super(props);
     
     this.state = {
       isChecked:false,
       hideFinishDialog: true,      
       configOptions : this.props.configOptions,
-      selectedKey: 0,
-      // hideQuickLaunchProperty: this.props.configOptions.hideQuickLaunchProperty,
-      // hideSiteLogoProperty: this.props.configOptions.hideSiteLogoProperty,
-      // hideSiteTitleProperty: this.props.configOptions.hideSiteTitleProperty,
-      // hideSiteDescriptionProperty: this.props.configOptions.hideSiteDescriptionProperty,
-      // hideSiteMembersProperty: this.props.configOptions.hideSiteMembersProperty,
-      // hideTopNavProperty: this.props.configOptions.hideTopNavProperty,
-      // hideTitleRowProperty: this.props.configOptions.hideTitleRowProperty,
-      // hideCommandBarItemsProperty: this.props.configOptions.hideCommandBarItemsProperty,
-      // hidePageTitleProperty: this.props.configOptions.hidePageTitleProperty,
-      // hideSearchBoxProperty: this.props.configOptions.hideSearchBoxProperty,
-      // hideShareButtonProperty: this.props.configOptions.hideShareButtonProperty,
+      selectedKey: this.props.configOptions.cachedTabKey,
     };
     
     this._takeMetoNextPage = this._takeMetoNextPage.bind(this);
     this._takeMetoPrevPage = this._takeMetoPrevPage.bind(this);
     this._showFinishDialog = this._showFinishDialog.bind(this);
     this._closeFinishDialog = this._closeFinishDialog.bind(this);
-    
+    this.onPivotChange = this.onPivotChange.bind(this);    
     this._finishChanges = this._finishChanges.bind(this);
   }
 
@@ -65,10 +50,15 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
     
     pivotArray.push(
-      <PivotItem linkText='Overview' itemKey='0' itemIcon='Info'>
-        <Label>Step 1</Label>
-        <Label>Step 2</Label>
-        <Label>Step 3.</Label>
+      <PivotItem linkText='Overview' itemKey='0' itemIcon='Info'><br/>
+            <MessageBar messageBarType={ MessageBarType.severeWarning } ><strong>Note:</strong> This configuration box is visible <u>only in edit mode</u></MessageBar>
+            <p>Brand this page in three easy steps.</p>
+            <ul>
+              <li><b>Step 1</b> - Hide or Unhide different elements on a specific page including Quicklaunch, Top navigation, Share button etc...</li>
+              <li><b>Step 2</b> - Add/ update colors of navigation, page titles etc..</li>
+              <li><b>Step 3</b> - Update miscellaneous settings including compacte mode to remove additional padding or margin spaces</li>
+            </ul>
+                        
         
         <div className="ms-Grid">
           <div className="ms-Grid-row">
@@ -175,7 +165,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     if (this.props.editMode == 2) {
       return (
         <span className={styles.configLanding}>
-          <Pivot linkFormat={PivotLinkFormat.tabs} linkSize={PivotLinkSize.large} selectedKey={ `${this.state.selectedKey}` } >
+          <Pivot linkFormat={PivotLinkFormat.tabs} linkSize={PivotLinkSize.large} selectedKey={ `${this.state.selectedKey}` } onLinkClick={ this.onPivotChange }>
           { pivotArray }
           </Pivot>            
           {/* Include in edit mode as well */}
@@ -220,6 +210,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   private _onhideUnhideChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
     var checkBoxID = ev.currentTarget.attributes.getNamedItem('value').value.toString();
     var _configOptions = {
+      "cachedTabKey": this.state.selectedKey,
       "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
       "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
       "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
@@ -239,13 +230,14 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   
   private _takeMetoNextPage(): void {
-    this.setState({selectedKey: (this.state.selectedKey + 1) % 4})
+    this.setState({selectedKey: (this.state.selectedKey + 1) % 4});
   }
   private _takeMetoPrevPage(): void {
-    this.setState({selectedKey: (this.state.selectedKey - 1) % 4})    
+    this.setState({selectedKey: (this.state.selectedKey - 1) % 4});   
   }
   private _finishChanges(): void {
     var _configOptions = {
+      "cachedTabKey": this.state.selectedKey,
       "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
       "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
       "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
@@ -266,5 +258,23 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   private _showFinishDialog() {
     this.setState({ hideFinishDialog: false });
+  }
+  public onPivotChange(item: PivotItem): void {
+    this.setState({selectedKey:parseInt(item.props.itemKey) });
+    var _configOptions = {
+      "cachedTabKey": this.state.selectedKey,
+      "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
+      "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
+      "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
+      "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
+      "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
+      "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
+      "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
+      "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
+      "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
+      "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
+      "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
+    };
+    this.props.save(_configOptions);
   }
 }

@@ -33,6 +33,7 @@
       // "hideSearchBoxProperty": false,
       // "hideShareButtonProperty": false,
       "configOptions":{
+        "cachedTabKey":0,
         "hideQuickLaunchProperty": false,
         "hideSiteLogoProperty": false,
         "hideSiteTitleProperty": false,
