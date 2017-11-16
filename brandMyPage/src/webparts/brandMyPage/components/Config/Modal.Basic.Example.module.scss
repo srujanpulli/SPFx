@@ -1,0 +1,31 @@
+// @import '../../../common/common';
+
+:global {
+  .ms-modalExample-container {
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+
+    .ms-modalExample-header {
+      flex: 1 1 auto;
+      background-color: rgba(51, 51, 51, 0) !important;
+      color: #333333;
+      display: flex;
+      align-items: center;
+      font-size: large;
+      // @include ms-font-xxl;
+      // @include ms-fontWeight-semibold;
+      padding: 0 12px;
+      min-height: 30px;
+    }
+
+    .ms-modalExample-body {
+      flex: 4 4 auto;
+      padding: 0px 28px;
+      overflow-y: auto;
+      vertical-align: top;
+    }
+  }
+}

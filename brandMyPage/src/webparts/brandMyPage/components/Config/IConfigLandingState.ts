@@ -4,6 +4,7 @@ export interface IConfigLandingState {
     selectedKey: number;
     isChecked:boolean;
     hideFinishDialog: boolean;
+    hideThemeDialog: boolean;
     // _onhideUnhideChange: (boolean) => boolean;
 
     // hideQuickLaunchProperty: boolean;
@@ -29,6 +30,11 @@ export interface IConfigLandingState {
       "hideCommandBarItemsProperty": boolean,
       "hidePageTitleProperty": boolean,
       "hideSearchBoxProperty": boolean,
-      "hideShareButtonProperty": boolean
+      "hideShareButtonProperty": boolean,
+      "PageTitleTheme":{
+        "fontSize": number,
+        "color" : string,
+        "backgroundColor": string,
+      }
     };  
   }

@@ -44,7 +44,12 @@
         "hideCommandBarItemsProperty": false,
         "hidePageTitleProperty": false,
         "hideSearchBoxProperty": false,
-        "hideShareButtonProperty": false
+        "hideShareButtonProperty": false,
+        "PageTitleTheme":{
+          "fontSize": 32,
+          "color" : "#333333",
+          "backgroundColor": "#ffffff"
+        }
       }      
 
     }

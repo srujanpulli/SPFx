@@ -9,8 +9,13 @@ import { Label }                                                              fr
 import { Icon }                                                               from 'office-ui-fabric-react/lib/Icon';
 import { DefaultButton, PrimaryButton }                                       from 'office-ui-fabric-react/lib/Button';
 import { Dialog, DialogType, DialogFooter }                                   from 'office-ui-fabric-react/lib/Dialog';
+import { Modal }                                                              from 'office-ui-fabric-react/lib/Modal';
 import { autobind }                                                           from 'office-ui-fabric-react/lib/Utilities';
 import { MessageBar, MessageBarType }                                         from 'office-ui-fabric-react/lib/MessageBar';
+import { ColorPicker }                                                        from 'office-ui-fabric-react/lib/ColorPicker';
+import { Slider }                                                             from 'office-ui-fabric-react/lib/Slider';
+import { loadTheme }                                                          from 'office-ui-fabric-react/lib/Styling';
+import './Modal.Basic.Example.module.scss';
 // import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 
 import HideUnhide             from './../HideUnhide/HideUnhide';
@@ -26,7 +31,8 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     
     this.state = {
       isChecked:false,
-      hideFinishDialog: true,      
+      hideFinishDialog: true,  
+      hideThemeDialog: false,    
       configOptions : this.props.configOptions,
       selectedKey: this.props.configOptions.cachedTabKey,
     };
@@ -35,8 +41,12 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     this._takeMetoPrevPage = this._takeMetoPrevPage.bind(this);
     this._showFinishDialog = this._showFinishDialog.bind(this);
     this._closeFinishDialog = this._closeFinishDialog.bind(this);
+    this._showThemeDialog = this._showThemeDialog.bind(this);
+    this._closeThemeDialog = this._closeThemeDialog.bind(this);
     this.onPivotChange = this.onPivotChange.bind(this);    
     this._finishChanges = this._finishChanges.bind(this);
+    // this._onColorChanged = this._onColorChanged.bind(this);
+    
   }
 
   public componentDidMount() {
@@ -46,7 +56,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   public render(): React.ReactElement<IConfigLandingProps>{ 
     console.log("ConfigLanding - React component is loaded");
-    
+    var pageTitleStyle = {"color":this.state.configOptions.PageTitleTheme.color, "background-color":this.state.configOptions.PageTitleTheme.backgroundColor, "font-size": this.state.configOptions.PageTitleTheme.fontSize.toString() + "px" };
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
     
     pivotArray.push(
@@ -110,10 +120,121 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       
       pivotArray.push(
         <PivotItem linkText='Add colors' itemKey='2' itemIcon='Color'>
-          <Label>2 Click the button below to show/hide this pivot item.</Label>
-          <Label>The selected item will not change when the number of pivot items changes.</Label>
-          <Label>If the selected item was removed, the new first item will be selected.</Label>
-          
+          <div className="ms-Grid">
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><br/>
+              <DefaultButton description='Opens the Sample Dialog' onClick={ this._showThemeDialog } text='Open Dialog' /><br/>
+              <Modal
+                isOpen={ this.state.hideThemeDialog }
+                onDismiss={ this._closeThemeDialog }
+                isBlocking={ false }
+                containerClassName='ms-modalExample-container'
+              >
+                <div className='ms-modalExample-header'>
+                  <span>Customize your page title</span>
+                </div>
+                <div className='ms-modalExample-body'>
+                <div className="ms-Grid">
+                    <div className="ms-Grid-row">
+                      <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                      <Pivot>
+                          <PivotItem linkText='Font Size' itemKey="0">
+                          <Slider
+                              // label='Basic example:'
+                              min={ 0 }
+                              max={ 46 }
+                              step={ 1 }
+                              value = { this.state.configOptions.PageTitleTheme.fontSize}
+                              showValue={ true }
+                              // vertical={ true }
+                              // tslint:disable-next-line:jsx-no-lambda
+                              onChange={ value => { this.state.configOptions.PageTitleTheme.fontSize = value; this.setState(this.state)}} />
+                          </PivotItem>
+                          <PivotItem linkText='Font color' itemKey="1">
+                          <div><label>Add font color</label>
+                            <ColorPicker color={this.state.configOptions.PageTitleTheme.color} onColorChanged={color => {this.state.configOptions.PageTitleTheme.color = color; this.setState(this.state); this.props.save(this.state.configOptions)}}/>
+                          </div></PivotItem>
+                          <PivotItem linkText='Background color' itemKey="2">
+                          <div>
+                          <label>Add background color</label>
+                          <ColorPicker color={this.state.configOptions.PageTitleTheme.backgroundColor} onColorChanged={color => {this.state.configOptions.PageTitleTheme.backgroundColor = color; this.setState(this.state); this.props.save(this.state.configOptions)}}/>
+                          </div>
+                          </PivotItem>
+                        </Pivot>
+                      </div>
+                      <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                      <p style={pageTitleStyle}>Sample Page Title</p>
+                      </div>
+                    </div>
+                  </div>
+                
+                        <div className="ms-Grid">
+                    <div className="ms-Grid-row">
+                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={ this._closeThemeDialog } text='Done' iconProps={ { iconName: 'Accept' } }/></div>
+                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton onClick={ this._closeThemeDialog } text='Delete' iconProps={ { iconName: 'Cancel' } }/></div>
+                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"></div>
+                    </div>
+                  </div>
+
+                </div>
+              </Modal>
+              
+              {/* <Dialog
+                hidden={ this.state.hideThemeDialog }
+                onDismiss={ this._closeThemeDialog }
+                dialogContentProps={ {
+                  type: DialogType.normal,
+                  title: 'Add some colors',
+                  // subText: 'Your Inbox has changed. No longer does it include favorites, it is a singular destination for your emails.'
+                } }
+                modalProps={ {
+                  isBlocking: false,
+                  containerClassName: 'ms-dialogMainOverride'
+                } }
+              >
+        
+                        <Pivot>
+                          <PivotItem linkText='Font Size' itemKey="0">
+                          <Slider
+                              // label='Basic example:'
+                              min={ 0 }
+                              max={ 46 }
+                              step={ 1 }
+                              value = { this.state.configOptions.PageTitleTheme.fontSize}
+                              showValue={ true }
+                              // vertical={ true }
+                              // tslint:disable-next-line:jsx-no-lambda
+                              onChange={ value => { this.state.configOptions.PageTitleTheme.fontSize = value; this.setState(this.state)}} />
+                          </PivotItem>
+                          <PivotItem linkText='Font color' itemKey="1">
+                          <div><label>Add font color</label>
+                            <ColorPicker color={this.state.configOptions.PageTitleTheme.color} onColorChanged={color => {this.state.configOptions.PageTitleTheme.color = color; this.setState(this.state); this.props.save(this.state.configOptions)}}/>
+                          </div></PivotItem>
+                          <PivotItem linkText='Background color' itemKey="2">
+                          <div>
+                          <label>Add background color</label>
+                          <ColorPicker color={this.state.configOptions.PageTitleTheme.backgroundColor} onColorChanged={color => {this.state.configOptions.PageTitleTheme.backgroundColor = color; this.setState(this.state); this.props.save(this.state.configOptions)}}/>
+                          </div>
+                          </PivotItem>
+                        </Pivot>
+                <DialogFooter>
+                  <div className="ms-Grid">
+                    <div className="ms-Grid-row">
+                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={ this._closeThemeDialog } text='Done' iconProps={ { iconName: 'Accept' } }/></div>
+                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"></div>
+                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton onClick={ this._closeThemeDialog } text='Delete' iconProps={ { iconName: 'Cancel' } }/></div>
+                    </div>
+                  </div>
+                </DialogFooter>
+              </Dialog> */}
+              </div>
+              <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">Preview
+              <p><strong>Preview</strong><br/>
+                      Selected values - {this.state.configOptions.PageTitleTheme.fontSize},{this.state.configOptions.PageTitleTheme.color},{this.state.configOptions.PageTitleTheme.backgroundColor}
+                      </p>
+                </div>
+            </div>
+          </div>
           <div className="ms-Grid">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><DefaultButton description='Back' iconProps={ { iconName: 'Back' }} onClick={this._takeMetoPrevPage}>BACK</DefaultButton></div>
@@ -128,9 +249,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       );
       pivotArray.push(
         <PivotItem linkText='Miscellaneous' itemKey='3' itemIcon='Drop'>
-          <Label>3 Click the button below to show/hide this pivot item.</Label>
-          <Label>The selected item will not change when the number of pivot items changes.</Label>
-          <Label>If the selected item was removed, the new first item will be selected.</Label>
+          <p>click on button to apply colors</p>
           <div className="ms-Grid">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><DefaultButton description='Back' iconProps={ { iconName: 'Back' }} onClick={this._takeMetoPrevPage}>BACK</DefaultButton></div>
@@ -145,7 +264,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
             dialogContentProps={ {
               type: DialogType.normal,
               title: 'Done..',
-              subText: 'Your changes have been successfully applied. Don\'t forget to Publish this page to reflect changes to all users.'
+              subText: 'Your changes have been successfully applied. Don\'t forget to Save & Publish this page to reflect changes to all users.'
             } }
             modalProps={ {
               titleAriaId: 'myLabelId',
@@ -155,6 +274,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
             } }
           >
             { null /** You can also include null values as the result of conditionals */ }
+            <ColorPicker color='#FFFFFF' />
             <DialogFooter>
               <PrimaryButton onClick={ this._closeFinishDialog } text='OK' />
             </DialogFooter>
@@ -209,24 +329,32 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   // @autobind
   private _onhideUnhideChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
     var checkBoxID = ev.currentTarget.attributes.getNamedItem('value').value.toString();
-    var _configOptions = {
-      "cachedTabKey": this.state.selectedKey,
-      "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
-      "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
-      "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
-      "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
-      "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
-      "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
-      "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
-      "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
-      "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
-      "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
-    };
-    _configOptions[checkBoxID] = checked!;
-    this.props.save(_configOptions);    
-    this.setState({configOptions: _configOptions});
-    // this.render();        
+    // var _configOptions = {
+    //   "cachedTabKey": this.state.selectedKey,
+    //   "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
+    //   "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
+    //   "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
+    //   "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
+    //   "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
+    //   "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
+    //   "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
+    //   "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
+    //   "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
+    //   "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
+    //   "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty,
+    //   "PageTitleTheme":{
+    //     "fontSize": this.state.configOptions.PageTitleTheme.fontSize,
+    //     "color" : this.state.configOptions.PageTitleTheme.color,
+    //     "backgroundColor": this.state.configOptions.PageTitleTheme.backgroundColor,
+    //   }
+    // };
+    // _configOptions[checkBoxID] = checked!;
+    // this.props.save(_configOptions);    
+    // this.setState({configOptions: _configOptions});
+    // this.render();
+    this.state.configOptions[checkBoxID] = checked!;
+    this.setState(this.state);
+    this.props.save(this.state);
   }
   
   private _takeMetoNextPage(): void {
@@ -236,21 +364,26 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     this.setState({selectedKey: (this.state.selectedKey - 1) % 4});   
   }
   private _finishChanges(): void {
-    var _configOptions = {
-      "cachedTabKey": this.state.selectedKey,
-      "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
-      "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
-      "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
-      "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
-      "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
-      "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
-      "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
-      "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
-      "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
-      "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
-    };
-    this.props.save(_configOptions);
+    // var _configOptions = {
+    //   "cachedTabKey": this.state.selectedKey,
+    //   "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
+    //   "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
+    //   "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
+    //   "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
+    //   "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
+    //   "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
+    //   "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
+    //   "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
+    //   "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
+    //   "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
+    //   "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty,
+    //   "PageTitleTheme":{
+    //     "fontSize": this.state.configOptions.PageTitleTheme.fontSize,
+    //     "color" : this.state.configOptions.PageTitleTheme.color,
+    //     "backgroundColor": this.state.configOptions.PageTitleTheme.backgroundColor,
+    //   }
+    // };
+    this.props.save(this.state.configOptions);
     this.setState({ hideFinishDialog: false });    
   }
   private _closeFinishDialog() {
@@ -259,22 +392,41 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   private _showFinishDialog() {
     this.setState({ hideFinishDialog: false });
   }
+
+  private _showThemeDialog() {
+    this.setState({ hideThemeDialog: true });
+  }
+  private _closeThemeDialog() {
+    this.setState({ hideThemeDialog: false });
+  }
+ 
   public onPivotChange(item: PivotItem): void {
     this.setState({selectedKey:parseInt(item.props.itemKey) });
-    var _configOptions = {
-      "cachedTabKey": this.state.selectedKey,
-      "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
-      "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
-      "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
-      "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
-      "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
-      "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
-      "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
-      "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
-      "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
-      "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
-      "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty
-    };
-    this.props.save(_configOptions);
+    // var _configOptions = {
+    //   "cachedTabKey": this.state.selectedKey,
+    //   "hideQuickLaunchProperty": this.state.configOptions.hideQuickLaunchProperty,
+    //   "hideSiteLogoProperty": this.state.configOptions.hideSiteLogoProperty,
+    //   "hideSiteTitleProperty": this.state.configOptions.hideSiteTitleProperty,
+    //   "hideSiteDescriptionProperty": this.state.configOptions.hideSiteDescriptionProperty,
+    //   "hideSiteMembersProperty": this.state.configOptions.hideSiteMembersProperty,
+    //   "hideTopNavProperty": this.state.configOptions.hideTopNavProperty,
+    //   "hideTitleRowProperty": this.state.configOptions.hideTitleRowProperty,
+    //   "hideCommandBarItemsProperty": this.state.configOptions.hideCommandBarItemsProperty,
+    //   "hidePageTitleProperty": this.state.configOptions.hidePageTitleProperty,
+    //   "hideSearchBoxProperty": this.state.configOptions.hideSearchBoxProperty,
+    //   "hideShareButtonProperty": this.state.configOptions.hideShareButtonProperty,      
+    //   "PageTitleTheme":{
+    //     "fontSize": this.state.configOptions.PageTitleTheme.fontSize,
+    //     "color" : this.state.configOptions.PageTitleTheme.color,
+    //     "backgroundColor": this.state.configOptions.PageTitleTheme.backgroundColor,
+    //   }
+    // };
+    this.props.save(this.state.configOptions);
   }
+  // Custom color code 
+  // private _onColorChanged(color: string): void {
+  //   this.state.configOptions.PageTitleTheme.color = color;
+  //   this.setState(this.state);
+  //   this.props.save(this.state.configOptions);
+  // }
 }

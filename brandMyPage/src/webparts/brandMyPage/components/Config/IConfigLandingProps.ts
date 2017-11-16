@@ -27,7 +27,12 @@ export interface IConfigLandingProps {
     "hideCommandBarItemsProperty": boolean,
     "hidePageTitleProperty": boolean,
     "hideSearchBoxProperty": boolean,
-    "hideShareButtonProperty": boolean
+    "hideShareButtonProperty": boolean,
+    "PageTitleTheme":{
+      "fontSize": number,
+      "color" : string,
+      "backgroundColor": string,
+    }
   };  
   //state props
   save(configOptions: object): void;  
