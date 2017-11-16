@@ -3,21 +3,20 @@ import styles                   from './IConfigLanding.module.scss';
 import { IConfigLandingProps }  from './IConfigLandingProps';
 import { IConfigLandingState }  from './IConfigLandingState';
 import { escape }               from '@microsoft/sp-lodash-subset';
+// import { Fabric }               from 'office-ui-fabric-reacgulpt/lib/Fabric';
+
 import { Pivot, PivotItem, PivotLinkFormat, PivotLinkSize, IPivotItemProps }  from 'office-ui-fabric-react/lib/Pivot';
 import { Checkbox, ICheckboxStyles, ICheckboxProps }                          from 'office-ui-fabric-react/lib/Checkbox';
 import { Label }                                                              from 'office-ui-fabric-react/lib/Label';
 import { Icon }                                                               from 'office-ui-fabric-react/lib/Icon';
 import { DefaultButton, PrimaryButton }                                       from 'office-ui-fabric-react/lib/Button';
 import { Dialog, DialogType, DialogFooter }                                   from 'office-ui-fabric-react/lib/Dialog';
-import { Modal }                                                              from 'office-ui-fabric-react/lib/Modal';
+import { Panel, PanelType }                                                   from 'office-ui-fabric-react/lib/Panel';
 import { autobind }                                                           from 'office-ui-fabric-react/lib/Utilities';
 import { MessageBar, MessageBarType }                                         from 'office-ui-fabric-react/lib/MessageBar';
 import { ColorPicker }                                                        from 'office-ui-fabric-react/lib/ColorPicker';
 import { Slider }                                                             from 'office-ui-fabric-react/lib/Slider';
 import { loadTheme }                                                          from 'office-ui-fabric-react/lib/Styling';
-import './Modal.Basic.Example.module.scss';
-// import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-
 import HideUnhide             from './../HideUnhide/HideUnhide';
 import { IHideUnhideProps }   from './../HideUnhide/IHideUnhideProps';
 import { IHideUnhideState }   from './../HideUnhide/IHideUnhideState';
@@ -56,7 +55,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   public render(): React.ReactElement<IConfigLandingProps>{ 
     console.log("ConfigLanding - React component is loaded");
-    var pageTitleStyle = {"color":this.state.configOptions.PageTitleTheme.color, "background-color":this.state.configOptions.PageTitleTheme.backgroundColor, "font-size": this.state.configOptions.PageTitleTheme.fontSize.toString() + "px" };
+    // var pageTitleStyle = {"color":this.state.configOptions.PageTitleTheme.color, "background-color":this.state.configOptions.PageTitleTheme.backgroundColor, "font-size": this.state.configOptions.PageTitleTheme.fontSize.toString() + "px" };
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
     
     pivotArray.push(
@@ -119,27 +118,31 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
       );
       
       pivotArray.push(
-        <PivotItem linkText='Add colors' itemKey='2' itemIcon='Color'>
+        <PivotItem linkText='Customize theme' itemKey='2' itemIcon='Color'>
           <div className="ms-Grid">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><br/>
-              <DefaultButton description='Opens the Sample Dialog' onClick={ this._showThemeDialog } text='Open Dialog' /><br/>
-              <Modal
+              <DefaultButton description='Opens the Sample Dialog' onClick={ this._showThemeDialog } text='Customize page title' iconProps={{iconName:"Color"}} /><br/>
+              <Panel
                 isOpen={ this.state.hideThemeDialog }
                 onDismiss={ this._closeThemeDialog }
-                isBlocking={ false }
-                containerClassName='ms-modalExample-container'
+                isLightDismiss = {true}
+                type={ PanelType.medium }
+                headerText='Customize your page title'
+                isFooterAtBottom={ true }                
+                onRenderFooterContent = {() => {return(
+                  <div className="ms-Grid"><div className="ms-Grid-row">
+                  <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={ this._closeThemeDialog } text='Done' iconProps={ { iconName: 'Accept' } }/></div>
+                  <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton className="ms-bgColor-orangeLighter" onClick={ this._closeThemeDialog } text='Delete' iconProps={ { iconName: 'Cancel' } }/></div>
+                </div></div>
+                );}}
               >
-                <div className='ms-modalExample-header'>
-                  <span>Customize your page title</span>
-                </div>
-                <div className='ms-modalExample-body'>
-                <div className="ms-Grid">
+                <span><div className="ms-Grid">
                     <div className="ms-Grid-row">
                       <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
                       <Pivot>
                           <PivotItem linkText='Font Size' itemKey="0">
-                          <Slider
+                          <br/><Slider
                               // label='Basic example:'
                               min={ 0 }
                               max={ 46 }
@@ -151,33 +154,36 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                               onChange={ value => { this.state.configOptions.PageTitleTheme.fontSize = value; this.setState(this.state)}} />
                           </PivotItem>
                           <PivotItem linkText='Font color' itemKey="1">
-                          <div><label>Add font color</label>
                             <ColorPicker color={this.state.configOptions.PageTitleTheme.color} onColorChanged={color => {this.state.configOptions.PageTitleTheme.color = color; this.setState(this.state); this.props.save(this.state.configOptions)}}/>
-                          </div></PivotItem>
+                          </PivotItem>
                           <PivotItem linkText='Background color' itemKey="2">
-                          <div>
-                          <label>Add background color</label>
                           <ColorPicker color={this.state.configOptions.PageTitleTheme.backgroundColor} onColorChanged={color => {this.state.configOptions.PageTitleTheme.backgroundColor = color; this.setState(this.state); this.props.save(this.state.configOptions)}}/>
-                          </div>
                           </PivotItem>
                         </Pivot>
                       </div>
                       <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
-                      <p style={pageTitleStyle}>Sample Page Title</p>
+                      <p >Sample Page Title</p>
+                      {/* //style={pageTitleStyle} */}
                       </div>
                     </div>
                   </div>
+                  </span>
+              </Panel>
+              
+              {/* <Modal
+                isOpen={ this.state.hideThemeDialog }
+                onDismiss={ this._closeThemeDialog }
+                isBlocking={ false }
+                containerClassName='ms-modalExample-container'
+              >
+                <div className='ms-modalExample-header'>
+                  <span>Customize your page title</span>
+                </div>
+                <div className='ms-modalExample-body'>
                 
-                        <div className="ms-Grid">
-                    <div className="ms-Grid-row">
-                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={ this._closeThemeDialog } text='Done' iconProps={ { iconName: 'Accept' } }/></div>
-                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton onClick={ this._closeThemeDialog } text='Delete' iconProps={ { iconName: 'Cancel' } }/></div>
-                      <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"></div>
-                    </div>
-                  </div>
 
                 </div>
-              </Modal>
+              </Modal> */}
               
               {/* <Dialog
                 hidden={ this.state.hideThemeDialog }
@@ -289,17 +295,17 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
           { pivotArray }
           </Pivot>            
           {/* Include in edit mode as well */}
-          <HideUnhide hideQuickLaunchProperty={this.props.configOptions.hideQuickLaunchProperty}
-            hideSiteLogoProperty={this.props.configOptions.hideSiteLogoProperty}
-            hideSiteTitleProperty={this.props.configOptions.hideSiteTitleProperty}
-            hideSiteDescriptionProperty={this.props.configOptions.hideSiteDescriptionProperty}
-            hideSiteMembersProperty={this.props.configOptions.hideSiteMembersProperty}
-            hideTopNavProperty={this.props.configOptions.hideTopNavProperty}
-            hideTitleRowProperty={this.props.configOptions.hideTitleRowProperty}
-            hideCommandBarItemsProperty={this.props.configOptions.hideCommandBarItemsProperty}
-            hidePageTitleProperty={this.props.configOptions.hidePageTitleProperty}
-            hideSearchBoxProperty={this.props.configOptions.hideSearchBoxProperty}
-            hideShareButtonProperty={this.props.configOptions.hideShareButtonProperty} />
+          <HideUnhide hideQuickLaunchProperty={this.state.configOptions.hideQuickLaunchProperty}
+            hideSiteLogoProperty={this.state.configOptions.hideSiteLogoProperty}
+            hideSiteTitleProperty={this.state.configOptions.hideSiteTitleProperty}
+            hideSiteDescriptionProperty={this.state.configOptions.hideSiteDescriptionProperty}
+            hideSiteMembersProperty={this.state.configOptions.hideSiteMembersProperty}
+            hideTopNavProperty={this.state.configOptions.hideTopNavProperty}
+            hideTitleRowProperty={this.state.configOptions.hideTitleRowProperty}
+            hideCommandBarItemsProperty={this.state.configOptions.hideCommandBarItemsProperty}
+            hidePageTitleProperty={this.state.configOptions.hidePageTitleProperty}
+            hideSearchBoxProperty={this.state.configOptions.hideSearchBoxProperty}
+            hideShareButtonProperty={this.state.configOptions.hideShareButtonProperty} />
 
         </span>
       );
@@ -307,17 +313,17 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     else {
       // return (null); if you want to return null
       return (<span className={styles.configLanding}>
-            <HideUnhide hideQuickLaunchProperty={this.props.configOptions.hideQuickLaunchProperty}
-            hideSiteLogoProperty={this.props.configOptions.hideSiteLogoProperty}
-            hideSiteTitleProperty={this.props.configOptions.hideSiteTitleProperty}
-            hideSiteDescriptionProperty={this.props.configOptions.hideSiteDescriptionProperty}
-            hideSiteMembersProperty={this.props.configOptions.hideSiteMembersProperty}
-            hideTopNavProperty={this.props.configOptions.hideTopNavProperty}
-            hideTitleRowProperty={this.props.configOptions.hideTitleRowProperty}
-            hideCommandBarItemsProperty={this.props.configOptions.hideCommandBarItemsProperty}
-            hidePageTitleProperty={this.props.configOptions.hidePageTitleProperty}
-            hideSearchBoxProperty={this.props.configOptions.hideSearchBoxProperty}
-            hideShareButtonProperty={this.props.configOptions.hideShareButtonProperty} />
+          <HideUnhide hideQuickLaunchProperty={this.state.configOptions.hideQuickLaunchProperty}
+            hideSiteLogoProperty={this.state.configOptions.hideSiteLogoProperty}
+            hideSiteTitleProperty={this.state.configOptions.hideSiteTitleProperty}
+            hideSiteDescriptionProperty={this.state.configOptions.hideSiteDescriptionProperty}
+            hideSiteMembersProperty={this.state.configOptions.hideSiteMembersProperty}
+            hideTopNavProperty={this.state.configOptions.hideTopNavProperty}
+            hideTitleRowProperty={this.state.configOptions.hideTitleRowProperty}
+            hideCommandBarItemsProperty={this.state.configOptions.hideCommandBarItemsProperty}
+            hidePageTitleProperty={this.state.configOptions.hidePageTitleProperty}
+            hideSearchBoxProperty={this.state.configOptions.hideSearchBoxProperty}
+            hideShareButtonProperty={this.state.configOptions.hideShareButtonProperty} />
       </span>
       );
     }
@@ -354,7 +360,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     // this.render();
     this.state.configOptions[checkBoxID] = checked!;
     this.setState(this.state);
-    this.props.save(this.state);
+    this.props.save(this.state.configOptions);
   }
   
   private _takeMetoNextPage(): void {
