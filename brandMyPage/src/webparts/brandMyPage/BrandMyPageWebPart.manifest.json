@@ -21,17 +21,6 @@
     "officeFabricIconFontName": "Page",
     "properties": {
       "description": "BrandMyPage",
-      // "hideQuickLaunchProperty": false,
-      // "hideSiteLogoProperty": false,
-      // "hideSiteTitleProperty": false,
-      // "hideSiteDescriptionProperty": false,
-      // "hideSiteMembersProperty": false,
-      // "hideTopNavProperty": false,
-      // "hideTitleRowProperty": false,
-      // "hideCommandBarItemsProperty": false,
-      // "hidePageTitleProperty": false,
-      // "hideSearchBoxProperty": false,
-      // "hideShareButtonProperty": false,
       "configOptions":{
         "cachedTabKey":0,
         "hideQuickLaunchProperty": false,
@@ -46,6 +35,7 @@
         "hideSearchBoxProperty": false,
         "hideShareButtonProperty": false,
         "PageTitleTheme":{
+          "isCustomized":false,
           "fontSize": 32,
           "color" : "#333333",
           "backgroundColor": "#ffffff"

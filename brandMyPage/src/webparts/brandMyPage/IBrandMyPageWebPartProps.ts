@@ -27,6 +27,7 @@ export interface IBrandMyPageWebPartProps {
     "hideSearchBoxProperty": boolean,
     "hideShareButtonProperty": boolean,
     "PageTitleTheme":{
+      "isCustomized":boolean,
       "fontSize": number,
       "color" : string,
       "backgroundColor": string,

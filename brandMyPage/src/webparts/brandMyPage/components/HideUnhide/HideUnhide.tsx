@@ -233,12 +233,12 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
     }    
         
     // css updates to hide on page load.
-      if(this.props.hideQuickLaunchProperty)
+      if(this.props.configOptions.hideQuickLaunchProperty)
         hideQuickLaunch();
       else
         showQuickLaunch();
 
-      if(this.props.hideTitleRowProperty)
+      if(this.props.configOptions.hideTitleRowProperty)
       {
           hideTitleRow();
           hideSearchBox();
@@ -248,40 +248,40 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
           showTitleRow();
           showSearchBox();
 
-          if(this.props.hideTopNavProperty)
+          if(this.props.configOptions.hideTopNavProperty)
               hideTopNav(); 
             else
               showTopNav();     
-          if(this.props.hideSiteLogoProperty)
+          if(this.props.configOptions.hideSiteLogoProperty)
               hideSiteLogo();
             else
               showSiteLogo();
-          if(this.props.hideSiteTitleProperty)
+          if(this.props.configOptions.hideSiteTitleProperty)
               hideSiteTitle();
             else
               showSiteTitle();
-          if(this.props.hideSiteDescriptionProperty)
+          if(this.props.configOptions.hideSiteDescriptionProperty)
               hideSiteDescription();   
             else
               showSiteDescription();
-          if(this.props.hideSiteMembersProperty)
+          if(this.props.configOptions.hideSiteMembersProperty)
               hideSiteMembers(); 
             else
               showSiteMembers();
-          if(this.props.hideSearchBoxProperty)
+          if(this.props.configOptions.hideSearchBoxProperty)
               hideSearchBox();
             else
               showSearchBox();
-          if(this.props.hideShareButtonProperty)
+          if(this.props.configOptions.hideShareButtonProperty)
               hideShareButton();
             else
               showShareButton();
       }   
-      if(this.props.hideCommandBarItemsProperty)
+      if(this.props.configOptions.hideCommandBarItemsProperty)
           hideCommandBarItems();   
       else
           showCommandBarItems();
-      if(this.props.hidePageTitleProperty)
+      if(this.props.configOptions.hidePageTitleProperty)
           hidePageTitle();
         else
           showPageTitle();
@@ -393,17 +393,17 @@ $( "body" ).bind("DOMSubtreeModified",() => {
 
 
         return(<span hidden={true} className={styles.hideUnhide}>
-        <IsQuickLaunchHidden isHidden={this.props.hideQuickLaunchProperty}/>
-        <IsSiteLogoHidden isHidden={this.props.hideSiteLogoProperty}/>
-        <IsSiteTitleHidden isHidden={this.props.hideSiteTitleProperty}/>
-        <IsSiteDescriptionHidden isHidden={this.props.hideSiteDescriptionProperty}/>
-        <IsSiteMembersHidden isHidden={this.props.hideSiteMembersProperty}/>
-        <IsTopNavHidden isHidden={this.props.hideTopNavProperty}/>
-        <IsTitleRowHidden isHidden={this.props.hideTitleRowProperty}/>
-        <IsCommandBarItemsHidden isHidden={this.props.hideCommandBarItemsProperty}/>
-        <IsPageTitleHidden isHidden={this.props.hidePageTitleProperty}/>
-        <IsSearchBoxHidden isHidden={this.props.hideSearchBoxProperty}/>
-        <IsShareButtonHidden isHidden={this.props.hideShareButtonProperty}/></span>
+        <IsQuickLaunchHidden isHidden={this.props.configOptions.hideQuickLaunchProperty}/>
+        <IsSiteLogoHidden isHidden={this.props.configOptions.hideSiteLogoProperty}/>
+        <IsSiteTitleHidden isHidden={this.props.configOptions.hideSiteTitleProperty}/>
+        <IsSiteDescriptionHidden isHidden={this.props.configOptions.hideSiteDescriptionProperty}/>
+        <IsSiteMembersHidden isHidden={this.props.configOptions.hideSiteMembersProperty}/>
+        <IsTopNavHidden isHidden={this.props.configOptions.hideTopNavProperty}/>
+        <IsTitleRowHidden isHidden={this.props.configOptions.hideTitleRowProperty}/>
+        <IsCommandBarItemsHidden isHidden={this.props.configOptions.hideCommandBarItemsProperty}/>
+        <IsPageTitleHidden isHidden={this.props.configOptions.hidePageTitleProperty}/>
+        <IsSearchBoxHidden isHidden={this.props.configOptions.hideSearchBoxProperty}/>
+        <IsShareButtonHidden isHidden={this.props.configOptions.hideShareButtonProperty}/></span>
     );
       
   }//end of render
