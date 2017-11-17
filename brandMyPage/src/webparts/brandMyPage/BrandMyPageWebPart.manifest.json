@@ -34,11 +34,33 @@
         "hidePageTitleProperty": false,
         "hideSearchBoxProperty": false,
         "hideShareButtonProperty": false,
-        "PageTitleTheme":{
+        "masterTheme":{
           "isCustomized":false,
-          "fontSize": 32,
-          "color" : "#333333",
-          "backgroundColor": "#ffffff"
+          "backgroundColor" : "#333333"
+        },
+        "topNav":{
+          "isCustomized":false,
+          "color": "#333333",
+          "backgroundColor" : "#333333",
+          "hoverColor": "#333333",
+          "hoverBackgroundColor" : "#333333"
+        },
+        "quickLaunch":{
+          "isCustomized":false,
+          "color": "#333333",
+          "backgroundColor" : "#333333",
+          "hoverColor": "#333333",
+          "hoverBackgroundColor" : "#333333"
+        },
+        "SiteTitle":{
+          "isCustomized":false,
+          "fontSize": 42,
+          "color" : "#333333"
+        },
+        "PageTitle":{
+          "isCustomized":false,
+          "fontSize": 42,
+          "color" : "#333333"
         }
       }      
 
