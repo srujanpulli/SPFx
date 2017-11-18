@@ -16,6 +16,7 @@ import { autobind } from 'office-ui-fabric-react/lib/Utilities';
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { loadTheme } from 'office-ui-fabric-react/lib/Styling';
 import HideUnhide from './../HideUnhide/HideUnhide';
 import { IHideUnhideProps } from './../HideUnhide/IHideUnhideProps';
@@ -46,6 +47,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     this._takeMetoPrevPage = this._takeMetoPrevPage.bind(this);
     this._showFinishDialog = this._showFinishDialog.bind(this);
     this._closeFinishDialog = this._closeFinishDialog.bind(this);
+    this._getTextBoxErrorMessage = this._getTextBoxErrorMessage.bind(this);    
     this.onPivotChange = this.onPivotChange.bind(this);
     this._finishChanges = this._finishChanges.bind(this);
     // this._onColorChanged = this._onColorChanged.bind(this);
@@ -358,7 +360,30 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     );
     pivotArray.push(
       <PivotItem linkText='Miscellaneous' itemKey='3' itemIcon='Drop'>
-        <p>click on button to apply colors</p>
+       
+        <Checkbox className={styles.top10Margin} label='Compact mode' checked={this.state.configOptions.Misc.compactMode} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.compactMode = checked!; this.setState(this.state); this.props.save(this.state.configOptions)} }  />
+        <Checkbox className={styles.top10Margin} label='Show custom terms and conditions message on first page load.' checked={this.state.configOptions.Misc.megaMenu.isEnabled} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.megaMenu.isEnabled = checked!; this.setState(this.state); this.props.save(this.state.configOptions)} }  /> 
+        <div className={styles.left30Margin} hidden={!this.state.configOptions.Misc.megaMenu.isEnabled}>
+        <TextField
+          label='Terms & Conditions'
+          required={ this.state.configOptions.Misc.megaMenu.isEnabled }
+          onGetErrorMessage={ this._getTextBoxErrorMessage }
+          value={this.state.configOptions.Misc.megaMenu.menuContent}
+          multiline
+          rows={ 5 }    
+          validateOnFocusIn
+          validateOnFocusOut
+        />
+         {/* <TextField
+          label='Agree button message'
+          required={ this.state.configOptions.Misc.megaMenu.isEnabled }
+          onGetErrorMessage={ this._getTextBoxErrorMessage }
+          value={this.state.configOptions.Misc.megaMenu.termsAcceptButtonText}
+          validateOnFocusIn
+          validateOnFocusOut      
+        /> */}
+        <br/><br/>
+        </div>
         <div className="ms-Grid">
           <div className="ms-Grid-row">
             <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6"><DefaultButton description='Back' iconProps={{ iconName: 'Back' }} onClick={this._takeMetoPrevPage}>BACK</DefaultButton></div>
@@ -477,5 +502,10 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   private _closePageTitleThemeDialog() {
     this.setState({ hidePageTitleThemeDialog: false });
+  }
+  private _getTextBoxErrorMessage(value: string): string {
+    return value.length > 0
+      ? ''
+      : `This field is required.`;
   }
 }

@@ -11,6 +11,7 @@ import styles from './IHideUnhide.module.scss';
 
 import 'jQuery';
 declare var $;
+// var tmp = this.state.configOptions.masterTheme.backgroundColor;
 
 export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
   constructor(props) {
@@ -18,7 +19,6 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
     this.state = { 
     };
   }
-
   public componentDidMount() 
     {
       // apply hide styles?
@@ -31,7 +31,14 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
       // apply show styles?
       // alert("UN ---- mount success")
     }
-  public render(): React.ReactElement<IHideUnhideProps> {    
+  public render(): React.ReactElement<IHideUnhideProps> {  
+    // custom style objects
+    var customStyles = {
+        "masterTheme":{
+            "background-color":this.props.configOptions.masterTheme.backgroundColor
+        }
+    }  
+    
     // require('./App.js');
     function hideQuickLaunch()
     {
@@ -231,7 +238,43 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             return $(this).text() === "Share" ? true : false;
         }).closest("button").show();
     }    
-        
+    
+    // Start custom themes
+    function applyCustomMasterTheme()
+    {
+        if($('#s4-bodyContainer').length > 0)//Classic page
+        {
+            
+        }
+        else //Modern page
+        {
+            var styleProps = $("#divMasterTHemeCustomStyles").css([
+                "background-color"
+              ]);
+              $.each( styleProps, function( prop, value ) {
+                $( ".ms-compositeHeader" ).css(prop, value);
+                $( "#workbenchPageContent" ).css(prop, value)
+              });
+        }
+    }
+    function removeCustomMasterTheme()
+    {
+        if($('#s4-bodyContainer').length > 0)//Classic page
+        {
+            
+        }
+        else //Modern page
+        {
+            var styleProps = $("#divMasterTHemeCustomStyles").css([
+                "background-color"
+              ]);
+              $.each( styleProps, function( prop, value ) {
+                $( ".ms-compositeHeader" ).css(prop, "")
+              });
+        }        
+    }
+    // End custom themes    
+
     // css updates to hide on page load.
       if(this.props.configOptions.hideQuickLaunchProperty)
         hideQuickLaunch();
@@ -285,6 +328,16 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
           hidePageTitle();
         else
           showPageTitle();
+    
+    //apply custom styles
+    if(this.props.configOptions.masterTheme.isCustomized)
+    {
+        applyCustomMasterTheme();
+    }
+    else
+    {
+
+    }
 
 //Start page navigation triggers
 $( "body" ).bind("DOMSubtreeModified",() => {
@@ -388,6 +441,11 @@ $( "body" ).bind("DOMSubtreeModified",() => {
     function IsShareButtonHidden(props) {
       if (props.isHidden) { return (<div hidden={true} id="divhideShareButton" className={styles.hide}>hide share button</div>);}
       else { return (null);}}
+
+      function IsMasterThemeCustomized(props) {
+        if (props.isHidden) { return (<div hidden={true} id="divMasterTHemeCustomized" className={styles.hide}><span id="divMasterTHemeCustomStyles" style={customStyles.masterTheme}></span></div>);}
+        else { return (null);}}
+
         // return (null); if you want to return null
         console.log("HideUnHide - React component is loaded");
 
@@ -403,7 +461,9 @@ $( "body" ).bind("DOMSubtreeModified",() => {
         <IsCommandBarItemsHidden isHidden={this.props.configOptions.hideCommandBarItemsProperty}/>
         <IsPageTitleHidden isHidden={this.props.configOptions.hidePageTitleProperty}/>
         <IsSearchBoxHidden isHidden={this.props.configOptions.hideSearchBoxProperty}/>
-        <IsShareButtonHidden isHidden={this.props.configOptions.hideShareButtonProperty}/></span>
+        <IsShareButtonHidden isHidden={this.props.configOptions.hideShareButtonProperty}/>
+
+        <IsMasterThemeCustomized isHidden={this.props.configOptions.masterTheme.isCustomized} /></span>
     );
       
   }//end of render

@@ -18,7 +18,7 @@
     "group": { "default": "Other" },
     "title": { "default": "BrandMyPage" },
     "description": { "default": "Use this webpart to brand your page including hiding, unhiding elements or add colors." },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "Unfavorite",
     "properties": {
       "description": "BrandMyPage",
       "configOptions":{
@@ -61,6 +61,13 @@
           "isCustomized":false,
           "fontSize": 42,
           "color" : "#333333"
+        },
+        "Misc":{
+          "compactMode":false,
+          "megaMenu": {
+            "isEnabled":false,
+            "menuContent":"<div><h1>Heading 1</h1><ul><li>Link 1</li><li>Link 2</li></ul><h1>Heading 2</h1><ul><li>Link 1</li><li>Link 2</li></ul></div>"
+          }
         }
       }      
 

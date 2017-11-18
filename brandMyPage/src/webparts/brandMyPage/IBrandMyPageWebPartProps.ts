@@ -40,6 +40,13 @@ export interface IBrandMyPageWebPartProps {
       "isCustomized":boolean,
       "fontSize": number,
       "color" : string,
+    },
+    "Misc":{
+      "compactMode":boolean,
+      "megaMenu": {
+        "isEnabled":boolean,
+        "menuContent":string,
+      }
     }
   };  
 }
