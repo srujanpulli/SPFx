@@ -1,4 +1,4 @@
-import {IBrandMyPageWebPartProps} from "./../../IBrandMyPageWebPartProps"
+import {IBrandMyPageWebPartProps} from "./../../IBrandMyPageWebPartProps";
 
 export interface IConfigLandingState {
     selectedKey: number;

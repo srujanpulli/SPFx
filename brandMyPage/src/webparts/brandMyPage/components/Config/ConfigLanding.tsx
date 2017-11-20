@@ -22,7 +22,7 @@ import HideUnhide from './../HideUnhide/HideUnhide';
 import { IHideUnhideProps } from './../HideUnhide/IHideUnhideProps';
 import { IHideUnhideState } from './../HideUnhide/IHideUnhideState';
 
-import { IBrandMyPageWebPartDefaultProps } from "./../../IBrandMyPageWebPartDefaultProps"
+import { IBrandMyPageWebPartDefaultProps } from "./../../IBrandMyPageWebPartDefaultProps";
 
 import 'jQuery';
 declare var $;
@@ -74,7 +74,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
   }
   public render(): React.ReactElement<IConfigLandingProps> {
     console.log("ConfigLanding - React component is loaded");
-    // var pageTitleStyle = {"color":this.state.configOptions.PageTitleTheme.color, "background-color":this.state.configOptions.PageTitleTheme.backgroundColor, "font-size": this.state.configOptions.PageTitleTheme.fontSize.toString() + "px" };
+    // var pageTitleStyle = {"color":this.state.configOptions.PageTitleTheme.color, "background-color":this.state.configOptions.PageTitleTheme.backgroundColor, "font-size": this.state.configOptions.PageTitleTheme.fontSize.toString() + "px" }
     let pivotArray: React.ReactElement<IPivotItemProps>[] = [];
 
     pivotArray.push(
@@ -162,7 +162,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
               >
                 <span>
                   <h3>Add background color to Title bar and Quicklaunch</h3>
-                  <ColorPicker color={this.state.configOptions.masterTheme.backgroundColor} onColorChanged={color => { this.state.configOptions.masterTheme.backgroundColor = color; if (!this.state.configOptions.masterTheme.isCustomized) { this.state.configOptions.masterTheme.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                  <ColorPicker color={this.state.configOptions.masterTheme.backgroundColor} onColorChanged={color => { this.state.configOptions.masterTheme.backgroundColor = color; if (!this.state.configOptions.masterTheme.isCustomized) { this.state.configOptions.masterTheme.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                 </span>
               </Panel>
             </td>
@@ -193,16 +193,16 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                 <span>
                   <Pivot>
                     <PivotItem linkText='Color' itemKey="0">
-                      <ColorPicker color={this.state.configOptions.topNav.color} onColorChanged={color => { this.state.configOptions.topNav.color = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.topNav.color} onColorChanged={color => { this.state.configOptions.topNav.color = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                     <PivotItem linkText='Hover color' itemKey="1">
-                      <ColorPicker color={this.state.configOptions.topNav.hoverColor} onColorChanged={color => { this.state.configOptions.topNav.hoverColor = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.topNav.hoverColor} onColorChanged={color => { this.state.configOptions.topNav.hoverColor = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                     <PivotItem linkText='Background color' itemKey="2">
-                      <ColorPicker color={this.state.configOptions.topNav.backgroundColor} onColorChanged={color => { this.state.configOptions.topNav.backgroundColor = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.topNav.backgroundColor} onColorChanged={color => { this.state.configOptions.topNav.backgroundColor = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                     <PivotItem linkText='Background hover color' itemKey="3">
-                      <ColorPicker color={this.state.configOptions.topNav.hoverBackgroundColor} onColorChanged={color => { this.state.configOptions.topNav.hoverBackgroundColor = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.topNav.hoverBackgroundColor} onColorChanged={color => { this.state.configOptions.topNav.hoverBackgroundColor = color; if (!this.state.configOptions.topNav.isCustomized) { this.state.configOptions.topNav.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                   </Pivot>
                 </span>
@@ -235,16 +235,16 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                 <span>
                   <Pivot>
                     <PivotItem linkText='Color' itemKey="0">
-                      <ColorPicker color={this.state.configOptions.quickLaunch.color} onColorChanged={color => { this.state.configOptions.quickLaunch.color = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.quickLaunch.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.quickLaunch.color} onColorChanged={color => { this.state.configOptions.quickLaunch.color = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.quickLaunch.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                     <PivotItem linkText='Hover color' itemKey="1">
-                      <ColorPicker color={this.state.configOptions.quickLaunch.hoverColor} onColorChanged={color => { this.state.configOptions.quickLaunch.hoverColor = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.quickLaunch.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.quickLaunch.hoverColor} onColorChanged={color => { this.state.configOptions.quickLaunch.hoverColor = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.quickLaunch.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                     <PivotItem linkText='Background color' itemKey="2">
-                      <ColorPicker color={this.state.configOptions.quickLaunch.backgroundColor} onColorChanged={color => { this.state.configOptions.quickLaunch.backgroundColor = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.quickLaunch.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.quickLaunch.backgroundColor} onColorChanged={color => { this.state.configOptions.quickLaunch.backgroundColor = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.quickLaunch.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                     <PivotItem linkText='Background hover color' itemKey="3">
-                      <ColorPicker color={this.state.configOptions.quickLaunch.hoverBackgroundColor} onColorChanged={color => { this.state.configOptions.quickLaunch.hoverBackgroundColor = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.topNav.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.quickLaunch.hoverBackgroundColor} onColorChanged={color => { this.state.configOptions.quickLaunch.hoverBackgroundColor = color; if (!this.state.configOptions.quickLaunch.isCustomized) { this.state.configOptions.topNav.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                   </Pivot>
                 </span>
@@ -285,10 +285,10 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                         value={this.state.configOptions.SiteTitle.fontSize}
                         showValue={true}
                         // tslint:disable-next-line:jsx-no-lambda
-                        onChange={value => { this.state.configOptions.SiteTitle.fontSize = value; if (!this.state.configOptions.SiteTitle.isCustomized) { this.state.configOptions.SiteTitle.isCustomized = true } this.setState(this.state) }} />
+                        onChange={value => { this.state.configOptions.SiteTitle.fontSize = value; if (!this.state.configOptions.SiteTitle.isCustomized) { this.state.configOptions.SiteTitle.isCustomized = true; } this.setState(this.state); }} />
                     </PivotItem>
                     <PivotItem linkText='Color' itemKey="1">
-                      <ColorPicker color={this.state.configOptions.SiteTitle.color} onColorChanged={color => { this.state.configOptions.SiteTitle.color = color; if (!this.state.configOptions.SiteTitle.isCustomized) { this.state.configOptions.SiteTitle.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.SiteTitle.color} onColorChanged={color => { this.state.configOptions.SiteTitle.color = color; if (!this.state.configOptions.SiteTitle.isCustomized) { this.state.configOptions.SiteTitle.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                   </Pivot>
                 </span>
@@ -328,10 +328,10 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                         step={1}
                         value={this.state.configOptions.PageTitle.fontSize}
                         showValue={true}
-                        onChange={value => { this.state.configOptions.PageTitle.fontSize = value; if (!this.state.configOptions.PageTitle.isCustomized) { this.state.configOptions.PageTitle.isCustomized = true } this.setState(this.state) }} />
+                        onChange={value => { this.state.configOptions.PageTitle.fontSize = value; if (!this.state.configOptions.PageTitle.isCustomized) { this.state.configOptions.PageTitle.isCustomized = true; } this.setState(this.state); }} />
                     </PivotItem>
                     <PivotItem linkText='Color' itemKey="1">
-                      <ColorPicker color={this.state.configOptions.PageTitle.color} onColorChanged={color => { this.state.configOptions.PageTitle.color = color; if (!this.state.configOptions.PageTitle.isCustomized) { this.state.configOptions.PageTitle.isCustomized = true; }; this.setState(this.state); this.props.save(this.state.configOptions) }} />
+                      <ColorPicker color={this.state.configOptions.PageTitle.color} onColorChanged={color => { this.state.configOptions.PageTitle.color = color; if (!this.state.configOptions.PageTitle.isCustomized) { this.state.configOptions.PageTitle.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
                     </PivotItem>
                   </Pivot>
                 </span>
@@ -361,8 +361,8 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     pivotArray.push(
       <PivotItem linkText='Miscellaneous' itemKey='3' itemIcon='Drop'>
        
-        <Checkbox className={styles.top10Margin} label='Compact mode' checked={this.state.configOptions.Misc.compactMode} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.compactMode = checked!; this.setState(this.state); this.props.save(this.state.configOptions)} }  />
-        <Checkbox className={styles.top10Margin} label='Show custom terms and conditions message on first page load.' checked={this.state.configOptions.Misc.megaMenu.isEnabled} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.megaMenu.isEnabled = checked!; this.setState(this.state); this.props.save(this.state.configOptions)} }  /> 
+        <Checkbox className={styles.top10Margin} label='Compact mode' checked={this.state.configOptions.Misc.compactMode} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.compactMode = checked!; this.setState(this.state); this.props.save(this.state.configOptions);} }  />
+        <Checkbox className={styles.top10Margin} label='Show custom terms and conditions message on first page load.' checked={this.state.configOptions.Misc.megaMenu.isEnabled} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.megaMenu.isEnabled = checked!; this.setState(this.state); this.props.save(this.state.configOptions);} }  /> 
         <div className={styles.left30Margin} hidden={!this.state.configOptions.Misc.megaMenu.isEnabled}>
         <TextField
           label='Terms & Conditions'
