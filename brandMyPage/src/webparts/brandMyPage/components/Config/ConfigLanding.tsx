@@ -269,7 +269,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                     <div className="ms-Grid">
                       <div className="ms-Grid-row">
                         <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={this._closeSiteTitleThemeDialog} text='Done' iconProps={{ iconName: 'Accept' }} /></div>
-                        <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.configOptions.SiteTitle.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => { this.state.configOptions.SiteTitle.isCustomized = false; this.setState(this.state); }} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
+                        <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.configOptions.SiteTitle.isColorCustomized && !this.state.configOptions.SiteTitle.isFontCustomized} className="ms-bgColor-orangeLighter" onClick={() => { this.state.configOptions.SiteTitle.isColorCustomized = false; this.state.configOptions.SiteTitle.isFontCustomized = false; this.setState(this.state); }} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
                       </div></div>
                   );
                 }}
@@ -285,18 +285,22 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                         value={this.state.configOptions.SiteTitle.fontSize}
                         showValue={true}
                         // tslint:disable-next-line:jsx-no-lambda
-                        onChange={value => { this.state.configOptions.SiteTitle.fontSize = value; if (!this.state.configOptions.SiteTitle.isCustomized) { this.state.configOptions.SiteTitle.isCustomized = true; } this.setState(this.state); }} />
-                    </PivotItem>
+                        onChange={value => { this.state.configOptions.SiteTitle.fontSize = value; if (!this.state.configOptions.SiteTitle.isFontCustomized) { this.state.configOptions.SiteTitle.isFontCustomized = true; } this.setState(this.state); }} />
+                        <span hidden={!this.state.configOptions.SiteTitle.isFontCustomized }><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i></span>
+                        
+                      </PivotItem>
                     <PivotItem linkText='Color' itemKey="1">
-                      <ColorPicker color={this.state.configOptions.SiteTitle.color} onColorChanged={color => { this.state.configOptions.SiteTitle.color = color; if (!this.state.configOptions.SiteTitle.isCustomized) { this.state.configOptions.SiteTitle.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
+                      <ColorPicker color={this.state.configOptions.SiteTitle.color} onColorChanged={color => { this.state.configOptions.SiteTitle.color = color; if (!this.state.configOptions.SiteTitle.isColorCustomized) { this.state.configOptions.SiteTitle.isColorCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
+                        <span hidden={!this.state.configOptions.SiteTitle.isColorCustomized }><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i></span>
+
                     </PivotItem>
                   </Pivot>
                 </span>
               </Panel>
             </td>
               <td>
-                <span hidden={!this.state.configOptions.SiteTitle.isCustomized}><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i> </span>
-                <span hidden={this.state.configOptions.SiteTitle.isCustomized}><i className="ms-Icon ms-Icon--Blocked ms-font-m" aria-hidden="true" aria-label="No"></i> No</span>
+                <span hidden={!this.state.configOptions.SiteTitle.isColorCustomized && !this.state.configOptions.SiteTitle.isFontCustomized }><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i> </span>
+                <span hidden={this.state.configOptions.SiteTitle.isColorCustomized || this.state.configOptions.SiteTitle.isFontCustomized}><i className="ms-Icon ms-Icon--Blocked ms-font-m" aria-hidden="true" aria-label="No"></i> No</span>
               </td></tr>
             {/* Button#5 */}
             <tr className={styles.tableRowCustomStyle}><td>
@@ -313,7 +317,7 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                     <div className="ms-Grid">
                       <div className="ms-Grid-row">
                         <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={this._closePageTitleThemeDialog} text='Done' iconProps={{ iconName: 'Accept' }} /></div>
-                        <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.configOptions.PageTitle.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => { this.state.configOptions.PageTitle.isCustomized = false; this.setState(this.state); }} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
+                        <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.configOptions.PageTitle.isColorCustomized && !this.state.configOptions.PageTitle.isFontCustomized} className="ms-bgColor-orangeLighter" onClick={() => { this.state.configOptions.PageTitle.isColorCustomized = false;this.state.configOptions.PageTitle.isFontCustomized = false; this.setState(this.state); }} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
                       </div></div>
                   );
                 }}
@@ -328,18 +332,20 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
                         step={1}
                         value={this.state.configOptions.PageTitle.fontSize}
                         showValue={true}
-                        onChange={value => { this.state.configOptions.PageTitle.fontSize = value; if (!this.state.configOptions.PageTitle.isCustomized) { this.state.configOptions.PageTitle.isCustomized = true; } this.setState(this.state); }} />
+                        onChange={value => { this.state.configOptions.PageTitle.fontSize = value; if (!this.state.configOptions.PageTitle.isFontCustomized) { this.state.configOptions.PageTitle.isFontCustomized = true; } this.setState(this.state); }} />
+                        <span hidden={!this.state.configOptions.PageTitle.isFontCustomized}><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i> </span>
                     </PivotItem>
                     <PivotItem linkText='Color' itemKey="1">
-                      <ColorPicker color={this.state.configOptions.PageTitle.color} onColorChanged={color => { this.state.configOptions.PageTitle.color = color; if (!this.state.configOptions.PageTitle.isCustomized) { this.state.configOptions.PageTitle.isCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
-                    </PivotItem>
+                      <ColorPicker color={this.state.configOptions.PageTitle.color} onColorChanged={color => { this.state.configOptions.PageTitle.color = color; if (!this.state.configOptions.PageTitle.isColorCustomized) { this.state.configOptions.PageTitle.isColorCustomized = true; } this.setState(this.state); this.props.save(this.state.configOptions); }} />
+                      <span hidden={!this.state.configOptions.PageTitle.isColorCustomized}><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i> </span>
+                      </PivotItem>
                   </Pivot>
                 </span>
               </Panel>
             </td>
               <td>
-                <span hidden={!this.state.configOptions.PageTitle.isCustomized}><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i> </span>
-                <span hidden={this.state.configOptions.PageTitle.isCustomized}><i className="ms-Icon ms-Icon--Blocked ms-font-m" aria-hidden="true" aria-label="No"></i> No</span>
+              <span hidden={!this.state.configOptions.PageTitle.isColorCustomized && !this.state.configOptions.PageTitle.isFontCustomized }><i className="ms-Icon ms-Icon--Accept ms-font-xxl ms-fontColor-tealLight" aria-hidden="true" aria-label="configured"></i> </span>
+                <span hidden={this.state.configOptions.PageTitle.isColorCustomized || this.state.configOptions.PageTitle.isFontCustomized}><i className="ms-Icon ms-Icon--Blocked ms-font-m" aria-hidden="true" aria-label="No"></i> No</span>
               </td></tr>
 
           </tbody>

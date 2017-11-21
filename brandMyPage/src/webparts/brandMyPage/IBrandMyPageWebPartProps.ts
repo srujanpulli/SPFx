@@ -32,13 +32,15 @@ export interface IBrandMyPageWebPartProps {
       "hoverBackgroundColor" : string
     },
     "SiteTitle":{
-      "isCustomized":boolean,
+      "isFontCustomized":boolean,
       "fontSize": number,
+      "isColorCustomized":boolean,
       "color" : string,
     },
     "PageTitle":{
-      "isCustomized":boolean,
+      "isFontCustomized":boolean,
       "fontSize": number,
+      "isColorCustomized":boolean,
       "color" : string,
     },
     "Misc":{

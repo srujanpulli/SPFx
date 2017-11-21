@@ -243,6 +243,199 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
                     showSearchBox();
             }
         }
+        function applyCustomTopNav() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {
+                var styleProps = $("#divMasterTHemeCustomStyles").css([
+                    "background-color"
+                ]);
+                $.each(styleProps, function (prop, value) {
+                    if($(".ms-compositeHeader").length > 0)
+                    {
+                        $(".ms-compositeHeader").css(prop, value);
+                    }
+                    if($("nav[class^='ms-Nav']").length > 0)
+                    {
+                        $("nav[class^='ms-Nav']").css("background-color",value);
+                        $("nav[class^='ms-Nav']").css("top","0px");
+                        $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color",value,"important");
+                        $("div[class^='ms-Nav-compositeLink']").css("background-color",value);
+                    }
+                    hideSearchBox();
+                    // $("#workbenchPageContent").css(prop, value)
+                });
+            }
+        }
+        function removeCustomTopNav() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {       
+                if($(".ms-compositeHeader").length > 0)
+                {
+                    $(".ms-compositeHeader").css("background-color","");
+                }
+                if($("nav[class^='ms-Nav']").length > 0)
+                {
+                    $("nav[class^='ms-Nav']").css("background-color","");
+                    $("nav[class^='ms-Nav']").css("top","40px");
+                    $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color","","important");
+                    $("div[class^='ms-Nav-compositeLink']").css("background-color","");
+                }
+                    showSearchBox();
+            }
+        }
+
+        function applyCustomQuiLaunch() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {
+                var styleProps = $("#divMasterTHemeCustomStyles").css([
+                    "background-color"
+                ]);
+                $.each(styleProps, function (prop, value) {
+                    if($(".ms-compositeHeader").length > 0)
+                    {
+                        $(".ms-compositeHeader").css(prop, value);
+                    }
+                    if($("nav[class^='ms-Nav']").length > 0)
+                    {
+                        $("nav[class^='ms-Nav']").css("background-color",value);
+                        $("nav[class^='ms-Nav']").css("top","0px");
+                        $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color",value,"important");
+                        $("div[class^='ms-Nav-compositeLink']").css("background-color",value);
+                    }
+                    hideSearchBox();
+                    // $("#workbenchPageContent").css(prop, value)
+                });
+            }
+        }
+        function removeCustomQuiLaunch() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {       
+                if($(".ms-compositeHeader").length > 0)
+                {
+                    $(".ms-compositeHeader").css("background-color","");
+                }
+                if($("nav[class^='ms-Nav']").length > 0)
+                {
+                    $("nav[class^='ms-Nav']").css("background-color","");
+                    $("nav[class^='ms-Nav']").css("top","40px");
+                    $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color","","important");
+                    $("div[class^='ms-Nav-compositeLink']").css("background-color","");
+                }
+                    showSearchBox();
+            }
+        }
+        function applyCustomSiteTitle() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {
+                var styleProps = $("#divMasterTHemeCustomStyles").css([
+                    "background-color"
+                ]);
+                $.each(styleProps, function (prop, value) {
+                    if($(".ms-compositeHeader").length > 0)
+                    {
+                        $(".ms-compositeHeader").css(prop, value);
+                    }
+                    if($("nav[class^='ms-Nav']").length > 0)
+                    {
+                        $("nav[class^='ms-Nav']").css("background-color",value);
+                        $("nav[class^='ms-Nav']").css("top","0px");
+                        $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color",value,"important");
+                        $("div[class^='ms-Nav-compositeLink']").css("background-color",value);
+                    }
+                    hideSearchBox();
+                    // $("#workbenchPageContent").css(prop, value)
+                });
+            }
+        }
+        function removeCustomSiteTitle() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {       
+                if($(".ms-compositeHeader").length > 0)
+                {
+                    $(".ms-compositeHeader").css("background-color","");
+                }
+                if($("nav[class^='ms-Nav']").length > 0)
+                {
+                    $("nav[class^='ms-Nav']").css("background-color","");
+                    $("nav[class^='ms-Nav']").css("top","40px");
+                    $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color","","important");
+                    $("div[class^='ms-Nav-compositeLink']").css("background-color","");
+                }
+                    showSearchBox();
+            }
+        }
+        function applyCustomPageTitle() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {
+                var styleProps = $("#divMasterTHemeCustomStyles").css([
+                    "background-color"
+                ]);
+                $.each(styleProps, function (prop, value) {
+                    if($(".ms-compositeHeader").length > 0)
+                    {
+                        $(".ms-compositeHeader").css(prop, value);
+                    }
+                    if($("nav[class^='ms-Nav']").length > 0)
+                    {
+                        $("nav[class^='ms-Nav']").css("background-color",value);
+                        $("nav[class^='ms-Nav']").css("top","0px");
+                        $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color",value,"important");
+                        $("div[class^='ms-Nav-compositeLink']").css("background-color",value);
+                    }
+                    hideSearchBox();
+                    // $("#workbenchPageContent").css(prop, value)
+                });
+            }
+        }
+        function removeCustomPageTitle() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+
+            }
+            else //Modern page
+            {       
+                if($(".ms-compositeHeader").length > 0)
+                {
+                    $(".ms-compositeHeader").css("background-color","");
+                }
+                if($("nav[class^='ms-Nav']").length > 0)
+                {
+                    $("nav[class^='ms-Nav']").css("background-color","");
+                    $("nav[class^='ms-Nav']").css("top","40px");
+                    $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color","","important");
+                    $("div[class^='ms-Nav-compositeLink']").css("background-color","");
+                }
+                    showSearchBox();
+            }
+        }
         // End custom themes    
 
         // css updates to hide on page load.
