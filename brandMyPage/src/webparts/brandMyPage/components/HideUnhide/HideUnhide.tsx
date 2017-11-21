@@ -44,10 +44,16 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
                 "color": this.props.configOptions.PageTitle.color
             },
             "topNav":{
-
+                "color":this.props.configOptions.topNav.color,
+                "background-color":this.props.configOptions.topNav.backgroundColor,
+                "border-left-color":this.props.configOptions.topNav.hoverColor,
+                "border-right-color":this.props.configOptions.topNav.hoverBackgroundColor
             },
             "quiLaunch":{
-
+                "color":this.props.configOptions.quickLaunch.color,
+                "background-color":this.props.configOptions.quickLaunch.backgroundColor,
+                "border-left-color":this.props.configOptions.quickLaunch.hoverColor,
+                "border-right-color":this.props.configOptions.quickLaunch.hoverBackgroundColor
             }
         };
 
@@ -259,28 +265,22 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         }
         function applyCustomTopNav() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
-            {
-
+            {   
+                
             }
             else //Modern page
             {
-                var styleProps = $("#divMasterTHemeCustomStyles").css([
-                    "background-color"
-                ]);
-                $.each(styleProps, function (prop, value) {
-                    if($(".ms-compositeHeader").length > 0)
-                    {
-                        $(".ms-compositeHeader").css(prop, value);
-                    }
-                    if($("nav[class^='ms-Nav']").length > 0)
-                    {
-                        $("nav[class^='ms-Nav']").css("background-color",value);
-                        $("nav[class^='ms-Nav']").css("top","0px");
-                        $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color",value,"important");
-                        $("div[class^='ms-Nav-compositeLink']").css("background-color",value);
-                    }
-                    hideSearchBox();
-                    // $("#workbenchPageContent").css(prop, value)
+                $(".ms-HorizontalNavItem-link").css("color",$("#divTopNavCustomStyles").css("color"));
+                $(".ms-HorizontalNavItem-splitbutton").find("i").css("color",$("#divTopNavCustomStyles").css("color"));
+                $(".ms-HorizontalNavItem").css({"margin-right":"0","padding":"5px 15px","background-color":$("#divTopNavCustomStyles").css("background-color")});
+                $(".ms-compositeHeader-topWrapper").css({"margin-bottom":"14px","margin-top":"2px"});
+                
+                $('.ms-HorizontalNavItem').hover(function(){
+                    $(this).find("a")[0].style.setProperty("color",$("#divTopNavCustomStyles").css("border-left-color"),"important");
+                    $(this).css({"background-color":$("#divTopNavCustomStyles").css("border-right-color") });                    
+                }, function(){
+                    $(this).find("a")[0].style.setProperty("color",$("#divTopNavCustomStyles").css("color"),"important");                
+                    $(this).css({"background-color":$("#divTopNavCustomStyles").css("background-color") });
                 });
             }
         }
@@ -290,19 +290,16 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
 
             }
             else //Modern page
-            {       
-                if($(".ms-compositeHeader").length > 0)
-                {
-                    $(".ms-compositeHeader").css("background-color","");
-                }
-                if($("nav[class^='ms-Nav']").length > 0)
-                {
-                    $("nav[class^='ms-Nav']").css("background-color","");
-                    $("nav[class^='ms-Nav']").css("top","40px");
-                    $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color","","important");
-                    $("div[class^='ms-Nav-compositeLink']").css("background-color","");
-                }
-                    showSearchBox();
+            {
+                $(".ms-HorizontalNavItem-link").css("color","");
+                $(".ms-HorizontalNavItem-splitbutton").find("i").css("color","");
+                $(".ms-HorizontalNavItem").css({"margin-right":"","padding":"","background-color":""});
+                $(".ms-compositeHeader-topWrapper").css({"margin-bottom":"","margin-top":""});
+                $('.ms-HorizontalNavItem').hover(function(){
+                    $(this).css({ "color":"", "background-color":"" });
+                }, function(){
+                    $(this).css({ "color":"", "background-color":"" });
+                });
             }
         }
 
@@ -313,23 +310,11 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             }
             else //Modern page
             {
-                var styleProps = $("#divMasterTHemeCustomStyles").css([
-                    "background-color"
-                ]);
-                $.each(styleProps, function (prop, value) {
-                    if($(".ms-compositeHeader").length > 0)
-                    {
-                        $(".ms-compositeHeader").css(prop, value);
-                    }
-                    if($("nav[class^='ms-Nav']").length > 0)
-                    {
-                        $("nav[class^='ms-Nav']").css("background-color",value);
-                        $("nav[class^='ms-Nav']").css("top","0px");
-                        $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color",value,"important");
-                        $("div[class^='ms-Nav-compositeLink']").css("background-color",value);
-                    }
-                    hideSearchBox();
-                    // $("#workbenchPageContent").css(prop, value)
+                $("a.ms-Nav-linkButton").css({"color":$("#divQuiLaunchCustomStyles").css("color"),"background-color":$("#divQuiLaunchCustomStyles").css("background-color")});
+                $('a.ms-Nav-linkButton').hover(function(){
+                    $(this).css({ "color":$("#divQuiLaunchCustomStyles").css("border-left-color"), "background-color":$("#divQuiLaunchCustomStyles").css("border-right-color") });
+                }, function(){
+                    $(this).css({ "color":$("#divQuiLaunchCustomStyles").css("color"), "background-color":$("#divQuiLaunchCustomStyles").css("background-color") });
                 });
             }
         }
@@ -340,18 +325,6 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             }
             else //Modern page
             {       
-                if($(".ms-compositeHeader").length > 0)
-                {
-                    $(".ms-compositeHeader").css("background-color","");
-                }
-                if($("nav[class^='ms-Nav']").length > 0)
-                {
-                    $("nav[class^='ms-Nav']").css("background-color","");
-                    $("nav[class^='ms-Nav']").css("top","40px");
-                    $("nav[class^='ms-Nav']")[0].style.setProperty("border-right-color","","important");
-                    $("div[class^='ms-Nav-compositeLink']").css("background-color","");
-                }
-                    showSearchBox();
             }
         }
         function applyCustomSiteTitle() {
@@ -372,9 +345,9 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
                         $("span[class^='ms-siteHeader-siteName']")[0].style.setProperty("color","");                    
                     }
 
-                    if($("#divPageTitleCustomStyles").css("color") != "")
+                    if($("#divPageTitleCustomStyles").css("font-size") != "")
                     {
-                        $("span[class^='ms-siteHeader-siteName']")[0].style.setProperty("font-size",$("#divSiteTitleCustomStyles").css("font-size") + "px");
+                        $("span[class^='ms-siteHeader-siteName']")[0].style.setProperty("font-size",$("#divSiteTitleCustomStyles").css("font-size"));
                     }
                     else
                     {
@@ -409,19 +382,35 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
                     if($("#divPageTitleCustomStyles").css("color") != "")
                     {
                         $("span[class^='headerTitleText_']")[0].style.setProperty("color",$("#divPageTitleCustomStyles").css("color"),"important");
+                        if($("textarea[class^='headerTitleText_']").length > 0)
+                        {
+                            $("textarea[class^='headerTitleText_']")[0].style.setProperty("color",$("#divPageTitleCustomStyles").css("color"),"important");
+                        }                        
                     }
                     else
                     {
                         $("span[class^='headerTitleText_']")[0].style.setProperty("color","");
+                        if($("textarea[class^='headerTitleText_']").length > 0)
+                        {
+                            $("textarea[class^='headerTitleText_']")[0].style.setProperty("color","");                            
+                        }                        
                     }
     
-                    if($("#divPageTitleCustomStyles").css("color") != "")
+                    if($("#divPageTitleCustomStyles").css("font-size") != "")
                     {
-                        $("span[class^='headerTitleText_']")[0].style.setProperty("font-size",$("#divPageTitleCustomStyles").css("font-size") + "px","important");
+                        $("span[class^='headerTitleText_']")[0].style.setProperty("font-size",$("#divPageTitleCustomStyles").css("font-size"),"important");
+                        if($("textarea[class^='headerTitleText_']").length > 0)
+                        {                     
+                        $("textarea[class^='headerTitleText_']")[0].style.setProperty("font-size",$("#divPageTitleCustomStyles").css("font-size"),"important");
+                        }
                     }
                     else
                     {
                         $("span[class^='headerTitleText_']")[0].style.setProperty("font-size","");
+                        if($("textarea[class^='headerTitleText_']").length > 0)
+                        {                        
+                        $("textarea[class^='headerTitleText_']")[0].style.setProperty("font-size","");
+                        }
                     } 
                 }
             }
@@ -513,57 +502,57 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             }
             if ($("#divHideTitleRow").length == 0) {
                 showTitleRow();
-                if ($("#divHideTopNav").length == 0)
-                    showTopNav();
-                else
-                    hideTopNav();
-
-                if ($("#divHideSiteLogo").length == 0)
-                    showSiteLogo();
-                else
-                    hideSiteLogo();
-
-                if ($("#divHideSiteTitle").length == 0)
-                    showSiteTitle();
-                else
-                    hideSiteTitle();
-
-                if ($("#divHideSiteDescription").length == 0)
-                    showSiteDescription();
-                else
-                    hideSiteDescription();
-
-                if ($("#divHideSiteMembers").length == 0)
-                    showSiteMembers();
-                else
-                    hideSiteMembers();
-
-                if ($("#divhideSearchBox").length == 0)
-                    showSearchBox();
-                else
-                    hideSearchBox();
-
-                if ($("#divhideShareButton").length == 0)
-                    showShareButton();
-                else
-                    hideShareButton();
-
-                if ($("#divTopNavCustomized").length > 0) {
-                    applyCustomTopNav();
-                }
-                else {
-                    removeCustomTopNav();
-                }
-
-                if ($("#divSiteTitleCustomized").length > 0) {
-                    applyCustomSiteTitle();
-                }
-                else {
-                    removeCustomSiteTitle();
-                }
             }
             else {
                 hideTitleRow();
+            }
+            if ($("#divHideTopNav").length == 0)
+            showTopNav();
+            else
+                hideTopNav();
+
+            if ($("#divHideSiteLogo").length == 0)
+                showSiteLogo();
+            else
+                hideSiteLogo();
+
+            if ($("#divHideSiteTitle").length == 0)
+                showSiteTitle();
+            else
+                hideSiteTitle();
+
+            if ($("#divHideSiteDescription").length == 0)
+                showSiteDescription();
+            else
+                hideSiteDescription();
+
+            if ($("#divHideSiteMembers").length == 0)
+                showSiteMembers();
+            else
+                hideSiteMembers();
+
+            if ($("#divhideSearchBox").length == 0)
+                showSearchBox();
+            else
+                hideSearchBox();
+
+            if ($("#divhideShareButton").length == 0)
+                showShareButton();
+            else
+                hideShareButton();
+
+            if ($("#divTopNavCustomized").length > 0) {
+                applyCustomTopNav();
+            }
+            else {
+                removeCustomTopNav();
+            }
+
+            if ($("#divSiteTitleCustomized").length > 0) {
+                applyCustomSiteTitle();
+            }
+            else {
+                removeCustomSiteTitle();
             }
 
             if ($("#divHideCommandBarItems").length == 0)
@@ -574,25 +563,18 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($("#divHidePageTitle").length == 0)
             {
                 showPageTitle();
-                if ($("#divPageTitleCustomized").length > 0) {
-                    applyCustomPageTitle();
-                }
-                else {
-                    removeCustomPageTitle();
-                }
             }
             else
                 hidePageTitle();
+
+            if ($("#divPageTitleCustomized").length > 0) {
+                applyCustomPageTitle();
+            }
+            else {
+                removeCustomPageTitle();
+            }
             if ($("#divHideQuickLaunch").length == 0)//check divHideQuickLaunch doesn't exist on the page
-                {
                     showQuickLaunch();
-                    if ($("#divQuiLaunchCustomized").length > 0) {
-                        applyCustomQuiLaunch();
-                    }
-                    else {
-                        removeCustomQuiLaunch();
-                    }
-                }
             else
                 hideQuickLaunch();
 
@@ -601,6 +583,12 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             }
             else {
                 removeCustomMasterTheme();
+            }
+            if ($("#divQuiLaunchCustomized").length > 0) {
+                applyCustomQuiLaunch();
+            }
+            else {
+                removeCustomQuiLaunch();
             }
             });
              
@@ -659,11 +647,11 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             else { return (null); }
         }
         function IsTopNavCustomized(props) {
-            if (props.isHidden) { return (<div hidden={true} id="divTopNavCustomized" className={styles.hide}><span id="divTopNavCustomStyles" style={customStyles.masterTheme}></span></div>); }
+            if (props.isHidden) { return (<div hidden={true} id="divTopNavCustomized" className={styles.hide}><span id="divTopNavCustomStyles" style={customStyles.topNav}></span></div>); }
             else { return (null); }
         }
         function IsQuiLaunchCustomized(props) {
-            if (props.isHidden) { return (<div hidden={true} id="divQuiLaunchCustomized" className={styles.hide}><span id="divQuiLaunchCustomStyles" style={customStyles.masterTheme}></span></div>); }
+            if (props.isHidden) { return (<div hidden={true} id="divQuiLaunchCustomized" className={styles.hide}><span id="divQuiLaunchCustomStyles" style={customStyles.quiLaunch}></span></div>); }
             else { return (null); }
         }
         function IsSiteTitleCustomized(props) {
