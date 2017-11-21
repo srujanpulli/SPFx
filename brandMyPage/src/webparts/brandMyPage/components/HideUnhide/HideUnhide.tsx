@@ -218,7 +218,8 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function applyCustomMasterTheme() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
-
+                $("#s4-titlerow").css("background-color",$("#divMasterTHemeCustomStyles").css("background-color"));
+                $("#contentRow").css("padding-top","0px");
             }
             else //Modern page
             {
@@ -266,6 +267,15 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function applyCustomTopNav() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {   
+                $( ".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item" ).each(function( index ) {
+                    $(".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important")                
+                    });
+                $( ".ms-core-listMenu-horizontalBox ul li a" ).each(function( index ) {
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("margin","0px")                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("padding","5px 10px")                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("background-color",$("#divMasterTHemeCustomStyles").css("background-color"),"important")                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important")                                    
+                });               
                 
             }
             else //Modern page
@@ -287,7 +297,15 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function removeCustomTopNav() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
-
+                $( ".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item" ).each(function( index ) {
+                    $(".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item")[index].style.setProperty("color","")
+                    });
+                $( ".ms-core-listMenu-horizontalBox ul li a" ).each(function( index ) {
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("margin","")                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("padding","")                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("background-color","")                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("color","")                                    
+                });    
             }
             else //Modern page
             {
@@ -306,6 +324,12 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function applyCustomQuiLaunch() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
+            $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
+                $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important")                
+                });
+            $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
+                $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("background-color",$("#divMasterTHemeCustomStyles").css("background-color"),"important")                
+                });
 
             }
             else //Modern page
@@ -321,6 +345,12 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function removeCustomQuiLaunch() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
+                $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
+                    $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("color","")                
+                    });
+                $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
+                    $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("background-color","")                
+                    });
 
             }
             else //Modern page
@@ -330,7 +360,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function applyCustomSiteTitle() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
-
+                $("#DeltaPlaceHolderPageTitleInTitleArea").find("a").css("color",$("#divSiteTitleCustomStyles").css("color"));
             }
             else //Modern page
             {
@@ -359,7 +389,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function removeCustomSiteTitle() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
-
+                $("#DeltaPlaceHolderPageTitleInTitleArea").find("a").css("color","");
             }
             else //Modern page
             {       
@@ -430,6 +460,45 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
                 }
             }
         }
+
+        function applyCompactMode() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+                $( ".ms-webpartzone-cell" ).each(function( index ) {
+                    $(".ms-webpartzone-cell")[index].style.setProperty("margin","0px","important")                
+                  });
+                  $( ".ms-webpartPage-root" ).each(function( index ) {
+                    $(".ms-webpartPage-root")[index].style.setProperty("border-spacing","0px","important")                
+                  });
+            }
+            else //Modern page
+            {       
+                $(".ms-compositeHeader").css({"padding-bottom" : "4px"})
+                $(".ControlZone").css({"padding-top": "0px", "padding-bottom": "0px", "margin-top": "2px"})
+                $("div[class^='compactCard_']").css({"height" : "100%"})
+                $("div[class^='persona_']").css({"height" : "100%"})                
+            }
+        }
+
+        function removeCompactMode() {
+            if ($('#s4-bodyContainer').length > 0)//Classic page
+            {
+                $( ".ms-webpartzone-cell" ).each(function( index ) {
+                    $(".ms-webpartzone-cell")[index].style.setProperty("margin","")                
+                  });
+                  $( ".ms-webpartPage-root" ).each(function( index ) {
+                    $(".ms-webpartPage-root")[index].style.setProperty("border-spacing","")                
+                  });             
+            }
+            else //Modern page
+            {       
+                $(".ms-compositeHeader").css({"padding-bottom" : ""})
+                $(".ControlZone").css({"padding-top": "", "padding-bottom": "", "margin-top": ""})
+                $("div[class^='compactCard_']").css({"height" : ""})
+                $("div[class^='persona_']").css({"height" : ""})
+                
+            }
+        }
         // End custom themes    
 
         // css updates to hide on page load.
@@ -490,6 +559,18 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         }
         else {
             removeCustomMasterTheme();
+        }
+        if ($("#divCompactModeActive").length > 0) {
+            applyCompactMode();
+        }
+        else {
+            removeCompactMode();
+        }
+        if ($("#divMegaMenuActive").length > 0) {
+            // applyCompactMode();
+        }
+        else {
+            // removeCompactMode();
         }
 
         //Start page navigation triggers
@@ -590,6 +671,18 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             else {
                 removeCustomQuiLaunch();
             }
+            if ($("#divCompactModeActive").length > 0) {
+                applyCompactMode();
+            }
+            else {
+                removeCompactMode();
+            }
+            if ($("#divMegaMenuActive").length > 0) {
+                
+            }
+            else {
+                
+            }
             });
              
         
@@ -662,11 +755,15 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if (props.isHidden) { return (<div hidden={true} id="divPageTitleCustomized" className={styles.hide}><span id="divPageTitleCustomStyles" style={customStyles.pageTitle}></span></div>); }
             else { return (null); }
         }
-        // function IsMasterThemeCustomized(props) {
-        //     if (props.isHidden) { return (<div hidden={true} id="divMasterTHemeCustomized" className={styles.hide}><span id="divMasterTHemeCustomStyles" style={customStyles.masterTheme}></span></div>); }
-        //     else { return (null); }
-        // }
-        // return (null); if you want to return null
+        function IsCompactModeActive(props) {
+            if (props.isHidden) { return (<div hidden={true} id="divCompactModeActive" className={styles.hide}></div>); }
+            else { return (null); }
+        }
+        function IsMegaMenuActive(props) {
+            if (props.isHidden) { return (<div hidden={true} id="divMegaMenuActive" className={styles.hide}></div>); }
+            else { return (null); }
+        }
+
         console.log("HideUnHide - React component is loaded");
 
 
@@ -688,6 +785,10 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             <IsQuiLaunchCustomized isHidden={this.props.configOptions.quickLaunch.isCustomized} />
             <IsSiteTitleCustomized isHidden={this.props.configOptions.SiteTitle.isColorCustomized || this.props.configOptions.SiteTitle.isFontCustomized} />
             <IsPageTitleCustomized isHidden={this.props.configOptions.PageTitle.isColorCustomized || this.props.configOptions.PageTitle.isFontCustomized} />
+
+            <IsCompactModeActive isHidden={this.props.configOptions.Misc.compactMode} />
+            <IsMegaMenuActive isHidden={this.props.configOptions.Misc.megaMenu} />
+
             {/* <IsMasterThemeCustomized isHidden={this.props.configOptions.masterTheme.isCustomized} /> */}
             
             </span>
