@@ -1,4 +1,61 @@
 .megaMenu {
+  .round
+  {
+    width:50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: orange;
+  }
+  .megaBotton
+  {
+    height: 60px;
+    .burgerBar {
+      background: transparent;
+      position: relative;
+      height: 30px;
+      width: 50px;
+      transition: 0.2s ease all;
+      }
+    .burgerBar:before, .burgerBar:after {
+      background-color: #fff;
+      backface-visibility: hidden;
+      content: "";
+      height: 2px;
+      left: 0;
+      transition: 0.75s;
+      width: 50px;
+      transition: 0.2s ease all;      
+    }
+    .burgerBar:before {
+      box-shadow: #fff 0 14px 0 0;
+      position: absolute;
+      top: 0;
+    }
+    .burgerBar:after {
+      position: absolute;
+      top: calc(100% - 2px);
+    }
+  }
+  .megaBotton:hover
+  {
+    .burgerBar{
+      margin-top: 4px;
+      transition: 0.2s ease all;
+      width: 48px;
+      margin-left: 1px;
+      margin-right: 1px;
+    }
+    .burgerBar:before {
+      box-shadow: #fff 0 12px 0 0;
+      transition: 0.2s ease all;   
+      width: 48px;   
+    }
+    .burgerBar:after {
+      top: calc(100% - 6px);
+      transition: 0.2s ease all;
+      width: 48px;
+    }
+  }
   .container {
     max-width: 700px;
     margin: 0px auto;
