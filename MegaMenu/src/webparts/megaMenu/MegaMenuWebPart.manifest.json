@@ -18,7 +18,7 @@
     "group": { "default": "Other" },
     "title": { "default": "MegaMenu" },
     "description": { "default": "Mega Menu description" },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "CollapseMenu",
     "properties": {
       "description": "MegaMenu"
     }

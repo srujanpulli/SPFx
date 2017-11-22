@@ -25,7 +25,17 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
       }
     );
 
-    ReactDom.render(element, this.domElement);
+    if(window.location.href.indexOf("workbench.") > -1)
+    {
+      ReactDom.render(element, this.domElement);
+    }
+    else
+    {
+      ReactDom.render(element, document.getElementsByClassName("ms-siteLogoContainerOuter")[0]); //in actual site (replace on logo container)
+    }
+    //ReactDom.render(element, document.getElementsByClassName("commandBar_e788ae32")[0]); //in workbench
+    
+    
   }
 
   protected get dataVersion(): Version {

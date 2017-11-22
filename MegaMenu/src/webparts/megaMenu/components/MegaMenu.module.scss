@@ -1,4 +1,18 @@
 .megaMenu {
+  // START menu classes
+  .heading{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #005a9e;
+  font-size: 16px;
+  // border-left: 2px solid grey;
+  }
+  .links{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #393939;
+    font-size: 14px;
+  }
+
+// END menu classes
   .round
   {
     width:50px;
@@ -6,7 +20,54 @@
     border-radius: 25px;
     background-color: orange;
   }
-  .megaBotton
+  .burgerBarClose {
+    height: 60px;
+    position: fixed;
+    right: 0;
+    top: 0;  
+  }
+  .close {
+    display: block;
+    width: 32px;
+    height: 32px;
+    transition: transform .2s ease-in-out;
+}
+.burgerBarClose:hover {
+  .close{
+    transform: rotate(180deg);
+  }
+}
+.close:before {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    height: 0;
+    border-top: 1px solid rgba(0,0,0,0.5);
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+.close:after {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    height: 0;
+    border-top: 1px solid rgba(0,0,0,0.5);
+    transform: rotate(-45deg);
+    transform-origin: center;
+}
+  .megaButton
   {
     height: 60px;
     .burgerBar {
@@ -57,9 +118,9 @@
     }
   }
   .container {
-    max-width: 700px;
+    max-width: 1024px;
     margin: 0px auto;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   }
 
   .row {
