@@ -18,6 +18,8 @@ import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker';
 import { Slider } from 'office-ui-fabric-react/lib/Slider';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { loadTheme } from 'office-ui-fabric-react/lib/Styling';
+import { TooltipHost, TooltipDelay, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
+
 import HideUnhide from './../HideUnhide/HideUnhide';
 import { IHideUnhideProps } from './../HideUnhide/IHideUnhideProps';
 import { IHideUnhideState } from './../HideUnhide/IHideUnhideState';
@@ -366,21 +368,24 @@ export default class ConfigLanding extends React.Component<IConfigLandingProps, 
     );
     pivotArray.push(
       <PivotItem linkText='Miscellaneous' itemKey='3' itemIcon='Drop'>
-       
-        <Checkbox className={styles.top10Margin} label='Compact mode' checked={this.state.configOptions.Misc.compactMode} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.compactMode = checked!; this.setState(this.state); this.props.save(this.state.configOptions);} }  />
-        {/* <Checkbox className={styles.top10Margin} label='Show custom terms and conditions message on first page load.' checked={this.state.configOptions.Misc.megaMenu.isEnabled} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.megaMenu.isEnabled = checked!; this.setState(this.state); this.props.save(this.state.configOptions);} }  /> 
-        <div className={styles.left30Margin} hidden={!this.state.configOptions.Misc.megaMenu.isEnabled}>
-        <TextField
-          label='Terms & Conditions'
-          required={ this.state.configOptions.Misc.megaMenu.isEnabled }
-          onGetErrorMessage={ this._getTextBoxErrorMessage }
-          value={this.state.configOptions.Misc.megaMenu.menuContent}
-          multiline
-          rows={ 5 }    
-          validateOnFocusIn
-          validateOnFocusOut
-        />
-        </div> */}
+        <TooltipHost
+            calloutProps={ { gapSpace: 10 } }
+            tooltipProps={ {
+              onRenderContent: () => {
+                return (
+                  <div>
+                    Hide extra space around webparts, Quick links and People webpart.
+                  </div>
+                );
+              }
+            } }
+            delay={ TooltipDelay.zero }
+            id='customID'
+            directionalHint={ DirectionalHint.bottomLeftEdge }
+          >
+              <Checkbox className={styles.top10Margin} label='Compact mode' checked={this.state.configOptions.Misc.compactMode} onChange={(ev: React.FormEvent<HTMLElement>, checked: boolean) => {this.state.configOptions.Misc.compactMode = checked!; this.setState(this.state); this.props.save(this.state.configOptions);} }  />
+              <br/><br/>
+          </TooltipHost>
         <br/><br/>
         <div className="ms-Grid">
           <div className="ms-Grid-row">
