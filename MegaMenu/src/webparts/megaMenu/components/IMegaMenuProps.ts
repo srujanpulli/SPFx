@@ -1,3 +1,5 @@
 export interface IMegaMenuProps {
-  description: string;
+  menuConfig: string;
+  save(_configMenu: string): void;
+  isEditMode: boolean; 
 }

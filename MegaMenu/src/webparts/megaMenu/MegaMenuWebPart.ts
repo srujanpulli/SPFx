@@ -12,17 +12,23 @@ import MegaMenu from './components/MegaMenu';
 import { IMegaMenuProps } from './components/IMegaMenuProps';
 
 export interface IMegaMenuWebPartProps {
-  description: string;
+  menuConfig: string;
 }
 
 export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebPartProps> {
-
+  public save: (configOptions) => void = (configOptions) => {
+    // alert();
+    this.properties.menuConfig = configOptions;
+    this.render();
+  }
   public render(): void {
     const element: React.ReactElement<IMegaMenuProps > = React.createElement(
       MegaMenu,
       {
-        // description: this.properties.description
-        description: this.properties.description
+        // menuConfig: this.properties.menuConfig
+        menuConfig: this.properties.menuConfig,
+        save: this.save,
+        isEditMode: (this.displayMode == 2) ? true : false
       }
     );
 
@@ -48,13 +54,13 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
       pages: [
         {
           // header: {
-          //   description: strings.PropertyPaneDescription
+          //   menuConfig: strings.PropertyPanemenuConfig
           // },
           groups: [
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
+                PropertyPaneTextField('menuConfig', {
                   label: strings.DescriptionFieldLabel,
                   multiline: true,
                   resizable: true,

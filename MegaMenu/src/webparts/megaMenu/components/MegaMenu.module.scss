@@ -6,10 +6,32 @@
   font-size: 16px;
   // border-left: 2px solid grey;
   }
+  .redFont{
+    color: rgb(180, 5, 5);
+  }
   .links{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #393939;
     font-size: 14px;
+    list-style-type: none;   
+    padding-left: 5px; 
+  }
+  .hoverBorder:hover{
+    background-color:  #f0f0f0;
+    padding-right: 10px;
+    .iconPaddingTop5px
+    {
+      display: block;
+    }
+    .redFont{
+      color: rgb(180, 5, 5);
+      background-color:  #f0f0f0;      
+    }
+  }
+  .iconPaddingTop5px
+  {
+    padding-top: 5px;
+    display: none;
   }
 
 // END menu classes
