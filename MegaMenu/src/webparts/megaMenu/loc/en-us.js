@@ -1,7 +1,7 @@
 define([], function() {
   return {
-    "PropertyPaneDescription": "Description",
-    "BasicGroupName": "Group Name",
-    "DescriptionFieldLabel": "Description Field"
+    "PropertyPaneDescription": "[Optional] - Don't update unless you really want to",
+    "BasicGroupName": "[Optional] - Don't update unless you really want to",
+    "DescriptionFieldLabel": "Mega Menu JSON content"
   }
 });

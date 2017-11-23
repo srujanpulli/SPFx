@@ -4,7 +4,7 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'MegaMenuWebPartStrings';
@@ -21,6 +21,7 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
     const element: React.ReactElement<IMegaMenuProps > = React.createElement(
       MegaMenu,
       {
+        // description: this.properties.description
         description: this.properties.description
       }
     );
@@ -46,15 +47,18 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
     return {
       pages: [
         {
-          header: {
-            description: strings.PropertyPaneDescription
-          },
+          // header: {
+          //   description: strings.PropertyPaneDescription
+          // },
           groups: [
             {
               groupName: strings.BasicGroupName,
               groupFields: [
                 PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                  label: strings.DescriptionFieldLabel,
+                  multiline: true,
+                  resizable: true,
+                  rows:16
                 })
               ]
             }

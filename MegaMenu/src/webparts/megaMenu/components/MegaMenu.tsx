@@ -41,12 +41,12 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }    
 
-    class SingleCard extends React.Component<{cardID}> {
+    class SingleCard extends React.Component<{cardContents}> {
       public render() {
         return (
           <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
-            <SingleHeader name={tmpMenuItems.cards[this.props.cardID].heading} />
-            <LinkGroup links={tmpMenuItems.cards[this.props.cardID].links} />
+            <SingleHeader name={this.props.cardContents.heading} />
+            <LinkGroup links={this.props.cardContents.links} />
           </div>);
       }
     }    
@@ -63,88 +63,16 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }    
 
-    class AllCards extends React.Component<any> {
+    class AllCards extends React.Component<{cardContents}> {
       public render() {
-        let cards = tmpMenuItems.cards;
+        let cards = this.props.cardContents;
         let allCardsInContainer = cards.map((card, index) =>
-          <SingleCard cardID={index}/>
+          <SingleCard cardContents={card}/>
         );
         return <div className={`ms-Grid-row  ${styles.row}`}>{allCardsInContainer}</div>;
       }
     }
 
-    var tmpMenuItems = {
-        "cards" : [
-          {"heading": "heading1",
-        "links": [{
-            "name": "name1",
-            "iconName": "addFriend",
-            "link":"https://google.com"
-            },
-            {
-            "name": "name1",
-            "iconName": "addFriend",
-            "link":"https://google.com"
-            },
-            {
-              "name": "name1",
-              "iconName": "addFriend",
-              "link":"https://google.com"
-              }
-          ]},
-          {"heading": "heading2",
-          "links": [{
-              "name": "name2",
-              "iconName": "addFriend",
-              "link":"https://google.com"
-              },
-              {
-              "name": "name1",
-              "iconName": "addFriend",
-              "link":"https://google.com"
-              },
-              {
-                "name": "name2",
-                "iconName": "addFriend",
-                "link":"https://google.com"
-                }
-            ]},
-            {"heading": "heading3",
-            "links": [{
-                "name": "name1",
-                "iconName": "addFriend",
-                "link":"https://google.com"
-                },
-                {
-                "name": "name3",
-                "iconName": "addFriend",
-                "link":"https://google.com"
-                },
-                {
-                  "name": "name1",
-                  "iconName": "addFriend",
-                  "link":"https://google.com"
-                  }
-              ]},
-              {"heading": "heading4",
-              "links": [{
-                  "name": "name1",
-                  "iconName": "addFriend",
-                  "link":"https://google.com"
-                  },
-                  {
-                  "name": "name3",
-                  "iconName": "addFriend",
-                  "link":"https://google.com"
-                  },
-                  {
-                    "name": "name1",
-                    "iconName": "addFriend",
-                    "link":"https://google.com"
-                    }
-                ]}
-        ]
-    };
     return (
       <div className={styles.megaMenu}>
             <PrimaryButton checked={this.state.showPanel} className={styles.megaButton} onClick={ () => this.setState({ showPanel: true }) } ><div className={styles.burgerBar} ></div></PrimaryButton>
@@ -172,15 +100,10 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
                     <div className={styles.container}>
-                      {/* <div className={`ms-Grid-row  ${styles.row}`}>
-                        <SingleCard cardID={0} />
-                        <SingleCard cardID={1} />
-                        <SingleCard cardID={2} />
-                        <SingleCard cardID={0} />
-                        <SingleCard cardID={1} />
-                        <SingleCard cardID={2} />                   
-                      </div> */}
-                      <AllCards />
+                      
+                      <AllCards cardContents={JSON.parse(this.props.description).cards} />
+                      {/* <SingleCard cardContents={x}/> */}
+
                     </div>
                   </div>
                   {/* END mega menu content */}
