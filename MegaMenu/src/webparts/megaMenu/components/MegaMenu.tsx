@@ -127,7 +127,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                 </div>);
       }
     }
-
+    var _isEditMode = this.props.isEditMode;
     return (
       <div className={styles.megaMenu}>
             <PrimaryButton checked={this.state.showPanel} className={styles.megaButton} onClick={ () => this.setState({ showPanel: true }) } ><div className={styles.burgerBar} ></div></PrimaryButton>
@@ -143,8 +143,8 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                 onRenderHeader={() => {
                   return (
                     <div>
-                        <div ><PrimaryButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Dismiss</PrimaryButton></div>
-                        <div ><PrimaryButton iconProps={ { iconName: 'Accept' } } onClick={ () => this.props.save(this.state.stateMenuConfig) } >Done</PrimaryButton></div>
+                        <div hidden={_isEditMode} ><PrimaryButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Close</PrimaryButton></div>
+                        <div hidden={!_isEditMode} ><DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Cancel</DefaultButton><span className={styles.paddingLeft10px} ><PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => this.props.save(this.state.stateMenuConfig) } >Save</PrimaryButton></span></div>
                       </div>
                   );
                 }}
