@@ -3,6 +3,8 @@ import styles from './MegaMenu.module.scss';
 import { IMegaMenuProps } from './IMegaMenuProps';
 import { IMegaMenuState } from './IMegaMenuState';
 import { escape } from '@microsoft/sp-lodash-subset';
+import { autobind } from 'office-ui-fabric-react/lib/Utilities';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 import { DefaultButton, CompoundButton, ActionButton, Button, IconButton, PrimaryButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
@@ -15,10 +17,32 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
     this.state = { 
       showPanel: false,
       stateMenuConfig: this.props.menuConfig,
-      _isEditMode: this.props.isEditMode};
+      editHeading :
+      {
+        showHeadingPanel:false,
+        headingID: 0,
+        headingTitle: "" 
+      },
+      editLink:{
+        showLinkPanel:false,
+        linkID: 0,
+        headingID: 0,    
+        linkTitle: "",
+        linkUrl: ""
+      },
+      };
+    this._addHeading = this._addHeading.bind(this);
+    this._addLink = this._addLink.bind(this);
+    this._onCloseHeadingPanel = this._onCloseHeadingPanel.bind(this) ;
+    this._onCloseLinkPanel = this._onCloseLinkPanel.bind(this) ;
+    this._headingSave = this._headingSave.bind(this)
+    
   }
 
   public render(): React.ReactElement<IMegaMenuProps> {
+    var _isEditMode = this.props.isEditMode;
+    var _isHeadingPanelOpen = this.state.editHeading.showHeadingPanel;
+    var _isLinkPanelOpen = this.state.editLink.showLinkPanel
 
     class SingleHeader extends React.Component<{name, isEditModetmp}> {
       public render() {
@@ -86,48 +110,192 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
           // Correct! Key should be specified inside the array.
           <li><SingleLink name={link.name} url={link.link} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} /></li>
         );
-      return (<ul className={`${styles.links}`}>{allLinksInGroup}
-               <ActionButton className={styles.redFont} iconProps={ { iconName: 'Add' }} text="Add a new link" />
-              </ul>);
+      return (<ul className={`${styles.links}`}>{allLinksInGroup}</ul>);
       }
     }    
 
-    class SingleCard extends React.Component<{cardContents, isEditModetmp}> {
+    class SingleCard extends React.Component<{cardContents, isEditModetmp, _addLink: () => void}> {
+
+      constructor(props)
+      {
+        super(props)
+        this.setState({});
+        this._addLink = this._addLink.bind(this);
+      }
       public render() {
-        return (
-          <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
-            <SingleHeader name={this.props.cardContents.heading} isEditModetmp={this.props.isEditModetmp} />
-            <LinkGroup links={this.props.cardContents.links} isEditModetmp={this.props.isEditModetmp} />
-          </div>);
+        if(this.props.isEditModetmp)
+        {
+          return (
+            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
+              <SingleHeader name={this.props.cardContents.heading} isEditModetmp={this.props.isEditModetmp} />
+              <LinkGroup links={this.props.cardContents.links} isEditModetmp={this.props.isEditModetmp} />
+              <ActionButton className={styles.redFont} iconProps={ { iconName: 'Add' }} text="Add a new link" onClick={ this.props._addLink} />
+            </div>);
+        }
+        else
+        {
+          return (
+            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
+              <SingleHeader name={this.props.cardContents.heading} isEditModetmp={this.props.isEditModetmp} />
+              <LinkGroup links={this.props.cardContents.links} isEditModetmp={this.props.isEditModetmp} />
+            </div>);
+        }
+
+      }
+      public _addLink(){
+        this.props._addLink();
       }
     }    
 
-    class AddNewCard extends React.Component<any> {
-      public render() {
-        return <h1>Hello, {this.props}</h1>;
+    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _addLink: () => void}> {
+      constructor(props)
+      {
+        super(props)
+        this.setState({});
+        this._addLink = this._addLink.bind(this);
       }
-    }    
 
-    class AddNewLink extends React.Component<any> {
-      public render() {
-        return <h1>Hello, {this.props}</h1>;
+      public _addLink(){
+        this.props._addLink();
       }
-    }    
-
-    class AllCards extends React.Component<{cardContents, isEditModetmp}> {
       public render() {
         let cards = this.props.cardContents;
         let allCardsInContainer = cards.map((card, index) =>
-          <SingleCard cardContents={card} isEditModetmp={this.props.isEditModetmp}/>
+          <SingleCard cardContents={card} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink}/>
         );
-        return (<div className={`ms-Grid-row  ${styles.row}`}>{allCardsInContainer}
-                    <PrimaryButton iconProps={ { iconName: 'Add' }} >
-                        Add a new heading..
-                    </PrimaryButton>
-                </div>);
+
+        if(this.props.isEditModetmp)
+        {
+          return (<div className={`ms-Grid-row  ${styles.row}`}>
+            {allCardsInContainer}
+            <PrimaryButton iconProps={ { iconName: 'Add' }} onClick={ this.props._addHeading} >
+              Add a new heading..
+            </PrimaryButton>
+      </div>);
+        }
+        else
+        {
+          return (<div className={`ms-Grid-row  ${styles.row}`}>
+            {allCardsInContainer}
+            </div>);
+        }
       }
     }
-    var _isEditMode = this.props.isEditMode;
+
+    class EditHeadingPanel extends React.Component<{cardContents, isNewItem, headingIndex, _onCloseHeadingPanel: () => void, _headingSave:() => void}, any> {
+      public constructor(props: any) {
+        super(props);
+        this.state = {
+        headingValue : "",
+        };
+      }
+
+      public render() {
+        return (<div className={`ms-Grid-row  ${styles.row}`}>
+                    <Panel
+                      isOpen={ _isHeadingPanelOpen }
+                      type={ PanelType.smallFixedFar }
+                      onDismiss={ this.props._onCloseHeadingPanel }
+                      headerText='My Heading Panel'
+                      closeButtonAriaLabel='Close'
+                      onRenderFooterContent={ this._onRenderFooterContent }
+                    >
+                      <div><TextField
+                            label = "Heading"
+                            required={ true }
+                            placeholder='Enter Heading'
+                            value={this.state.headingValue}
+                            onGetErrorMessage = {(value) => value.length > 2
+                              ? ''
+                              : `The length of the input value should be more than 2, actual is ${value.length}.`}
+                          />
+                    </div>
+                    </Panel>
+                </div>);
+      }
+    
+      @autobind
+      private _onRenderFooterContent(): JSX.Element {
+        return (
+          <div>
+            <PrimaryButton
+              // onClick={ this.props._headingSave(this.state.headingValue) }
+              onClick={ this.props._headingSave }
+              style={ { 'marginRight': '8px' } }
+            >
+              Save
+            </PrimaryButton>
+            <DefaultButton
+              onClick={ this.props._onCloseHeadingPanel }
+            >
+              Cancel
+            </DefaultButton>
+          </div>
+        );
+      }
+    }// END Heading Panel
+    class EditLinkPanel extends React.Component<{cardContents, isNewItem, headingIndex, linkIndex, _onCloseLinkPanel: () => void},IMegaMenuState> {
+      public render() {
+        return (<div className={`ms-Grid-row  ${styles.row}`}>
+                    <Panel
+                      isOpen={ _isLinkPanelOpen }
+                      type={ PanelType.smallFixedFar }
+                      onDismiss={ this.props._onCloseLinkPanel }
+                      headerText='My Link pane'
+                      closeButtonAriaLabel='Close'
+                      onRenderFooterContent={ this._onRenderFooterContentLink }
+                    >
+                      <div> 
+                          <TextField label="Heading"
+                            required={ true }
+                            value='Heading value'
+                            disabled={true}
+                          />
+                          <TextField label="Link Title"
+                            required={ true }
+                            placeholder='Enter Heading'
+                            onGetErrorMessage = {(value) => value.length > 0
+                              ? ''
+                              : `This field is required.`}
+                          />
+                          <TextField label="Url"
+                            required={ true }
+                            prefix="https://"
+                            placeholder='Enter Heading'
+                            onGetErrorMessage = {(value) => value.length > 0
+                              ? ''
+                              : `This field is required.`}
+                          />
+                    </div>
+                    </Panel>
+                </div>);
+      }
+    
+      @autobind
+      private _onRenderFooterContentLink(): JSX.Element {
+        return (
+          <div>
+            <PrimaryButton
+              onClick={ this.props._onCloseLinkPanel }
+              style={ { 'marginRight': '8px' } }
+            >
+              Save
+            </PrimaryButton>
+            <DefaultButton
+              onClick={ this.props._onCloseLinkPanel }
+            >
+              Cancel
+            </DefaultButton>
+          </div>
+        );
+      }
+    
+      // @autobind
+      // private _onShowLinkPanel(): void {
+      //   this.state.editLink.showLinkPanel = true;
+      //   this.setState(this.state);
+      // }
+    }// END Heading Panel
     return (
       <div className={styles.megaMenu}>
             <PrimaryButton checked={this.state.showPanel} className={styles.megaButton} onClick={ () => this.setState({ showPanel: true }) } ><div className={styles.burgerBar} ></div></PrimaryButton>
@@ -149,37 +317,68 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                   );
                 }}
                 >
-                <div>
-                {/* <IconButton onClick={ () => this.setState({ showPanel: false })} iconProps={ { iconName: 'ChromeClose' } } title='Close' ariaLabel='Close'>Close</IconButton> */}
-                {/* <DefaultButton checked={!this.state.showPanel} className={styles.burgerBarClose} onClick={ () => this.setState({ showPanel: false }) } ><div className={styles.close} ></div></DefaultButton> */}
-                  <br/>
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
                     <div className={styles.container}>
                       
-                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig).cards} isEditModetmp={this.props.isEditMode} />
+                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig).cards} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _addLink={this._addLink} />
                       {/* <SingleCard cardContents={x}/> */}
 
+                      <EditHeadingPanel cardContents={JSON.parse(this.state.stateMenuConfig).cards} headingIndex={0} isNewItem={true} _onCloseHeadingPanel={this._onCloseHeadingPanel} _headingSave={this._headingSave} />
+                      <EditLinkPanel cardContents={JSON.parse(this.state.stateMenuConfig).cards} headingIndex={0} linkIndex={0} isNewItem={true} _onCloseLinkPanel={this._onCloseLinkPanel} />
                     </div>
                   </div>
                   {/* END mega menu content */}
-                </div>
-                {/* <div className={styles.megaMenu}>
-                    <div className={styles.container}>
-                      <div className={`ms-Grid-row ms-bgColor-themeDark ms-fontColor-white ${styles.row}`}>
-                        <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
-                          <span className="ms-font-xl ms-fontColor-white">Welcome to SharePoint!</span>
-                          <p className="ms-font-l ms-fontColor-white">Customize SharePoint experiences using Web Parts.</p>
-                          <p className="ms-font-l ms-fontColor-white">{escape(this.props.description)}</p>
-                          <a href="https://aka.ms/spfx" className={styles.button}>
-                            <span className={styles.label}>Learn more</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
               </Panel>
+              {/* <AllCards cardContents={JSON.parse(this.state.stateMenuConfig).cards} isEditModetmp={_isEditMode} _addHeading={this._addHeading} /> */}
       </div>
     );
+  }
+@autobind
+  public _editHeading( showHeadingPanel:boolean, headingID: number, headingTitle: string): void {
+    this.state.editHeading.showHeadingPanel = true;
+    this.state.editHeading.headingID = headingID;
+    this.state.editHeading.headingTitle = headingTitle;
+    this.setState(this.state);
+  }
+  @autobind
+  public _editLink(showLinkPanel:boolean, linkID: number, headingID: number, linkTitle: string, linkUrl: string): void {
+    this.state.editLink.showLinkPanel = true;
+    this.state.editLink.headingID = headingID;
+    this.state.editLink.linkID = linkID;
+    this.state.editLink.linkTitle = linkTitle;
+    this.state.editLink.linkUrl = linkUrl;
+    
+    this.setState(this.state);
+  }
+
+  public _headingSave():void{
+    //headingValue:string
+    // alert("method called" + {headingValue});
+    alert("method called");
+    
+  }
+  public _addLink(): void {
+    this.state.editLink.showLinkPanel = true;
+    this.state.editLink.headingID = 0;
+    this.state.editLink.linkID = 0;
+    this.state.editLink.linkTitle = "";
+    this.state.editLink.linkUrl = "";
+    this.setState(this.state);
+  }
+  public _addHeading(): void {
+    this.state.editHeading.showHeadingPanel = true;
+    this.state.editHeading.headingID = 0;
+    this.state.editHeading.headingTitle = "";
+    this.setState(this.state);
+  }
+
+  public _onCloseHeadingPanel(): void {
+    this.state.editHeading.showHeadingPanel = false;
+    this.setState(this.state);
+  }
+  public _onCloseLinkPanel(): void {
+    this.state.editLink.showLinkPanel = false;
+    this.setState(this.state);
   }
 }
