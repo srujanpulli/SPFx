@@ -197,16 +197,20 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }
 
-class EditHeadingPanel extends React.Component<{cardContents, isNewItem, headingIndex, _onCloseHeadingPanel: () => void, _headingSave(headingValue: string): void}, any> {
+class EditHeadingPanel extends React.Component<{cardContents, isNewItem, headingIndex, _onCloseHeadingPanel: () => void, _headingSave(configOptionstmp, isNewItem:boolean, headingKey: number, headingValue: string): void}, any> {
       public constructor(props: any) {
         super(props);
         if(this.props.isNewItem)
         {
-          this.state = { headingValue : ""};
+          this.state = {  headingValue : "",
+          headingKey : this.props.headingIndex,
+          isNewItem: this.props.isNewItem};
         }
         else
         {
-          this.state = { headingValue : this.props.cardContents[this.props.headingIndex].heading};
+          this.state = {  headingValue : this.props.cardContents[this.props.headingIndex].heading,
+          headingKey : this.props.headingIndex,
+          isNewItem: this.props.isNewItem};
         }
         this.handleClick = this.handleClick.bind(this);
       }
@@ -238,7 +242,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
       }
 
       handleClick(): void {
-        this.props._headingSave(this.state.headingValue);
+        this.props._headingSave(this.props.cardContents,this.state.isNewItem, this.state.headingKey, this.state.headingValue);
       }
     
       @autobind
@@ -250,6 +254,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
               // onClick={ this.props._headingSave(this.state.headingValue) }
               onClick={this.handleClick}
               style={ { 'marginRight': '8px' } }
+              disabled={this.state.headingValue == "" ? true : false}
             >
               Save
             </PrimaryButton>
@@ -262,13 +267,15 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
         );
       }
     }// END Heading Panel
-    class EditLinkPanel extends React.Component<{cardContents, isNewItem, headingIndex, linkIndex, _onCloseLinkPanel: () => void, _addLinkSave(headingValue: string): void},any> {
+    class EditLinkPanel extends React.Component<{cardContents, isNewItem, headingIndex, linkIndex, _onCloseLinkPanel: () => void, _addLinkSave(isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string): void},any> {
       public constructor(props: any) {
         super(props);
         if(this.props.isNewItem)
         {
           this.state = {  headingValue  : this.props.cardContents[this.props.headingIndex].heading,
-                          linkText : "", linkUrl: ""};
+                          linkText : "", 
+                          linkUrl: "",
+                          iconName:""};
         }
         else
         {
@@ -283,7 +290,8 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
         this.handleClick = this.handleClick.bind(this);
       }
       handleClick(): void {
-        this.props._addLinkSave(this.state.headingValue);
+        //isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string
+        this.props._addLinkSave(this.props.isNewItem, this.props.headingIndex, this.state.headingValue, this.props.linkIndex, this.state.linkText, this.state.linkUrl, this.state.iconName);
       }
       public render() {
         return (<div className={`ms-Grid-row  ${styles.row}`}>
@@ -305,6 +313,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                             required={ true }
                             placeholder='Enter Heading'
                             value={this.state.linkText}
+                            onChanged={(value: string) => { this.setState({linkText : value});} }                            
                             onGetErrorMessage = {(value) => value.length > 0
                               ? ''
                               : `This field is required.`}
@@ -314,6 +323,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                             prefix="https://"
                             placeholder='Enter Heading'
                             value={this.state.linkUrl}
+                            onChanged={(value: string) => { this.setState({linkUrl : value});} }                            
                             onGetErrorMessage = {(value) => value.length > 0
                               ? ''
                               : `This field is required.`}
@@ -322,6 +332,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                             required={ true }
                             placeholder='Type an icon'
                             value={this.state.iconName}
+                            onChanged={(value: string) => { this.setState({iconName : value});} }                            
                             onGetErrorMessage = {(value) => value.length > 0
                               ? ''
                               : `This field is required.`}
@@ -338,6 +349,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             <PrimaryButton
               onClick={ this.props._onCloseLinkPanel }
               style={ { 'marginRight': '8px' } }
+              disabled = {(this.state.linkText == "" || this.state.linkUrl == ""|| this.state.iconName =="") ? true : false}
             >
               Save
             </PrimaryButton>
@@ -401,12 +413,25 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
   //   this.setState(this.state);
   // }
 
-  public _headingSave(headingValue:string) : void {
-    // alert();
-    alert("method called" + headingValue);
+  public _headingSave(configOptions ,isNewItem:boolean, headingKey:number, headingValue:string) : void {
+    // alert("method called" + headingValue + isNewItem + headingKey);
+    var configOptionstmp = configOptions;
+    var Card = { heading: headingValue, 
+                    links :[{ iconName:"addFriend",
+                        link:"https://spwestpros.blogspot.com",
+                        name:"Sample link"}]};
+          
+            if(isNewItem)
+            {
+              configOptionstmp.push(Card);
+            }
+            else
+            {
+              configOptions[headingKey].heading = headingValue;
+            }
+    this.props.save(JSON.stringify(configOptions));
   }
-  public _addLinkSave(headingValue:string) : void {
-    // alert();
+  public _addLinkSave(isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string) : void {
     alert("method called" + headingValue);
   }
   public _addLink(headingID: number): void {
