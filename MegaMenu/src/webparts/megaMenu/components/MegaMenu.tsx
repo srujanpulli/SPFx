@@ -30,7 +30,8 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         linkID: 0,
         headingID: 0,    
         linkTitle: "",
-        linkUrl: ""
+        linkUrl: "",
+        iconName: ""
       },
       };
     this._addHeading = this._addHeading.bind(this);
@@ -49,14 +50,14 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
     var _isHeadingPanelOpen = this.state.editHeading.showHeadingPanel;
     var _isLinkPanelOpen = this.state.editLink.showLinkPanel
 
-    class SingleHeader extends React.Component<{headingKey, name, isEditModetmp, _editHeading:(headingIndex:number) => void}> {
+    class SingleHeader extends React.Component<{cardContents, headingKey, isEditModetmp, _editHeading:(headingIndex:number) => void}> {
       public render() {
         if(this.props.isEditModetmp)
         {
           return (
             <div className={`ms-Grid-row ${styles.hoverBorder}`}>
               <div className="ms-Grid-col ms-lg8">
-                <h1 className={styles.heading}>{this.props.name}</h1>
+                <h1 className={styles.heading}>{this.props.cardContents[this.props.headingKey].heading}</h1>
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
               <IconButton iconProps={ { iconName: 'Edit' } } title='Edit' ariaLabel='Edit' onClick={() => this.props._editHeading(this.props.headingKey)}  />
@@ -65,26 +66,26 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
               <IconButton iconProps={ { iconName: 'Cancel' } } title='Cancel' ariaLabel='Delete' />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-              <IconButton iconProps={ { iconName: 'ChevronLeftSmall' } } title='Move left' ariaLabel='Move left'  />
+              <IconButton iconProps={ { iconName: 'ChevronLeftSmall' } } title='Move left' ariaLabel='Move left' disabled={(this.props.headingKey == 0 ? true : false)}/>
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-              <IconButton iconProps={ { iconName: 'ChevronRightSmall' } } title='Move right' ariaLabel='Move right' />
+              <IconButton iconProps={ { iconName: 'ChevronRightSmall' } } title='Move right' ariaLabel='Move right'  disabled={(this.props.headingKey == this.props.cardContents.length - 1 ? true : false)}/>
               </div>
           </div>
           );
         }else{
-          return <h1 className={styles.heading}>{this.props.name}</h1>;
+          return <h1 className={styles.heading}>{this.props.cardContents[this.props.headingKey]}</h1>;
         }
       }
     }
 
-    class SingleLink extends React.Component<{url, iconName, name, isEditModetmp, headingKey, linkKey, _editLink:(headingIndex:number, linkIndex:number) => void}> {
+    class SingleLink extends React.Component<{links, url, iconName, name, isEditModetmp, headingKey, linkKey, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void}> {
       public constructor(props: any) {
         super(props);
         this.handleSaveLinkClick = this.handleSaveLinkClick.bind(this);
       }
-      handleSaveLinkClick(headkingKey:number, linkKey:number): void {
-        this.props._editLink(headkingKey,linkKey);
+      handleSaveLinkClick(headkingKey:number, linkKey:number, iconName:string): void {
+        this.props._editLink(headkingKey,linkKey, iconName);
       }
       public render() {
         if(this.props.isEditModetmp)
@@ -96,16 +97,16 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                <ActionButton data-automation-id='test' href={this.props.url} target="_blank" iconProps={ { iconName: this.props.iconName } } disabled={ false } >{this.props.name}</ActionButton>
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-                <IconButton iconProps={ { iconName: 'Edit' } } title='Edit' ariaLabel='Edit' onClick={() => this.handleSaveLinkClick(this.props.headingKey, this.props.linkKey)} />
+                <IconButton iconProps={ { iconName: 'Edit' } } title='Edit' ariaLabel='Edit' onClick={() => this.handleSaveLinkClick(this.props.headingKey, this.props.linkKey, this.props.iconName)} />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
                 <IconButton iconProps={ { iconName: 'Cancel' } } title='Delete' ariaLabel='Delete' />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-                <IconButton iconProps={ { iconName: 'ChevronUpSmall' } } title='Move Up' ariaLabel='Move Up'  />
+                <IconButton iconProps={ { iconName: 'ChevronUpSmall' } } title='Move Up' ariaLabel='Move Up' disabled={(this.props.linkKey == 0 ? true : false)} />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-                <IconButton iconProps={ { iconName: 'ChevronDownSmall' } } title='Move Down' ariaLabel='Move Down' />
+                <IconButton iconProps={ { iconName: 'ChevronDownSmall' } } title='Move Down' ariaLabel='Move Down' disabled={(this.props.linkKey == this.props.links.length-1 ? true : false)}/>
               </div>
           </div>
           );
@@ -115,19 +116,29 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }    
 
-    class LinkGroup extends React.Component<{links,isEditModetmp, headingKey, _editLink:(headingIndex:number, linkIndex:number) => void}> {
+    class LinkGroup extends React.Component<{ links,isEditModetmp, headingKey,  _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void}> {
       
       public render() {
         let allLinks = this.props.links;
         let allLinksInGroup = allLinks.map((link, index) =>
           // Correct! Key should be specified inside the array.
-          <li><SingleLink headingKey={this.props.headingKey} linkKey={index} name={link.name} url={link.link} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink}/></li>
+          <li><SingleLink links={this.props.links} headingKey={this.props.headingKey} linkKey={index} name={link.name} url={link.link} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink}/></li>
         );
-      return (<ul className={`${styles.links}`}>{allLinksInGroup}</ul>);
+      if(this.props.isEditModetmp)        
+      {
+        return (<ul className={`${styles.links}`}>{allLinksInGroup}
+        <ActionButton className={styles.redFont} iconProps={ { iconName: 'Add' }} text="Add a new link" onClick={() => this.props._addLink(this.props.headingKey)} />
+      </ul>);
+      }
+      else
+      {
+        return (<ul className={`${styles.links}`}>{allLinksInGroup}</ul>);
+      }
+      
       }
     }    
 
-    class SingleCard extends React.Component<{headingKey, cardContents, isEditModetmp, _addLink:(headingIndex:number) => void, _editHeading:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number) => void}> {
+    class SingleCard extends React.Component<{headingKey, cardContents, isEditModetmp, _addLink:(headingIndex:number) => void, _editHeading:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void}> {
 
       constructor(props)
       {
@@ -139,17 +150,16 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         {
           return (
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
-              <SingleHeader headingKey={this.props.headingKey} name={this.props.cardContents.heading} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} />
-              <LinkGroup headingKey={this.props.headingKey} links={this.props.cardContents.links} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink}/>
-              <ActionButton className={styles.redFont} iconProps={ { iconName: 'Add' }} text="Add a new link" onClick={() => this.props._addLink(this.props.headingKey)} />
+              <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} />
+              <LinkGroup headingKey={this.props.headingKey} links={this.props.cardContents[this.props.headingKey].links} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink}/>
             </div>);
         }
         else
         {
           return (
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
-              <SingleHeader headingKey={this.props.headingKey} name={this.props.cardContents.heading} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading}/>
-              <LinkGroup headingKey={this.props.headingKey} links={this.props.cardContents.links} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink}/>
+              <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading}/>
+              <LinkGroup headingKey={this.props.headingKey} links={this.props.cardContents[this.props.headingKey].links} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink}/>
             </div>);
         }
 
@@ -157,7 +167,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
     }    
 
-    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number) => void}> {
+    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void}> {
       constructor(props)
       {
         super(props)
@@ -166,7 +176,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       public render() {
         let cards = this.props.cardContents;
         let allCardsInContainer = cards.map((card, index) =>
-          <SingleCard headingKey={index} cardContents={card} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink}/>
+          <SingleCard headingKey={index} cardContents={cards} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink}/>
         );
 
         if(this.props.isEditModetmp)
@@ -265,7 +275,8 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
           this.state = { 
                         headingValue  : this.props.cardContents[this.props.headingIndex].heading,
                         linkText      : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].name,
-                        linkUrl       : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].link
+                        linkUrl       : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].link,
+                        iconName      : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].iconName,
           };
         }
 
@@ -303,6 +314,14 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                             prefix="https://"
                             placeholder='Enter Heading'
                             value={this.state.linkUrl}
+                            onGetErrorMessage = {(value) => value.length > 0
+                              ? ''
+                              : `This field is required.`}
+                          />
+                          <TextField label="Icon"
+                            required={ true }
+                            placeholder='Type an icon'
+                            value={this.state.iconName}
                             onGetErrorMessage = {(value) => value.length > 0
                               ? ''
                               : `This field is required.`}
@@ -399,13 +418,12 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     this.state.editLink.linkUrl = "";
     this.setState(this.state);
   }
-  public _editLink(headingID: number, linkID: number): void {
+  public _editLink(headingID: number, linkID: number, iconName: string): void {
     this.state.editLink.showLinkPanel = true;
     this.state.editLink.isNewItem = false;
     this.state.editLink.headingID = headingID;
     this.state.editLink.linkID = linkID;
-    // this.state.editLink.linkTitle = "";
-    // this.state.editLink.linkUrl = "";
+    this.state.editLink.iconName = iconName,  
     this.setState(this.state);
   }
   public _addHeading(): void {

@@ -13,6 +13,7 @@ export interface IMegaMenuState {
     linkID: number,
     headingID: number,    
     linkTitle: string,
-    linkUrl: string
+    linkUrl: string,
+    iconName: string
   }
 }
