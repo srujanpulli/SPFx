@@ -37,11 +37,13 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
     this._addHeading = this._addHeading.bind(this);
     this._editHeading = this._editHeading.bind(this);
     this._addLink = this._addLink.bind(this);
+    this._editLink = this._editLink.bind(this)
+    
     this._onCloseHeadingPanel = this._onCloseHeadingPanel.bind(this) ;
     this._onCloseLinkPanel = this._onCloseLinkPanel.bind(this) ;
+
     this._headingSave = this._headingSave.bind(this)
     this._addLinkSave = this._addLinkSave.bind(this)
-    this._editLink = this._editLink.bind(this)
     
   }
 
@@ -74,7 +76,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
           </div>
           );
         }else{
-          return <h1 className={styles.heading}>{this.props.cardContents[this.props.headingKey]}</h1>;
+          return <h1 className={styles.heading}>{this.props.cardContents[this.props.headingKey].heading}</h1>;
         }
       }
     }
@@ -174,7 +176,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         this.setState({});       
       }
       public render() {
-        let cards = this.props.cardContents;
+        let cards = this.props.cardContents.cards;
         let allCardsInContainer = cards.map((card, index) =>
           <SingleCard headingKey={index} cardContents={cards} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink}/>
         );
@@ -186,7 +188,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
             <PrimaryButton iconProps={ { iconName: 'Add' }} onClick={ this.props._addHeading} >
               Add a new heading..
             </PrimaryButton>
-      </div>);
+                  </div>);
         }
         else
         {
@@ -208,7 +210,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
         }
         else
         {
-          this.state = {  headingValue : this.props.cardContents[this.props.headingIndex].heading,
+          this.state = {  headingValue : this.props.cardContents.cards[this.props.headingIndex].heading,
           headingKey : this.props.headingIndex,
           isNewItem: this.props.isNewItem};
         }
@@ -272,7 +274,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
         super(props);
         if(this.props.isNewItem)
         {
-          this.state = {  headingValue  : this.props.cardContents[this.props.headingIndex].heading,
+          this.state = {  headingValue  : this.props.cardContents.cards[this.props.headingIndex].heading,
                           linkText : "", 
                           linkUrl: "",
                           iconName:""};
@@ -280,10 +282,10 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
         else
         {
           this.state = { 
-                        headingValue  : this.props.cardContents[this.props.headingIndex].heading,
-                        linkText      : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].name,
-                        linkUrl       : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].link,
-                        iconName      : this.props.cardContents[this.props.headingIndex].links[this.props.linkIndex].iconName,
+                        headingValue  : this.props.cardContents.cards[this.props.headingIndex].heading,
+                        linkText      : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].name,
+                        linkUrl       : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].link,
+                        iconName      : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].iconName,
           };
         }
 
@@ -365,7 +367,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     }// END Heading Panel
     return (
       <div className={styles.megaMenu}>
-            <PrimaryButton checked={this.state.showPanel} className={styles.megaButton} onClick={ () => this.setState({ showPanel: true }) } ><div className={styles.burgerBar} ></div></PrimaryButton>
+            <PrimaryButton className={styles.megaButton} onClick={ () => this.setState({ showPanel: true }) } ><div className={styles.burgerBar} ></div></PrimaryButton>
             <Panel
                 isOpen={ this.state.showPanel }
                 type={ PanelType.smallFluid }
@@ -387,31 +389,17 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
                     <div className={styles.container}>
-                      
-                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig).cards} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} />
-                      {/* <SingleCard cardContents={x}/> */}
-
-                      <EditHeadingPanel cardContents={JSON.parse(this.state.stateMenuConfig).cards} headingIndex={this.state.editHeading.headingID} isNewItem={this.state.editHeading.isNewItem} _onCloseHeadingPanel={this._onCloseHeadingPanel} _headingSave={this._headingSave} />
-                      <EditLinkPanel cardContents={JSON.parse(this.state.stateMenuConfig).cards} headingIndex={this.state.editLink.headingID} linkIndex={this.state.editLink.linkID} isNewItem={this.state.editLink.isNewItem} _onCloseLinkPanel={this._onCloseLinkPanel} _addLinkSave={this._addLinkSave} />
+                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} />
+                      <EditHeadingPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editHeading.headingID} isNewItem={this.state.editHeading.isNewItem} _onCloseHeadingPanel={this._onCloseHeadingPanel} _headingSave={this._headingSave} />
+                      <EditLinkPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editLink.headingID} linkIndex={this.state.editLink.linkID} isNewItem={this.state.editLink.isNewItem} _onCloseLinkPanel={this._onCloseLinkPanel} _addLinkSave={this._addLinkSave} />
                     </div>
                   </div>
                   {/* END mega menu content */}
               </Panel>
-              {/* <AllCards cardContents={JSON.parse(this.state.stateMenuConfig).cards} isEditModetmp={_isEditMode} _addHeading={this._addHeading} /> */}
+
       </div>
     );        
   }
-
-  // @autobind
-  // public _editLink(showLinkPanel:boolean, linkID: number, headingID: number, linkTitle: string, linkUrl: string): void {
-  //   this.state.editLink.showLinkPanel = true;
-  //   this.state.editLink.headingID = headingID;
-  //   this.state.editLink.linkID = linkID;
-  //   this.state.editLink.linkTitle = linkTitle;
-  //   this.state.editLink.linkUrl = linkUrl;
-    
-  //   this.setState(this.state);
-  // }
 
   public _headingSave(configOptions ,isNewItem:boolean, headingKey:number, headingValue:string) : void {
     // alert("method called" + headingValue + isNewItem + headingKey);
@@ -423,12 +411,13 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
           
             if(isNewItem)
             {
-              configOptionstmp.push(Card);
+              configOptionstmp.cards.push(Card);
             }
             else
             {
               configOptions[headingKey].heading = headingValue;
             }
+    this.state.editHeading.showHeadingPanel = false;   
     this.props.save(JSON.stringify(configOptions));
   }
   public _addLinkSave(isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string) : void {
