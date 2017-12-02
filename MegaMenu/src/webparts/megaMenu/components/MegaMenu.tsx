@@ -47,6 +47,9 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
     
     this._moveHeading = this._moveHeading.bind(this);
     this._moveLink = this._moveLink.bind(this);
+
+    this._deleteHeading = this._deleteHeading.bind(this);
+    this._deleteLink = this._deleteLink.bind(this);
   }
 
   public render(): React.ReactElement<IMegaMenuProps> {
@@ -54,7 +57,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
     var _isHeadingPanelOpen = this.state.editHeading.showHeadingPanel;
     var _isLinkPanelOpen = this.state.editLink.showLinkPanel
 
-    class SingleHeader extends React.Component<{cardContents, headingKey, isEditModetmp, _editHeading:(headingIndex:number) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void}> {
+    class SingleHeader extends React.Component<{cardContents, headingKey, isEditModetmp, _editHeading:(headingIndex:number) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void}> {
       public render() {
         if(this.props.isEditModetmp)
         {
@@ -67,7 +70,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
               <IconButton iconProps={ { iconName: 'Edit' } } title='Edit' ariaLabel='Edit' onClick={() => this.props._editHeading(this.props.headingKey)}  />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-              <IconButton iconProps={ { iconName: 'Cancel' } } title='Cancel' ariaLabel='Delete' />
+              <IconButton iconProps={ { iconName: 'Cancel' } } title='Delete' ariaLabel='Delete' onClick={() => this.props._deleteHeading(this.props.cardContents, this.props.headingKey)}/>
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
               <IconButton iconProps={ { iconName: 'ChevronLeftSmall' } } title='Move left' ariaLabel='Move left' onClick={() => this.props._moveHeading(this.props.cardContents, true,this.props.headingKey)}  disabled={(this.props.headingKey == 0 ? true : false)}/>
@@ -83,18 +86,21 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }
 
-    class SingleLink extends React.Component<{cardContents, url, iconName, name, isEditModetmp, headingKey, linkKey, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void}> {
+    class SingleLink extends React.Component<{cardContents, url, iconName, name, isEditModetmp, headingKey, linkKey, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
       public constructor(props: any) {
         super(props);
         this.handleSaveLinkClick = this.handleSaveLinkClick.bind(this);
         this.handleMoveLinkClick = this.handleMoveLinkClick.bind(this);
-        
+        this.handleDeleteLinkClick = this.handleDeleteLinkClick.bind(this);        
       }
       handleSaveLinkClick(headkingKey:number, linkKey:number, iconName:string): void {
         this.props._editLink(headkingKey,linkKey, iconName);
       }
       handleMoveLinkClick(cardContents, moveDown:boolean, headkingKey:number, linkKey:number): void {
         this.props._moveLink(cardContents,moveDown,headkingKey,linkKey);
+      }
+      handleDeleteLinkClick(headkingKey:number, linkKey:number): void {
+        this.props._deleteLink(this.props.cardContents, headkingKey,linkKey);
       }
       public render() {
         if(this.props.isEditModetmp)
@@ -109,7 +115,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                 <IconButton iconProps={ { iconName: 'Edit' } } title='Edit' ariaLabel='Edit' onClick={() => this.handleSaveLinkClick(this.props.headingKey, this.props.linkKey, this.props.iconName)} />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
-                <IconButton iconProps={ { iconName: 'Cancel' } } title='Delete' ariaLabel='Delete' />
+                <IconButton iconProps={ { iconName: 'Cancel' } } title='Delete' ariaLabel='Delete'  onClick={() => this.handleDeleteLinkClick(this.props.headingKey, this.props.linkKey)} />
               </div>
               <div className={`ms-Grid-col ms-lg1 ${styles.iconPaddingTop5px}`}>
                 <IconButton iconProps={ { iconName: 'ChevronUpSmall' } } title='Move Up' ariaLabel='Move Up' disabled={(this.props.linkKey == 0 ? true : false)} onClick={() => this.handleMoveLinkClick(this.props.cardContents,false, this.props.headingKey, this.props.linkKey)} />
@@ -125,13 +131,13 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }    
 
-    class LinkGroup extends React.Component<{ cardContents,isEditModetmp, headingKey,  _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void}> {
+    class LinkGroup extends React.Component<{ cardContents,isEditModetmp, headingKey,  _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
       
       public render() {
         let allLinks = this.props.cardContents.cards[this.props.headingKey].links;
         let allLinksInGroup = allLinks.map((link, index) =>
           // Correct! Key should be specified inside the array.
-          <li><SingleLink cardContents={this.props.cardContents} headingKey={this.props.headingKey} linkKey={index} name={link.name} url={link.link} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _moveLink={this.props._moveLink}/></li>
+          <li><SingleLink cardContents={this.props.cardContents} headingKey={this.props.headingKey} linkKey={index} name={link.name} url={link.link} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/></li>
         );
       if(this.props.isEditModetmp)        
       {
@@ -147,7 +153,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }    
 
-    class SingleCard extends React.Component<{headingKey, cardContents, isEditModetmp, _addLink:(headingIndex:number) => void, _editHeading:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void}> {
+    class SingleCard extends React.Component<{headingKey, cardContents, isEditModetmp, _addLink:(headingIndex:number) => void, _editHeading:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteHeading:(cardContents, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
 
       constructor(props)
       {
@@ -159,16 +165,16 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         {
           return (
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
-              <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} _moveHeading={this.props._moveHeading} />
-              <LinkGroup headingKey={this.props.headingKey} cardContents={this.props.cardContents} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink} _moveLink={this.props._moveLink}/>
+              <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} _moveHeading={this.props._moveHeading} _deleteHeading={this.props._deleteHeading} />
+              <LinkGroup headingKey={this.props.headingKey} cardContents={this.props.cardContents} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/>
             </div>);
         }
         else
         {
           return (
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
-              <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} _moveHeading={this.props._moveHeading}/>
-              <LinkGroup headingKey={this.props.headingKey} cardContents={this.props.cardContents} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink} _moveLink={this.props._moveLink}/>
+              <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} _moveHeading={this.props._moveHeading} _deleteHeading={this.props._deleteHeading}/>
+              <LinkGroup headingKey={this.props.headingKey} cardContents={this.props.cardContents} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/>
             </div>);
         }
 
@@ -176,7 +182,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
     }    
 
-    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void}> {
+    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
       constructor(props)
       {
         super(props)
@@ -186,7 +192,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         // let cards = this.props.cardContents.cards;
         let cardContents = this.props.cardContents;
         let allCardsInContainer = cardContents.cards.map((card, index) =>
-          <SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink}/>
+          <SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />
         );
 
         if(this.props.isEditModetmp)
@@ -397,7 +403,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
                     <div className={styles.container}>
-                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} _moveHeading={this._moveHeading} _moveLink={this._moveLink} />
+                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} _moveHeading={this._moveHeading} _moveLink={this._moveLink} _deleteHeading={this._deleteHeading} _deleteLink={this._deleteLink}/>
                       <EditHeadingPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editHeading.headingID} isNewItem={this.state.editHeading.isNewItem} _onCloseHeadingPanel={this._onCloseHeadingPanel} _headingSave={this._headingSave} />
                       <EditLinkPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editLink.headingID} linkIndex={this.state.editLink.linkID} isNewItem={this.state.editLink.isNewItem} _onCloseLinkPanel={this._onCloseLinkPanel} _addLinkSave={this._addLinkSave} />
                     </div>
@@ -432,6 +438,16 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     configOptions.cards[headingKey].links[tmpLinkValue - 1] = tmpLink;
     
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
+    this.props.save(JSON.stringify(configOptions));
+  }
+  public _deleteHeading(configOptions, headingKey:number ) :void{
+    configOptions.cards.splice(headingKey,1);
+    this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
+    this.props.save(JSON.stringify(configOptions));
+  }
+  public _deleteLink(configOptions, headingKey:number, linkKey:number ) :void{
+    configOptions.cards[headingKey].links.splice(linkKey,1);    
+    this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
     this.props.save(JSON.stringify(configOptions));
   }
   public _headingSave(configOptions ,isNewItem:boolean, headingKey:number, headingValue:string) : void {
