@@ -81,7 +81,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
           </div>
           );
         }else{
-          return <h1 className={styles.heading}>{this.props.cardContents[this.props.headingKey].heading}</h1>;
+          return <h1 className={styles.heading}>{this.props.cardContents.cards[this.props.headingKey].heading}</h1>;
         }
       }
     }
@@ -164,18 +164,18 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         if(this.props.isEditModetmp)
         {
           return (
-            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
+            <span>        
               <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} _moveHeading={this.props._moveHeading} _deleteHeading={this.props._deleteHeading} />
               <LinkGroup headingKey={this.props.headingKey} cardContents={this.props.cardContents} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/>
-            </div>);
+            </span>);
         }
         else
         {
           return (
-            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">        
+            <span >        
               <SingleHeader cardContents={this.props.cardContents} headingKey={this.props.headingKey} isEditModetmp={this.props.isEditModetmp} _editHeading={this.props._editHeading} _moveHeading={this.props._moveHeading} _deleteHeading={this.props._deleteHeading}/>
               <LinkGroup headingKey={this.props.headingKey} cardContents={this.props.cardContents} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _addLink={this.props._addLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/>
-            </div>);
+            </span>);
         }
 
       }
@@ -191,14 +191,34 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       public render() {
         // let cards = this.props.cardContents.cards;
         let cardContents = this.props.cardContents;
-        let allCardsInContainer = cardContents.cards.map((card, index) =>
-          <SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />
-        );
-
+        // let allCardsInContainer = cardContents.cards.map((card, index) =>
+        //   <SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />
+        // );
+        let Col1 = [];
+        let Col2 = [];
+        let Col3 = [];
+        cardContents.cards.forEach((card, index) => {
+   
+        switch(index % 3) {
+          case 0:
+            Col1.push(<SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
+            break;
+          case 1:
+            Col2.push(<SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
+            break;
+          case 2:
+            Col3.push(<SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
+          break;
+          default:break;          
+          }
+        });
         if(this.props.isEditModetmp)
         {
           return (<div className={`ms-Grid-row  ${styles.row}`}>
-            {allCardsInContainer}
+            {/* {allCardsInContainer} */}
+            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
+            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col2}</div>
+            <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col3}</div>
             <PrimaryButton iconProps={ { iconName: 'Add' }} onClick={ this.props._addHeading} >
               Add a new heading..
             </PrimaryButton>
@@ -207,7 +227,9 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         else
         {
           return (<div className={`ms-Grid-row  ${styles.row}`}>
-            {allCardsInContainer}
+              <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
+              <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col2}</div>
+              <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col3}</div>
             </div>);
         }
       }
