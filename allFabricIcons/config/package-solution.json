@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "all-fabric-icons-client-side-solution",
+    "id": "5f4d68a7-ec64-4ae5-ba85-e179254632d5",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/all-fabric-icons.sppkg"
+  }
+}

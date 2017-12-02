@@ -1,0 +1,18 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "all-fabric-icons-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/allFabricIcons/AllFabricIconsWebPart.js",
+          "manifest": "./src/webparts/allFabricIcons/AllFabricIconsWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "AllFabricIconsWebPartStrings": "lib/webparts/allFabricIcons/loc/{locale}.js"
+  }
+}
