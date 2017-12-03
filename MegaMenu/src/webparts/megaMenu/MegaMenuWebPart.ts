@@ -9,6 +9,7 @@ import {
 
 import * as strings from 'MegaMenuWebPartStrings';
 import MegaMenu from './components/MegaMenu';
+import PlaceHolder from './PlaceHolder';
 import { IMegaMenuProps } from './components/IMegaMenuProps';
 
 export interface IMegaMenuWebPartProps {
@@ -22,7 +23,7 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
     this.render();
   }
   public render(): void {
-    const element: React.ReactElement<IMegaMenuProps > = React.createElement(
+      const element: React.ReactElement<IMegaMenuProps > = React.createElement(
       MegaMenu,
       {
         // menuConfig: this.properties.menuConfig
@@ -31,6 +32,7 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
         isEditMode: (this.displayMode == 2) ? true : false
       }
     );
+    const placeHolder: React.ReactElement<{}> = React.createElement(PlaceHolder);
 
     if(window.location.href.indexOf("workbench.") > -1)
     {
@@ -39,10 +41,8 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
     else
     {
       ReactDom.render(element, document.getElementsByClassName("ms-siteLogoContainerOuter")[0]); //in actual site (replace on logo container)
-    }
-    //ReactDom.render(element, document.getElementsByClassName("commandBar_e788ae32")[0]); //in workbench
-    
-    
+      ReactDom.render(placeHolder, this.domElement);      
+    } 
   }
 
   protected get dataVersion(): Version {

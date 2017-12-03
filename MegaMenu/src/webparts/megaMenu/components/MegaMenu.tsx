@@ -186,7 +186,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
     }    
 
-    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void,_closeMenuPanel:()=>void, _cancelEditMenu:()=> void, _savelEditMenu:(cardContents)=> void},any> {
+    class AllCards extends React.Component<{baseCardContents, cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void,_closeMenuPanel:()=>void, _cancelEditMenu:(baseCardContents)=> void, _savelEditMenu:(cardContents)=> void},any> {
       constructor(props)
       {
         super(props)
@@ -221,7 +221,9 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         });
         if(this.props.isEditModetmp)
         {
-          return (<span><DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={()=>{this.setState({SavePropsshowDialog:true})}} >Cancel</DefaultButton><span className={styles.paddingLeft10px} ><PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this._saveEditMenu} } >Save</PrimaryButton></span>
+          return (<span>
+            <DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={()=>{this.setState({IgnorePropsshowDialog:true})}} >Cancel</DefaultButton><span className={styles.paddingLeft10px} >
+            <PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this.setState({SavePropsshowDialog:true})} } >Save</PrimaryButton></span>
           <div className={`ms-Grid-row  ${styles.row}`}>
             {/* {allCardsInContainer} */}
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
@@ -230,13 +232,14 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
             <PrimaryButton iconProps={ { iconName: 'Add' }} onClick={ this.props._addHeading} >
               Add a new heading..
             </PrimaryButton>
+                {/* Cancel confirmation dialog */}
                       <Dialog
-                          hidden={ !this.state.SavePropsshowDialog }
-                          onDismiss={ () => {this.setState({SavePropsshowDialog:false})} }
+                          hidden={ !this.state.IgnorePropsshowDialog }
+                          onDismiss={ () => {this.setState({IgnorePropsshowDialog:false})} }
                           dialogContentProps={ {
                             type: DialogType.normal,
-                            title: 'Are you sure you want to Save changes',
-                            // subText: '.'
+                            title: 'Cancel confirmation',
+                            subText: 'By clicking "OK" all of your current changes will be lost.'
                           } }
                           modalProps={ {
                             isBlocking: true,
@@ -244,7 +247,26 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                           } }
                         >
                           <DialogFooter>
-                            <PrimaryButton onClick={ this._YesCancelDialog} text='Save' />
+                            <PrimaryButton onClick={ this._YesCancelDialog} text='OK' />
+                            <DefaultButton onClick={ ()=> {this.setState({IgnorePropsshowDialog:false})} } text='Cancel' />
+                          </DialogFooter>
+                        </Dialog>
+                        {/* Save confirmation dialog */}
+                        <Dialog
+                          hidden={ !this.state.SavePropsshowDialog }
+                          onDismiss={ () => {this.setState({SavePropsshowDialog:false})} }
+                          dialogContentProps={ {
+                            type: DialogType.normal,
+                            title: 'Save confirmation',
+                            subText: 'Are you sure you want to save current changes?'
+                          } }
+                          modalProps={ {
+                            isBlocking: true,
+                            containerClassName: 'ms-dialogMainOverride'
+                          } }
+                        >
+                          <DialogFooter>
+                            <PrimaryButton onClick={ this._YesSaveEditMenu} text='Save' />
                             <DefaultButton onClick={ ()=> {this.setState({SavePropsshowDialog:false})} } text='Cancel' />
                           </DialogFooter>
                         </Dialog>
@@ -261,27 +283,24 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
             </div></span>);
         }
       }
-    @autobind
+    @autobind // Readonly mode - just close the dialog
     public _closeMenu():void{
       this.props._closeMenuPanel();
     }
-    @autobind    
-    public _cancelEditMenu(): void {
-      // this.state.SaveProps.showDialog = true; 
-      // alert();
-      // this.setState(SavePropsshowDialog:false)
-      this.props._cancelEditMenu();
-    }
-    @autobind    
-    public _saveEditMenu(): void {
-      // this.props.save(JSON.stringify(cardContents));
-      // this.state.SaveProps.showDialog = false;    
+    // @autobind //Don't do anything, keep editing
+    // public _cancelEditMenu(): void {
+    //   this.props._cancelEditMenu();
+    // }
+    @autobind    //Save current changes
+    public _YesSaveEditMenu(): void {
+      this.setState({SavePropsshowDialog:false});      
+      this.props._savelEditMenu(this.props.cardContents);// Send current state    
     }
 
-    @autobind    
+    @autobind    //Ignore current changes
     public _YesCancelDialog(): void {
-      this.setState({SavePropsshowDialog:false});
-      this.props._cancelEditMenu();
+      this.setState({IgnorePropsshowDialog:false});// Send default props to reset
+      this.props._cancelEditMenu(this.props.baseCardContents);
     }
 
     // public _cancelChangesSuccess(cardContents): void {
@@ -315,7 +334,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                       isOpen={ _isHeadingPanelOpen }
                       type={ PanelType.smallFixedFar }
                       onDismiss={ this.props._onCloseHeadingPanel }
-                      headerText='My Heading Panel'
+                      headerText='Edit Heading'
                       closeButtonAriaLabel='Close'
                       onRenderFooterContent={ this._onRenderFooterContent }
                     >
@@ -369,7 +388,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
           this.state = {  headingValue  : this.props.cardContents.cards[this.props.headingIndex].heading,
                           linkText : "", 
                           linkUrl: "",
-                          iconName:""};
+                          iconName:"Link"};
         }
         else
         {
@@ -393,7 +412,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                       isOpen={ _isLinkPanelOpen }
                       type={ PanelType.smallFixedFar }
                       onDismiss={ this.props._onCloseLinkPanel }
-                      headerText='My Link pane'
+                      headerText='Edit link'
                       closeButtonAriaLabel='Close'
                       onRenderFooterContent={ this._onRenderFooterContentLink }
                     >
@@ -423,14 +442,15 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                               : `This field is required.`}
                           />
                           <TextField label="Icon"
-                            required={ true }
+                            required={ false }
                             placeholder='Type an icon'
                             value={this.state.iconName}
                             onChanged={(value: string) => { this.setState({iconName : value});} }                            
-                            onGetErrorMessage = {(value) => value.length > 0
-                              ? ''
-                              : `This field is required.`}
+                            // onGetErrorMessage = {(value) => value.length > 0
+                            //   ? ''
+                            //   : `This field is required.`}
                           />
+                          <div><a href="https://developer.microsoft.com/en-us/fabric#/styles/icons" target="_blank">Find an icon</a></div>
                     </div>
                     </Panel>
                 </div>);
@@ -443,7 +463,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             <PrimaryButton
               onClick={ this.handleClick }
               style={ { 'marginRight': '8px' } }
-              disabled = {(this.state.linkText == "" || this.state.linkUrl == ""|| this.state.iconName =="") ? true : false}
+              disabled = {(this.state.linkText == "" || this.state.linkUrl == "") ? true : false}
             >
               Save
             </PrimaryButton>
@@ -484,7 +504,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
                     <div className={styles.container}>
-                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} _moveHeading={this._moveHeading} _moveLink={this._moveLink} _deleteHeading={this._deleteHeading} _deleteLink={this._deleteLink} _closeMenuPanel={this._closeMenuPanel} _cancelEditMenu={this._cancelMenuPanel} _savelEditMenu={this._saveMenuPanel}/>
+                      <AllCards baseCardContents={JSON.parse(this.props.menuConfig)} cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} _moveHeading={this._moveHeading} _moveLink={this._moveLink} _deleteHeading={this._deleteHeading} _deleteLink={this._deleteLink} _closeMenuPanel={this._closeMenuPanel} _cancelEditMenu={this._cancelMenuPanel} _savelEditMenu={this._saveMenuPanel}/>
                       <EditHeadingPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editHeading.headingID} isNewItem={this.state.editHeading.isNewItem} _onCloseHeadingPanel={this._onCloseHeadingPanel} _headingSave={this._headingSave} />
                       <EditLinkPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editLink.headingID} linkIndex={this.state.editLink.linkID} isNewItem={this.state.editLink.isNewItem} _onCloseLinkPanel={this._onCloseLinkPanel} _addLinkSave={this._addLinkSave} />
                     </div>
@@ -506,7 +526,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     configOptions.cards[tmpHeadValue - 1] = tmpHead;
     
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    // this.props.save(JSON.stringify(configOptions));
+
   }
   public _moveLink(configOptions, moveDown: boolean, headingKey:number, linkKey:number ) :void{
     var tmpLinkValue = linkKey;
@@ -519,17 +539,17 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     configOptions.cards[headingKey].links[tmpLinkValue - 1] = tmpLink;
     
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    // this.props.save(JSON.stringify(configOptions));
+
   }
   public _deleteHeading(configOptions, headingKey:number ) :void{
     configOptions.cards.splice(headingKey,1);
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
-    // this.props.save(JSON.stringify(configOptions));
+
   }
   public _deleteLink(configOptions, headingKey:number, linkKey:number ) :void{
     configOptions.cards[headingKey].links.splice(linkKey,1);    
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
-    // this.props.save(JSON.stringify(configOptions));
+
   }
   public _headingSave(configOptions ,isNewItem:boolean, headingKey:number, headingValue:string) : void {
     var configOptionstmp = configOptions;
@@ -548,7 +568,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             }
     this.state.editHeading.showHeadingPanel = false;
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    // this.props.save(JSON.stringify(configOptions));
+
   }
   public _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string) : void {
     var configOptionstmp = configOptions;
@@ -566,7 +586,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             }
     this.state.editLink.showLinkPanel = false;
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    // this.props.save(JSON.stringify(configOptions));
+
   }
   public _addLink(headingID: number): void {
     this.state.editLink.showLinkPanel = true;
@@ -613,14 +633,12 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     public _closeMenuPanel(): void {
       this.setState({showPanel:false});
     }
-    public _cancelMenuPanel(): void {
-      // this.state.editLink.showLinkPanel = false;
-      // this.setState(this.state);
-      this.setState({showPanel:false});      
+    public _cancelMenuPanel(baseCardContents): void {
+      this.setState({showPanel:false, stateMenuConfig: JSON.stringify(baseCardContents)});
     }
-    public _saveMenuPanel(): void {
-      // this.state.editLink.showLinkPanel = false;
-      // this.setState(this.state);
+    public _saveMenuPanel(cardContents): void {
+      this.setState({showPanel:false});      
+      this.props.save(JSON.stringify(cardContents));
     }
   
 }
