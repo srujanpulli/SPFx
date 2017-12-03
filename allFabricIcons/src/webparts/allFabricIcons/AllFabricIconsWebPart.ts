@@ -13,6 +13,7 @@ import { IAllFabricIconsProps } from './components/IAllFabricIconsProps';
 
 export interface IAllFabricIconsWebPartProps {
   description: string;
+  allIcons: string;
 }
 
 export default class AllFabricIconsWebPart extends BaseClientSideWebPart<IAllFabricIconsWebPartProps> {
@@ -21,7 +22,8 @@ export default class AllFabricIconsWebPart extends BaseClientSideWebPart<IAllFab
     const element: React.ReactElement<IAllFabricIconsProps > = React.createElement(
       AllFabricIcons,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        allIcons: this.properties.allIcons
       }
     );
 

@@ -3,11 +3,18 @@
     max-width: 700px;
     margin: 0px auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
   }
 
   .row {
-    padding: 20px;
+    padding: 3px;
+    padding-left: 20px;
+    &:hover
+    {
+      background-color: #f0f0f0;
+    }
   }
+
 
   .listItem {
     max-width: 715px;
