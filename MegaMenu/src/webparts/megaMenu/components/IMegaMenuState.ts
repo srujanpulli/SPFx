@@ -6,7 +6,7 @@ export interface IMegaMenuState {
     showHeadingPanel:boolean,
     headingID: number,
     headingTitle: string
-  }
+  };
   editLink:{
     isNewItem:boolean,
     showLinkPanel:boolean,
@@ -15,5 +15,11 @@ export interface IMegaMenuState {
     linkTitle: string,
     linkUrl: string,
     iconName: string
-  }
+  };
+  // SaveProps:{
+  //   showDialog:boolean;
+  // };
+  // IgnoreProps:{
+  //   showDialog:boolean;
+  // };
 }

@@ -8,6 +8,7 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 import { DefaultButton, CompoundButton, ActionButton, Button, IconButton, PrimaryButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
+import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { valid, link } from 'glamor';
 
 export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuState> {
@@ -32,7 +33,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         linkTitle: "",
         linkUrl: "",
         iconName: ""
-      },
+      }
       };
     this._addHeading = this._addHeading.bind(this);
     this._editHeading = this._editHeading.bind(this);
@@ -50,8 +51,11 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
     this._deleteHeading = this._deleteHeading.bind(this);
     this._deleteLink = this._deleteLink.bind(this);
-  }
 
+    this._closeMenuPanel = this._closeMenuPanel.bind(this);
+    this._cancelMenuPanel = this._cancelMenuPanel.bind(this);
+    this._saveMenuPanel = this._saveMenuPanel.bind(this);
+  }
   public render(): React.ReactElement<IMegaMenuProps> {
     var _isEditMode = this.props.isEditMode;
     var _isHeadingPanelOpen = this.state.editHeading.showHeadingPanel;
@@ -182,11 +186,14 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
     }    
 
-    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
+    class AllCards extends React.Component<{cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void,_closeMenuPanel:()=>void, _cancelEditMenu:()=> void, _savelEditMenu:(cardContents)=> void},any> {
       constructor(props)
       {
         super(props)
-        this.setState({});       
+        this.state = {
+          SavePropsshowDialog:false,
+          IgnorePropsshowDialog:false
+        };
       }
       public render() {
         // let cards = this.props.cardContents.cards;
@@ -214,7 +221,8 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         });
         if(this.props.isEditModetmp)
         {
-          return (<div className={`ms-Grid-row  ${styles.row}`}>
+          return (<span><DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={()=>{this.setState({SavePropsshowDialog:true})}} >Cancel</DefaultButton><span className={styles.paddingLeft10px} ><PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this._saveEditMenu} } >Save</PrimaryButton></span>
+          <div className={`ms-Grid-row  ${styles.row}`}>
             {/* {allCardsInContainer} */}
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col2}</div>
@@ -222,17 +230,65 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
             <PrimaryButton iconProps={ { iconName: 'Add' }} onClick={ this.props._addHeading} >
               Add a new heading..
             </PrimaryButton>
-                  </div>);
+                      <Dialog
+                          hidden={ !this.state.SavePropsshowDialog }
+                          onDismiss={ () => {this.setState({SavePropsshowDialog:false})} }
+                          dialogContentProps={ {
+                            type: DialogType.normal,
+                            title: 'Are you sure you want to Save changes',
+                            // subText: '.'
+                          } }
+                          modalProps={ {
+                            isBlocking: true,
+                            containerClassName: 'ms-dialogMainOverride'
+                          } }
+                        >
+                          <DialogFooter>
+                            <PrimaryButton onClick={ this._YesCancelDialog} text='Save' />
+                            <DefaultButton onClick={ ()=> {this.setState({SavePropsshowDialog:false})} } text='Cancel' />
+                          </DialogFooter>
+                        </Dialog>
+                  </div></span>);
         }
         else
         {
-          return (<div className={`ms-Grid-row  ${styles.row}`}>
+          return (<span>
+          <PrimaryButton iconProps={ { iconName: 'ChromeClose' } } onClick={this._closeMenu} >Close</PrimaryButton>
+          <div className={`ms-Grid-row  ${styles.row}`}>
               <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
               <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col2}</div>
               <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col3}</div>
-            </div>);
+            </div></span>);
         }
       }
+    @autobind
+    public _closeMenu():void{
+      this.props._closeMenuPanel();
+    }
+    @autobind    
+    public _cancelEditMenu(): void {
+      // this.state.SaveProps.showDialog = true; 
+      // alert();
+      // this.setState(SavePropsshowDialog:false)
+      this.props._cancelEditMenu();
+    }
+    @autobind    
+    public _saveEditMenu(): void {
+      // this.props.save(JSON.stringify(cardContents));
+      // this.state.SaveProps.showDialog = false;    
+    }
+
+    @autobind    
+    public _YesCancelDialog(): void {
+      this.setState({SavePropsshowDialog:false});
+      this.props._cancelEditMenu();
+    }
+
+    // public _cancelChangesSuccess(cardContents): void {
+    //   // this.props.save(JSON.stringify(cardContents));
+    //   this.setState({stateMenuConfig: JSON.stringify(cardContents)})
+    //   // this.state.SaveProps.showDialog = false;    
+    // }
     }
 
 class EditHeadingPanel extends React.Component<{cardContents, isNewItem, headingIndex, _onCloseHeadingPanel: () => void, _headingSave(configOptionstmp, isNewItem:boolean, headingKey: number, headingValue: string): void}, any> {
@@ -401,6 +457,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
       }
     
     }// END Heading Panel
+    
     return (
       <div className={styles.megaMenu}>
             <PrimaryButton className={styles.megaButton} onClick={ () => this.setState({ showPanel: true }) } ><div className={styles.burgerBar} ></div></PrimaryButton>
@@ -409,23 +466,25 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                 type={ PanelType.smallFluid }
                 // tslint:disable-next-line:jsx-no-lambda
                 onDismiss={ () => this.setState({ showPanel: false }) }
-                headerText='Panel - Small, right-aligned, fixed'
+                // headerText='Panel - Small, right-aligned, fixed'
                 // isFooterAtBottom={true}
                 //onRenderFooterContent
                 hasCloseButton = {false}
-                onRenderHeader={() => {
-                  return (
-                    <div>
-                        <div hidden={_isEditMode} ><PrimaryButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Close</PrimaryButton></div>
-                        <div hidden={!_isEditMode} ><DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Cancel</DefaultButton><span className={styles.paddingLeft10px} ><PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => this.props.save(this.state.stateMenuConfig) } >Save</PrimaryButton></span></div>
-                      </div>
-                  );
-                }}
+                // onRenderHeader={() => {
+                //   return (
+                //     <div>
+                //         <div hidden={_isEditMode} ><PrimaryButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Close</PrimaryButton></div>
+                //         <div hidden={!_isEditMode} ><DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Cancel</DefaultButton><span className={styles.paddingLeft10px} ><PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this._showSaveDialog(this.state.stateMenuConfig)} } >Save</PrimaryButton></span></div>
+                //         {/* ActualSave */} 
+                //         {/* () => this.props.save(this.state.stateMenuConfig) */}
+                //       </div>
+                //   );
+                // }}
                 >
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
                     <div className={styles.container}>
-                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} _moveHeading={this._moveHeading} _moveLink={this._moveLink} _deleteHeading={this._deleteHeading} _deleteLink={this._deleteLink}/>
+                      <AllCards cardContents={JSON.parse(this.state.stateMenuConfig)} isEditModetmp={_isEditMode} _addHeading={this._addHeading} _editHeading={this._editHeading} _addLink={this._addLink} _editLink={this._editLink} _moveHeading={this._moveHeading} _moveLink={this._moveLink} _deleteHeading={this._deleteHeading} _deleteLink={this._deleteLink} _closeMenuPanel={this._closeMenuPanel} _cancelEditMenu={this._cancelMenuPanel} _savelEditMenu={this._saveMenuPanel}/>
                       <EditHeadingPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editHeading.headingID} isNewItem={this.state.editHeading.isNewItem} _onCloseHeadingPanel={this._onCloseHeadingPanel} _headingSave={this._headingSave} />
                       <EditLinkPanel cardContents={JSON.parse(this.state.stateMenuConfig)} headingIndex={this.state.editLink.headingID} linkIndex={this.state.editLink.linkID} isNewItem={this.state.editLink.isNewItem} _onCloseLinkPanel={this._onCloseLinkPanel} _addLinkSave={this._addLinkSave} />
                     </div>
@@ -447,7 +506,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     configOptions.cards[tmpHeadValue - 1] = tmpHead;
     
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    this.props.save(JSON.stringify(configOptions));
+    // this.props.save(JSON.stringify(configOptions));
   }
   public _moveLink(configOptions, moveDown: boolean, headingKey:number, linkKey:number ) :void{
     var tmpLinkValue = linkKey;
@@ -460,17 +519,17 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     configOptions.cards[headingKey].links[tmpLinkValue - 1] = tmpLink;
     
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    this.props.save(JSON.stringify(configOptions));
+    // this.props.save(JSON.stringify(configOptions));
   }
   public _deleteHeading(configOptions, headingKey:number ) :void{
     configOptions.cards.splice(headingKey,1);
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
-    this.props.save(JSON.stringify(configOptions));
+    // this.props.save(JSON.stringify(configOptions));
   }
   public _deleteLink(configOptions, headingKey:number, linkKey:number ) :void{
     configOptions.cards[headingKey].links.splice(linkKey,1);    
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
-    this.props.save(JSON.stringify(configOptions));
+    // this.props.save(JSON.stringify(configOptions));
   }
   public _headingSave(configOptions ,isNewItem:boolean, headingKey:number, headingValue:string) : void {
     var configOptionstmp = configOptions;
@@ -489,7 +548,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             }
     this.state.editHeading.showHeadingPanel = false;
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    this.props.save(JSON.stringify(configOptions));
+    // this.props.save(JSON.stringify(configOptions));
   }
   public _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string) : void {
     var configOptionstmp = configOptions;
@@ -507,7 +566,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             }
     this.state.editLink.showLinkPanel = false;
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
-    this.props.save(JSON.stringify(configOptions));
+    // this.props.save(JSON.stringify(configOptions));
   }
   public _addLink(headingID: number): void {
     this.state.editLink.showLinkPanel = true;
@@ -547,4 +606,21 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     this.state.editLink.showLinkPanel = false;
     this.setState(this.state);
   }
+
+    // this._showSaveDialog = this._showSaveDialog.bind(this);
+    // this._saveChangesSuccess = this._saveChangesSuccess.bind(this);
+    // this._cancelChangesSuccess = this._cancelChangesSuccess.bind(this);
+    public _closeMenuPanel(): void {
+      this.setState({showPanel:false});
+    }
+    public _cancelMenuPanel(): void {
+      // this.state.editLink.showLinkPanel = false;
+      // this.setState(this.state);
+      this.setState({showPanel:false});      
+    }
+    public _saveMenuPanel(): void {
+      // this.state.editLink.showLinkPanel = false;
+      // this.setState(this.state);
+    }
+  
 }
