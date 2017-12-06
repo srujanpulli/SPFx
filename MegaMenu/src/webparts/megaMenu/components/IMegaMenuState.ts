@@ -14,12 +14,7 @@ export interface IMegaMenuState {
     headingID: number,    
     linkTitle: string,
     linkUrl: string,
-    iconName: string
+    iconName: string,
+    openInNewTab: boolean
   };
-  // SaveProps:{
-  //   showDialog:boolean;
-  // };
-  // IgnoreProps:{
-  //   showDialog:boolean;
-  // };
 }

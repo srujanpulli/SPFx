@@ -7,9 +7,10 @@ import { autobind } from 'office-ui-fabric-react/lib/Utilities';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 import { DefaultButton, CompoundButton, ActionButton, Button, IconButton, PrimaryButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
+import {Checkbox, ICheckboxStyles, ICheckboxProps} from 'office-ui-fabric-react/lib/Checkbox';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { valid, link } from 'glamor';
+import { valid, link, checked } from 'glamor';
 
 export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuState> {
   
@@ -32,6 +33,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         headingID: 0,    
         linkTitle: "",
         linkUrl: "",
+        openInNewTab:false,
         iconName: ""
       }
       };
@@ -90,7 +92,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       }
     }
 
-    class SingleLink extends React.Component<{cardContents, url, iconName, name, isEditModetmp, headingKey, linkKey, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
+    class SingleLink extends React.Component<{cardContents, url, iconName, name, openInNewTab, isEditModetmp, headingKey, linkKey, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void}> {
       public constructor(props: any) {
         super(props);
         this.handleSaveLinkClick = this.handleSaveLinkClick.bind(this);
@@ -109,6 +111,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       public render() {
         if(this.props.isEditModetmp)
         {
+          //all links open in new tab in edit mode.
           return (
             <div className={`ms-Grid-row ${styles.hoverBorder}`}>
               <div className="ms-Grid-col ms-lg8">
@@ -130,7 +133,15 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
           </div>
           );
         }else{
-          return <ActionButton data-automation-id='test' href={this.props.url} iconProps={ { iconName: this.props.iconName } } disabled={ false } >{this.props.name}</ActionButton>;
+          if(this.props.openInNewTab)
+          {
+            return <ActionButton data-automation-id='test' href={this.props.url} target="_blank" iconProps={ { iconName: this.props.iconName } } disabled={ false } >{this.props.name}</ActionButton>;
+          }
+          else
+          {
+            return <ActionButton data-automation-id='test' href={this.props.url} target="_self"  iconProps={ { iconName: this.props.iconName } } disabled={ false } >{this.props.name}</ActionButton>;
+          }
+          
         }
       }
     }    
@@ -141,7 +152,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         let allLinks = this.props.cardContents.cards[this.props.headingKey].links;
         let allLinksInGroup = allLinks.map((link, index) =>
           // Correct! Key should be specified inside the array.
-          <li><SingleLink cardContents={this.props.cardContents} headingKey={this.props.headingKey} linkKey={index} name={link.name} url={link.link} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/></li>
+          <li key={index}><SingleLink cardContents={this.props.cardContents} headingKey={this.props.headingKey} linkKey={index} name={link.name} url={link.link} openInNewTab={link.openInNewTab} iconName={link.iconName} isEditModetmp={this.props.isEditModetmp} _editLink={this.props._editLink} _moveLink={this.props._moveLink} _deleteLink={this.props._deleteLink}/></li>
         );
       if(this.props.isEditModetmp)        
       {
@@ -162,7 +173,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
       constructor(props)
       {
         super(props)
-        this.setState({});
+        // this.setState({});
       }
       public render() {
         if(this.props.isEditModetmp)
@@ -196,11 +207,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         };
       }
       public render() {
-        // let cards = this.props.cardContents.cards;
         let cardContents = this.props.cardContents;
-        // let allCardsInContainer = cardContents.cards.map((card, index) =>
-        //   <SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />
-        // );
         let Col1 = [];
         let Col2 = [];
         let Col3 = [];
@@ -208,13 +215,13 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
    
         switch(index % 3) {
           case 0:
-            Col1.push(<SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
+            Col1.push(<SingleCard key={index} headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
             break;
           case 1:
-            Col2.push(<SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
+            Col2.push(<SingleCard key={index} headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
             break;
           case 2:
-            Col3.push(<SingleCard headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
+            Col3.push(<SingleCard key={index} headingKey={index} cardContents={cardContents} isEditModetmp={this.props.isEditModetmp} _addLink={this.props._addLink} _editHeading = {this.props._editHeading} _editLink={this.props._editLink} _moveHeading={this.props._moveHeading}  _moveLink={this.props._moveLink} _deleteHeading={this.props._deleteHeading} _deleteLink={this.props._deleteLink} />);
           break;
           default:break;          
           }
@@ -380,15 +387,16 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
         );
       }
     }// END Heading Panel
-    class EditLinkPanel extends React.Component<{cardContents, isNewItem, headingIndex, linkIndex, _onCloseLinkPanel: () => void, _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string): void},any> {
+    class EditLinkPanel extends React.Component<{cardContents, isNewItem, headingIndex, linkIndex, _onCloseLinkPanel: () => void, _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string, openInNewTab: boolean): void},any> {
       public constructor(props: any) {
         super(props);
         if(this.props.isNewItem)
         {
           this.state = {  headingValue  : this.props.cardContents.cards[this.props.headingIndex].heading,
-                          linkText : "", 
-                          linkUrl: "",
-                          iconName:"Link"};
+                          linkText : "Home", 
+                          linkUrl: "https://url",
+                          iconName:"Link",
+                          openInNewTab:false};
         }
         else
         {
@@ -397,6 +405,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                         linkText      : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].name,
                         linkUrl       : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].link,
                         iconName      : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].iconName,
+                        openInNewTab  : this.props.cardContents.cards[this.props.headingIndex].links[this.props.linkIndex].openInNewTab
           };
         }
 
@@ -404,7 +413,11 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
       }
       handleClick(): void {
         //isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string
-        this.props._addLinkSave(this.props.cardContents, this.props.isNewItem, this.props.headingIndex, this.state.headingValue, this.props.linkIndex, this.state.linkText, this.state.linkUrl, this.state.iconName);
+        this.props._addLinkSave(this.props.cardContents, this.props.isNewItem, this.props.headingIndex, this.state.headingValue, this.props.linkIndex, this.state.linkText, this.state.linkUrl, this.state.iconName, this.state.openInNewTab);
+      }
+      @autobind
+      private _onControlledCheckboxChange(ev: React.FormEvent<HTMLElement>, checked: boolean): void {
+        this.setState({ openInNewTab: checked! });
       }
       public render() {
         return (<div className={`ms-Grid-row  ${styles.row}`}>
@@ -441,14 +454,18 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                               ? ''
                               : `This field is required.`}
                           />
+                          <Checkbox
+                            label='Open in new tab'
+                            // onChange={ (checked) => {this.setState({'openInNewTab': checked})} }
+                            onChange={ this._onControlledCheckboxChange }                            
+                            checked={this.state.openInNewTab}
+                            ariaDescribedBy={ 'descriptionID' }
+                          />
                           <TextField label="Icon"
                             required={ false }
                             placeholder='Type an icon'
                             value={this.state.iconName}
                             onChanged={(value: string) => { this.setState({iconName : value});} }                            
-                            // onGetErrorMessage = {(value) => value.length > 0
-                            //   ? ''
-                            //   : `This field is required.`}
                           />
                           <div><a href="https://developer.microsoft.com/en-us/fabric#/styles/icons" target="_blank">Find an icon</a></div>
                     </div>
@@ -570,11 +587,12 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
 
   }
-  public _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string) : void {
+  public _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string, openInNewTab: boolean) : void {
     var configOptionstmp = configOptions;
-    var link = {  iconName: iconName,
-                  link:     linkUrl,
-                  name:     linkText}
+    var link = {  'name':     linkText,
+                  'iconName': iconName,
+                  'link':     linkUrl,
+                  'openInNewTab': openInNewTab}
             if(isNewItem)
             {
               configOptionstmp.cards[headingKey].links.push(link);
