@@ -10,6 +10,6 @@ export default class PlaceHolder extends React.Component<any> {
             <li>Optionally, you will be able to copy configuration text from/ to 'properties' to any other page.</li>
             <li>If you don't want this mega menu, delete this webpart.</li>
         </ul>
-        </MessageBar>)
+        </MessageBar>);
     }        
 }

@@ -61,7 +61,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
   public render(): React.ReactElement<IMegaMenuProps> {
     var _isEditMode = this.props.isEditMode;
     var _isHeadingPanelOpen = this.state.editHeading.showHeadingPanel;
-    var _isLinkPanelOpen = this.state.editLink.showLinkPanel
+    var _isLinkPanelOpen = this.state.editLink.showLinkPanel;
 
     class SingleHeader extends React.Component<{cardContents, headingKey, isEditModetmp, _editHeading:(headingIndex:number) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void}> {
       public render() {
@@ -99,13 +99,13 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         this.handleMoveLinkClick = this.handleMoveLinkClick.bind(this);
         this.handleDeleteLinkClick = this.handleDeleteLinkClick.bind(this);        
       }
-      handleSaveLinkClick(headkingKey:number, linkKey:number, iconName:string): void {
+      public handleSaveLinkClick(headkingKey:number, linkKey:number, iconName:string): void {
         this.props._editLink(headkingKey,linkKey, iconName);
       }
-      handleMoveLinkClick(cardContents, moveDown:boolean, headkingKey:number, linkKey:number): void {
+      public handleMoveLinkClick(cardContents, moveDown:boolean, headkingKey:number, linkKey:number): void {
         this.props._moveLink(cardContents,moveDown,headkingKey,linkKey);
       }
-      handleDeleteLinkClick(headkingKey:number, linkKey:number): void {
+      public handleDeleteLinkClick(headkingKey:number, linkKey:number): void {
         this.props._deleteLink(this.props.cardContents, headkingKey,linkKey);
       }
       public render() {
@@ -172,8 +172,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
       constructor(props)
       {
-        super(props)
-        // this.setState({});
+        super(props);
       }
       public render() {
         if(this.props.isEditModetmp)
@@ -200,7 +199,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
     class AllCards extends React.Component<{baseCardContents, cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void,_closeMenuPanel:()=>void, _cancelEditMenu:(baseCardContents)=> void, _savelEditMenu:(cardContents)=> void},any> {
       constructor(props)
       {
-        super(props)
+        super(props);
         this.state = {
           SavePropsshowDialog:false,
           IgnorePropsshowDialog:false
@@ -229,8 +228,8 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
         if(this.props.isEditModetmp)
         {
           return (<span>
-            <DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={()=>{this.setState({IgnorePropsshowDialog:true})}} >Cancel</DefaultButton><span className={styles.paddingLeft10px} >
-            <PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this.setState({SavePropsshowDialog:true})} } >Save</PrimaryButton></span>
+            <DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={()=>{this.setState({IgnorePropsshowDialog:true});}} >Cancel</DefaultButton><span className={styles.paddingLeft10px} >
+            <PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this.setState({SavePropsshowDialog:true});} } >Save</PrimaryButton></span>
           <div className={`ms-Grid-row  ${styles.row}`}>
             {/* {allCardsInContainer} */}
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
@@ -242,7 +241,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                 {/* Cancel confirmation dialog */}
                       <Dialog
                           hidden={ !this.state.IgnorePropsshowDialog }
-                          onDismiss={ () => {this.setState({IgnorePropsshowDialog:false})} }
+                          onDismiss={ () => {this.setState({IgnorePropsshowDialog:false});} }
                           dialogContentProps={ {
                             type: DialogType.normal,
                             title: 'Cancel confirmation',
@@ -255,13 +254,13 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                         >
                           <DialogFooter>
                             <PrimaryButton onClick={ this._YesCancelDialog} text='OK' />
-                            <DefaultButton onClick={ ()=> {this.setState({IgnorePropsshowDialog:false})} } text='Cancel' />
+                            <DefaultButton onClick={ ()=> {this.setState({IgnorePropsshowDialog:false});} } text='Cancel' />
                           </DialogFooter>
                         </Dialog>
                         {/* Save confirmation dialog */}
                         <Dialog
                           hidden={ !this.state.SavePropsshowDialog }
-                          onDismiss={ () => {this.setState({SavePropsshowDialog:false})} }
+                          onDismiss={ () => {this.setState({SavePropsshowDialog:false});} }
                           dialogContentProps={ {
                             type: DialogType.normal,
                             title: 'Save confirmation',
@@ -274,7 +273,7 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                         >
                           <DialogFooter>
                             <PrimaryButton onClick={ this._YesSaveEditMenu} text='Save' />
-                            <DefaultButton onClick={ ()=> {this.setState({SavePropsshowDialog:false})} } text='Cancel' />
+                            <DefaultButton onClick={ ()=> {this.setState({SavePropsshowDialog:false});} } text='Cancel' />
                           </DialogFooter>
                         </Dialog>
                   </div></span>);
@@ -361,7 +360,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
                 </div>);
       }
 
-      handleClick(): void {
+      public handleClick(): void {
         this.props._headingSave(this.props.cardContents,this.state.isNewItem, this.state.headingKey, this.state.headingValue);
       }
     
@@ -542,7 +541,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     configOptions.cards[tmpHeadValue] =  configOptions.cards[tmpHeadValue - 1];
     configOptions.cards[tmpHeadValue - 1] = tmpHead;
     
-    this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
+    this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
 
   }
   public _moveLink(configOptions, moveDown: boolean, headingKey:number, linkKey:number ) :void{
@@ -552,10 +551,10 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
       tmpLinkValue+= 1;
     }
     var tmpLink = configOptions.cards[headingKey].links[tmpLinkValue];
-    configOptions.cards[headingKey].links[tmpLinkValue] = configOptions.cards[headingKey].links[tmpLinkValue - 1]
+    configOptions.cards[headingKey].links[tmpLinkValue] = configOptions.cards[headingKey].links[tmpLinkValue - 1];
     configOptions.cards[headingKey].links[tmpLinkValue - 1] = tmpLink;
     
-    this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
+    this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
 
   }
   public _deleteHeading(configOptions, headingKey:number ) :void{
@@ -584,7 +583,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
               configOptions.cards[headingKey].heading = headingValue;
             }
     this.state.editHeading.showHeadingPanel = false;
-    this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
+    this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
 
   }
   public _addLinkSave(configOptions, isNewItem:boolean, headingKey:number, headingValue:string, linkKey:number, linkText:string, linkUrl:string, iconName: string, openInNewTab: boolean) : void {
@@ -592,7 +591,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
     var link = {  'name':     linkText,
                   'iconName': iconName,
                   'link':     linkUrl,
-                  'openInNewTab': openInNewTab}
+                  'openInNewTab': openInNewTab};
             if(isNewItem)
             {
               configOptionstmp.cards[headingKey].links.push(link);
@@ -603,7 +602,7 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
               configOptionstmp.cards[headingKey].links[linkKey] = link;
             }
     this.state.editLink.showLinkPanel = false;
-    this.setState({ stateMenuConfig : JSON.stringify(configOptions)})
+    this.setState({ stateMenuConfig : JSON.stringify(configOptions)});
 
   }
   public _addLink(headingID: number): void {
