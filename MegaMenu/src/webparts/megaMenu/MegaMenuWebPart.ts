@@ -40,8 +40,18 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
     }
     else
     {
-      ReactDom.render(element, document.getElementsByClassName("ms-siteLogoContainerOuter")[0]); //in actual site (replace on logo container)
-      ReactDom.render(placeHolder, this.domElement);      
+      if(document.getElementById("s4-bodyContainer"))
+      {
+        ReactDom.render(element, document.getElementById("siteIcon")); //Classic mode
+      }
+      else
+      {
+        ReactDom.render(element, document.getElementsByClassName("ms-siteLogoContainerOuter")[0]); //in actual site (replace on logo container)        
+      }
+      if (this.displayMode == 2)
+      {
+        ReactDom.render(placeHolder, this.domElement);      
+      }
     } 
   }
 
@@ -49,6 +59,9 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
     return Version.parse('1.0');
   }
 
+  protected get disableReactivePropertyChanges(): boolean{
+    return true;
+  }
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
