@@ -2,17 +2,19 @@ export interface IBrandMyPageWebPartProps {
   StartConfigurations;
   configOptions:{
     "cachedTabKey": number,
-    "hideQuickLaunchProperty": boolean,
-    "hideSiteLogoProperty": boolean,
-    "hideSiteTitleProperty": boolean,
-    "hideSiteDescriptionProperty": boolean,
-    "hideSiteMembersProperty": boolean,
-    "hideTopNavProperty": boolean,
-    "hideTitleRowProperty": boolean,
-    "hideCommandBarItemsProperty": boolean,
-    "hidePageTitleProperty": boolean,
-    "hideSearchBoxProperty": boolean,
-    "hideShareButtonProperty": boolean,
+    "hideUnhide":{
+      "hideQuickLaunchProperty": boolean,
+      "hideSiteLogoProperty": boolean,
+      "hideSiteTitleProperty": boolean,
+      "hideSiteDescriptionProperty": boolean,
+      "hideSiteMembersProperty": boolean,
+      "hideTopNavProperty": boolean,
+      "hideTitleRowProperty": boolean,
+      "hideCommandBarItemsProperty": boolean,
+      "hidePageTitleProperty": boolean,
+      "hideSearchBoxProperty": boolean,
+      "hideShareButtonProperty": boolean
+    },
     "masterTheme":{
       "isCustomized":boolean,
       "backgroundColor" : string,

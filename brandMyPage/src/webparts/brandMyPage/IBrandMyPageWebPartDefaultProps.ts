@@ -1,17 +1,19 @@
 export interface IBrandMyPageWebPartDefaultProps {
     configOptions:{
       "cachedTabKey": 0,
-      "hideQuickLaunchProperty": false,
-      "hideSiteLogoProperty": false,
-      "hideSiteTitleProperty": false,
-      "hideSiteDescriptionProperty": false,
-      "hideSiteMembersProperty": false,
-      "hideTopNavProperty": false,
-      "hideTitleRowProperty": false,
-      "hideCommandBarItemsProperty": false,
-      "hidePageTitleProperty": false,
-      "hideSearchBoxProperty": false,
-      "hideShareButtonProperty": false,
+      "hideUnhide":{
+        "hideQuickLaunchProperty": false,
+        "hideSiteLogoProperty": false,
+        "hideSiteTitleProperty": false,
+        "hideSiteDescriptionProperty": false,
+        "hideSiteMembersProperty": false,
+        "hideTopNavProperty": false,
+        "hideTitleRowProperty": false,
+        "hideCommandBarItemsProperty": false,
+        "hidePageTitleProperty": false,
+        "hideSearchBoxProperty": false,
+        "hideShareButtonProperty": false
+      },
       "masterTheme":{
         "isCustomized":false,
         "backgroundColor" : "#ffffff",
@@ -31,13 +33,15 @@ export interface IBrandMyPageWebPartDefaultProps {
         "hoverBackgroundColor" : "#ffffff"
       },
       "SiteTitleTheme":{
-        "isCustomized":false,
+        "isFontCustomized":false,
         "fontSize": 42,
+        "isColorCustomized": false,        
         "color" : "#333333",
       },
       "PageTitleTheme":{
-        "isCustomized":false,
+        "isFontCustomized":false,
         "fontSize": 42,
+        "isColorCustomized": false,        
         "color" : "#333333",
       }
     };  

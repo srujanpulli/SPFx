@@ -18,22 +18,24 @@
     "group": { "default": "Other" },
     "title": { "default": "BrandMyPage" },
     "description": { "default": "Use this webpart to brand your page including hiding, unhiding elements or add colors." },
-    "officeFabricIconFontName": "Unfavorite",
+    "officeFabricIconFontName": "FavoriteStarFill",
     "properties": {
       "description": "BrandMyPage",
       "configOptions":{
         "cachedTabKey":0,
-        "hideQuickLaunchProperty": false,
-        "hideSiteLogoProperty": false,
-        "hideSiteTitleProperty": false,
-        "hideSiteDescriptionProperty": false,
-        "hideSiteMembersProperty": false,
-        "hideTopNavProperty": false,
-        "hideTitleRowProperty": false,
-        "hideCommandBarItemsProperty": false,
-        "hidePageTitleProperty": false,
-        "hideSearchBoxProperty": false,
-        "hideShareButtonProperty": false,
+        "hideUnhide" : {
+          "hideQuickLaunchProperty": false,
+          "hideSiteLogoProperty": false,
+          "hideSiteTitleProperty": false,
+          "hideSiteDescriptionProperty": false,
+          "hideSiteMembersProperty": false,
+          "hideTopNavProperty": false,
+          "hideTitleRowProperty": false,
+          "hideCommandBarItemsProperty": false,
+          "hidePageTitleProperty": false,
+          "hideSearchBoxProperty": false,
+          "hideShareButtonProperty": false
+        },
         "masterTheme":{
           "isCustomized":false,
           "backgroundColor" : "#333333"
@@ -53,13 +55,15 @@
           "hoverBackgroundColor" : "#333333"
         },
         "SiteTitle":{
-          "isCustomized":false,
+          "isFontCustomized":false,
           "fontSize": 42,
+          "isColorCustomized": false,
           "color" : "#333333"
         },
         "PageTitle":{
-          "isCustomized":false,
+          "isFontCustomized":false,
           "fontSize": 42,
+          "isColorCustomized": false,
           "color" : "#333333"
         },
         "Misc":{
