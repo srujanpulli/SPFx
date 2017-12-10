@@ -33,8 +33,8 @@ class ConfigCustomizeMasterTheme extends React.Component<{config, _applyChanges:
   constructor(props)
   {
     super(props);
-    this.state = {stateConfig : this.props.config, hideThemeDialog: true}
-      this._applyThemeDialog = this._applyThemeDialog.bind(this)      
+    this.state = {stateConfig : this.props.config, hideThemeDialog: true};
+      this._applyThemeDialog = this._applyThemeDialog.bind(this);
       this._showThemeDialog = this._showThemeDialog.bind(this);
   }
   private _showThemeDialog() {
@@ -66,7 +66,7 @@ class ConfigCustomizeMasterTheme extends React.Component<{config, _applyChanges:
         return (
           <div className="ms-Grid">
             <div className="ms-Grid-row">
-              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(true)}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
+              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(true);}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
               <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.stateConfig.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => this._applyThemeDialog(false)} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
             </div></div>
         );
@@ -85,8 +85,8 @@ class ConfigCustomizeTopNavTheme extends React.Component<{config, _applyChanges:
   constructor(props)
   {
     super(props);
-    this.state = {stateConfig : this.props.config, hideThemeDialog: true}
-      this._applyThemeDialog = this._applyThemeDialog.bind(this)      
+    this.state = {stateConfig : this.props.config, hideThemeDialog: true};
+      this._applyThemeDialog = this._applyThemeDialog.bind(this);
       this._showThemeDialog = this._showThemeDialog.bind(this);
   }
   private _showThemeDialog() {
@@ -118,7 +118,7 @@ class ConfigCustomizeTopNavTheme extends React.Component<{config, _applyChanges:
         return (
           <div className="ms-Grid">
             <div className="ms-Grid-row">
-              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(true)}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
+              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(true);}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
               <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.stateConfig.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => this._applyThemeDialog(false)} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
             </div></div>
         );
@@ -149,8 +149,8 @@ class ConfigCustomizeQuickLaunchTheme extends React.Component<{config, _applyCha
   constructor(props)
   {
     super(props);
-    this.state = {stateConfig : this.props.config, hideThemeDialog: true}
-      this._applyThemeDialog = this._applyThemeDialog.bind(this)      
+    this.state = {stateConfig : this.props.config, hideThemeDialog: true};
+      this._applyThemeDialog = this._applyThemeDialog.bind(this);
       this._showThemeDialog = this._showThemeDialog.bind(this);
   }
   private _showThemeDialog() {
@@ -182,7 +182,7 @@ class ConfigCustomizeQuickLaunchTheme extends React.Component<{config, _applyCha
         return (
           <div className="ms-Grid">
             <div className="ms-Grid-row">
-              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(true)}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
+              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(true);}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
               <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.stateConfig.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => this._applyThemeDialog(false)} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
             </div></div>
         );
@@ -214,8 +214,8 @@ class ConfigCustomizeSiteTitleTheme extends React.Component<{config, _applyChang
   constructor(props)
   {
     super(props);
-    this.state = {stateConfig : this.props.config, hideThemeDialog: true}
-      this._applyThemeDialog = this._applyThemeDialog.bind(this)      
+    this.state = {stateConfig : this.props.config, hideThemeDialog: true};
+      this._applyThemeDialog = this._applyThemeDialog.bind(this);
       this._showThemeDialog = this._showThemeDialog.bind(this);
   }
   private _showThemeDialog() {
@@ -255,7 +255,7 @@ class ConfigCustomizeSiteTitleTheme extends React.Component<{config, _applyChang
         return (
           <div className="ms-Grid">
             <div className="ms-Grid-row">
-              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(this.state.stateConfig.isFontCustomized, this.state.stateConfig.isColorCustomized)}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
+              <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(this.state.stateConfig.isFontCustomized, this.state.stateConfig.isColorCustomized);}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
               <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.stateConfig.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => this._applyThemeDialog(false, false)} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
             </div></div>
         );
@@ -290,8 +290,8 @@ class ConfigCustomizePageTitleTheme extends React.Component<{config, _applyChang
   constructor(props)
   {
     super(props);
-    this.state = {stateConfig : this.props.config, hideThemeDialog: true}
-      this._applyThemeDialog = this._applyThemeDialog.bind(this)      
+    this.state = {stateConfig : this.props.config, hideThemeDialog: true};
+      this._applyThemeDialog = this._applyThemeDialog.bind(this);
       this._showThemeDialog = this._showThemeDialog.bind(this);
   }
   private _showThemeDialog() {
@@ -331,7 +331,7 @@ class ConfigCustomizePageTitleTheme extends React.Component<{config, _applyChang
         return (
           <div className="ms-Grid">
             <div className="ms-Grid-row">
-            <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(this.state.stateConfig.isFontCustomized, this.state.stateConfig.isColorCustomized)}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
+            <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><PrimaryButton onClick={() => {this._applyThemeDialog(this.state.stateConfig.isFontCustomized, this.state.stateConfig.isColorCustomized);}} text='Apply' iconProps={{ iconName: 'Accept' }} /></div>
             <div className="ms-Grid-col ms-sm4 ms-md4 ms-lg4"><DefaultButton disabled={!this.state.stateConfig.isCustomized} className="ms-bgColor-orangeLighter" onClick={() => this._applyThemeDialog(false, false)} text='Disable theme' iconProps={{ iconName: 'Cancel' }} /></div>
           </div></div>
         );
@@ -366,7 +366,7 @@ class ConfigHideElements extends React.Component<{config, _applyChanges: (config
   constructor(props)
   {
     super(props);
-    this.state = {stateConfig : this.props.config}
+    this.state = {stateConfig : this.props.config};
     this._nextClick = this._nextClick.bind(this);
     
   }
@@ -378,7 +378,7 @@ class ConfigHideElements extends React.Component<{config, _applyChanges: (config
   }
   public _nextClick()
   {
-    this.props._applyChanges("hideUnhide", this.state.stateConfig)
+    this.props._applyChanges("hideUnhide", this.state.stateConfig);
   }
   public render(){
     return(

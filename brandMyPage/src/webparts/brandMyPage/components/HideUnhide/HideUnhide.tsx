@@ -204,12 +204,12 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
 
         //Hide Share Button
         function hideShareButton() {
-            $("span:contains('Share')").filter(function () {
+            $("div:contains('Share')").filter(function () {
                 return $(this).text() === "Share" ? true : false;
             }).closest("button").hide();
         }
         function showShareButton() {
-            $("span:contains('Share')").filter(function () {
+            $("div:contains('Share')").filter(function () {
                 return $(this).text() === "Share" ? true : false;
             }).closest("button").show();
         }
@@ -268,13 +268,13 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {   
                 $( ".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item" ).each(function( index ) {
-                    $(".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important")                
+                    $(".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important");
                     });
                 $( ".ms-core-listMenu-horizontalBox ul li a" ).each(function( index ) {
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("margin","0px")                
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("padding","5px 10px")                
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("background-color",$("#divMasterTHemeCustomStyles").css("background-color"),"important")                
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important")                                    
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("margin","0px");
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("padding","5px 10px");                
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("background-color",$("#divMasterTHemeCustomStyles").css("background-color"),"important");
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important");             
                 });               
                 
             }
@@ -298,13 +298,13 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
                 $( ".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item" ).each(function( index ) {
-                    $(".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item")[index].style.setProperty("color","")
+                    $(".ms-core-listMenu-horizontalBox li.static > .ms-core-listMenu-item")[index].style.setProperty("color","");
                     });
                 $( ".ms-core-listMenu-horizontalBox ul li a" ).each(function( index ) {
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("margin","")                
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("padding","")                
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("background-color","")                
-                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("color","")                                    
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("margin","");
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("padding","");
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("background-color","");
+                    $(".ms-core-listMenu-horizontalBox ul li a")[index].style.setProperty("color","");
                 });    
             }
             else //Modern page
@@ -325,10 +325,10 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
             $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
-                $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important")                
+                $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("color",$("#divMasterTHemeCustomStyles").css("color"),"important");
                 });
             $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
-                $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("background-color",$("#divMasterTHemeCustomStyles").css("background-color"),"important")                
+                $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("background-color",$("#divMasterTHemeCustomStyles").css("background-color"),"important");
                 });
 
             }
@@ -346,10 +346,10 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
                 $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
-                    $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("color","")                
+                    $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("color","");
                     });
                 $( ".ms-core-listMenu-verticalBox > ul.root > li" ).each(function( index ) {
-                    $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("background-color","")                
+                    $(".ms-core-listMenu-verticalBox > ul.root > li")[index].style.setProperty("background-color","");
                     });
 
             }
@@ -403,7 +403,22 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function applyCustomPageTitle() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
-
+                if($("#divPageTitleCustomStyles").css("color") != "")
+                {
+                    $("#DeltaPlaceHolderPageTitleInTitleArea").find("a").css("color",$("#divPageTitleCustomStyles").css("color"));
+                }
+                else
+                {
+                    $("#DeltaPlaceHolderPageTitleInTitleArea").find("a").css("color","");                    
+                }
+                if($("#divPageTitleCustomStyles").css("font-size") != "")
+                {
+                    $(".ms-core-pageTitle").css("font-size", $("#divPageTitleCustomStyles").css("font-size"));
+                }
+                else
+                {
+                    $(".ms-core-pageTitle").css("font-size","");
+                }
             }
             else //Modern page
             {
@@ -448,7 +463,8 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         function removeCustomPageTitle() {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
-
+                    $("#DeltaPlaceHolderPageTitleInTitleArea").find("a").css("color","");                    
+                    $(".ms-core-pageTitle").css("font-size","");
             }
             else //Modern page
             {       
@@ -465,18 +481,18 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
                 $( ".ms-webpartzone-cell" ).each(function( index ) {
-                    $(".ms-webpartzone-cell")[index].style.setProperty("margin","0px","important")                
+                    $(".ms-webpartzone-cell")[index].style.setProperty("margin","0px","important");
                   });
                   $( ".ms-webpartPage-root" ).each(function( index ) {
-                    $(".ms-webpartPage-root")[index].style.setProperty("border-spacing","0px","important")                
+                    $(".ms-webpartPage-root")[index].style.setProperty("border-spacing","0px","important");
                   });
             }
             else //Modern page
             {       
-                $(".ms-compositeHeader").css({"padding-bottom" : "4px"})
-                $(".ControlZone").css({"padding-top": "0px", "padding-bottom": "0px", "margin-top": "2px"})
-                $("div[class^='compactCard_']").css({"height" : "100%"})
-                $("div[class^='persona_']").css({"height" : "100%"})                
+                $(".ms-compositeHeader").css({"padding-bottom" : "4px"});
+                $(".ControlZone").css({"padding-top": "0px", "padding-bottom": "0px", "margin-top": "2px"});
+                $("div[class^='compactCard_']").css({"height" : "100%"});
+                $("div[class^='persona_']").css({"height" : "100%"});
             }
         }
 
@@ -484,18 +500,18 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             if ($('#s4-bodyContainer').length > 0)//Classic page
             {
                 $( ".ms-webpartzone-cell" ).each(function( index ) {
-                    $(".ms-webpartzone-cell")[index].style.setProperty("margin","")                
+                    $(".ms-webpartzone-cell")[index].style.setProperty("margin","");
                   });
                   $( ".ms-webpartPage-root" ).each(function( index ) {
-                    $(".ms-webpartPage-root")[index].style.setProperty("border-spacing","")                
+                    $(".ms-webpartPage-root")[index].style.setProperty("border-spacing","");
                   });             
             }
             else //Modern page
             {       
-                $(".ms-compositeHeader").css({"padding-bottom" : ""})
-                $(".ControlZone").css({"padding-top": "", "padding-bottom": "", "margin-top": ""})
-                $("div[class^='compactCard_']").css({"height" : ""})
-                $("div[class^='persona_']").css({"height" : ""})
+                $(".ms-compositeHeader").css({"padding-bottom" : ""});
+                $(".ControlZone").css({"padding-top": "", "padding-bottom": "", "margin-top": ""});
+                $("div[class^='compactCard_']").css({"height" : ""});
+                $("div[class^='persona_']").css({"height" : ""});
                 
             }
         }
