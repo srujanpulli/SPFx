@@ -65,24 +65,24 @@ export default class MegaMenuWebPart extends BaseClientSideWebPart<IMegaMenuWebP
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
-        {
-          // header: {
-          //   menuConfig: strings.PropertyPanemenuConfig
-          // },
-          groups: [
-            {
-              groupName: strings.BasicGroupName,
-              groupFields: [
-                PropertyPaneTextField('menuConfig', {
-                  label: strings.DescriptionFieldLabel,
-                  multiline: true,
-                  resizable: true,
-                  rows:16
-                })
-              ]
-            }
-          ]
-        }
+        // {
+        //   header: {
+        //     menuConfig: strings.PropertyPanemenuConfig
+        //   },
+        //   groups: [
+        //     {
+        //       groupName: strings.BasicGroupName,
+        //       groupFields: [
+        //         PropertyPaneTextField('menuConfig', {
+        //           label: strings.DescriptionFieldLabel,
+        //           multiline: true,
+        //           resizable: true,
+        //           rows:16
+        //         })
+        //       ]
+        //     }
+        //   ]
+        // }
       ]
     };
   }

@@ -196,15 +196,40 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
 
     }    
 
-    class AllCards extends React.Component<{baseCardContents, cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void,_closeMenuPanel:()=>void, _cancelEditMenu:(baseCardContents)=> void, _savelEditMenu:(cardContents)=> void},any> {
+    class AllCards extends React.Component<{baseCardContents, cardContents,isEditModetmp, _addHeading:() => void, _editHeading:(headingIndex:number) => void, _addLink:(headingIndex:number) => void, _editLink:(headingIndex:number, linkIndex:number, iconName: string) => void, _moveHeading:(configOptions, moveToLeft: boolean, headingIndex:number) => void, _deleteHeading:(configOptions, headingIndex:number) => void, _moveLink:(cardContents, moveDown:boolean,headingIndex:number, linkIndex:number)=> void, _deleteLink:(cardContents, headingIndex:number, linkIndex:number)=> void,_closeMenuPanel:()=>void, _cancelEditMenu:(baseCardContents)=> void, _savelEditMenu:(cardContents)=> void},{SavePropsshowDialog:boolean,
+      IgnorePropsshowDialog:boolean,
+      exportConfigIsPanelOpen:boolean,
+      exportConfigIsImport:boolean,
+      txtCardContents: string}> {
       constructor(props)
       {
         super(props);
         this.state = {
           SavePropsshowDialog:false,
-          IgnorePropsshowDialog:false
+          IgnorePropsshowDialog:false,
+          exportConfigIsPanelOpen:false,
+          exportConfigIsImport:false,
+          txtCardContents:""
         };
       }
+      @autobind
+      private _onRenderFooterContentExportImport(): JSX.Element {
+        if(!this.state.exportConfigIsImport)
+        {
+          return (<DefaultButton onClick={ () => {
+            this.setState({"exportConfigIsPanelOpen":false});}} > Done </DefaultButton>
+          );
+        }else
+        {
+          return(<span>
+            <PrimaryButton onClick={() => {this.props._savelEditMenu(JSON.parse(this.state.txtCardContents)); this.setState({"exportConfigIsPanelOpen":false}); }  } style={ { 'marginRight': '8px' } } >
+            Import
+            </PrimaryButton>
+            <DefaultButton onClick={ () => {this.setState({"exportConfigIsPanelOpen":false}); }} > Cancel </DefaultButton>
+          </span>);
+        }
+      }
+
       public render() {
         let cardContents = this.props.cardContents;
         let Col1 = [];
@@ -230,6 +255,13 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
           return (<span>
             <DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={()=>{this.setState({IgnorePropsshowDialog:true});}} >Cancel</DefaultButton><span className={styles.paddingLeft10px} >
             <PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this.setState({SavePropsshowDialog:true});} } >Save</PrimaryButton></span>
+            <div className={`ms-Grid-row  ${styles.row}`}>
+            <div className="ms-Grid-col ms-lg7"></div>
+            <div className="ms-Grid-col ms-lg5"> 
+              <DefaultButton iconProps={ { iconName: 'PageCheckedOut' } } onClick={()=>{this.setState({"exportConfigIsPanelOpen":true,"exportConfigIsImport":false});}} >Export</DefaultButton>
+              <DefaultButton iconProps={ { iconName: 'PageCheckedin' } } onClick={()=>{ this.setState({"exportConfigIsPanelOpen":true,"exportConfigIsImport":true});}} >Import</DefaultButton>
+            </div>
+            </div>
           <div className={`ms-Grid-row  ${styles.row}`}>
             {/* {allCardsInContainer} */}
             <div className="ms-Grid-col ms-xl4 ms-lg6 ms-md6 ms-sm12">{Col1}</div>
@@ -276,6 +308,36 @@ export default class MegaMenu extends React.Component<IMegaMenuProps, IMegaMenuS
                             <DefaultButton onClick={ ()=> {this.setState({SavePropsshowDialog:false});} } text='Cancel' />
                           </DialogFooter>
                         </Dialog>
+                        <Panel
+                            isOpen={ this.state.exportConfigIsPanelOpen }
+                            type={ PanelType.smallFixedFar }
+                            headerText='Export/ Import by copy pasting text from this box'
+                            closeButtonAriaLabel='Close'
+                            onRenderFooterContent={ this._onRenderFooterContentExportImport }
+                            >
+                            <div hidden={this.state.exportConfigIsImport}>
+                            <TextField label="Export text" value={JSON.stringify(this.props.cardContents)}
+                            multiline
+                            rows={ 8 }
+                            required={true}
+                            onGetErrorMessage = {(value) => (value.length > 0 && JSON.parse(value))
+                              ? ''
+                              : `This field is required.`}
+                            onChanged={(value: string) => { this.setState({txtCardContents : value});} }                                                        
+                            /></div>
+                            <div hidden={!this.state.exportConfigIsImport}>
+                            <TextField label="Import text" hidden={!this.state.exportConfigIsImport} value={this.state.txtCardContents}
+                            multiline
+                            rows={ 8 }
+                            required={true}
+                            onGetErrorMessage = {(value) => (value.length > 0 && JSON.parse(value))
+                              ? ''
+                              : `This field is required.`}
+                            onChanged={(value: string) => { this.setState({txtCardContents : value});} }                                                        
+                            /></div>
+                            <div hidden={this.state.exportConfigIsImport}>Copy text from this textbox to any oher page</div>
+                            <div hidden={!this.state.exportConfigIsImport}>Paste text in this textbox and click Import</div>
+                        </Panel>
                   </div></span>);
         }
         else
@@ -500,22 +562,8 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
             <Panel
                 isOpen={ this.state.showPanel }
                 type={ PanelType.smallFluid }
-                // tslint:disable-next-line:jsx-no-lambda
                 onDismiss={ () => this.setState({ showPanel: false }) }
-                // headerText='Panel - Small, right-aligned, fixed'
-                // isFooterAtBottom={true}
-                //onRenderFooterContent
                 hasCloseButton = {false}
-                // onRenderHeader={() => {
-                //   return (
-                //     <div>
-                //         <div hidden={_isEditMode} ><PrimaryButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Close</PrimaryButton></div>
-                //         <div hidden={!_isEditMode} ><DefaultButton iconProps={ { iconName: 'ChromeClose' } } onClick={ () => this.setState({ showPanel: false }) } >Cancel</DefaultButton><span className={styles.paddingLeft10px} ><PrimaryButton iconProps={ { iconName: 'save' } } onClick={ () => {this._showSaveDialog(this.state.stateMenuConfig)} } >Save</PrimaryButton></span></div>
-                //         {/* ActualSave */} 
-                //         {/* () => this.props.save(this.state.stateMenuConfig) */}
-                //       </div>
-                //   );
-                // }}
                 >
                   {/* START mega menu content */}
                   <div className={styles.megaMenu}>
@@ -654,8 +702,11 @@ class EditHeadingPanel extends React.Component<{cardContents, isNewItem, heading
       this.setState({showPanel:false, stateMenuConfig: JSON.stringify(baseCardContents)});
     }
     public _saveMenuPanel(cardContents): void {
-      this.setState({showPanel:false});      
+      this.setState({showPanel:false});
+      // this.state.stateMenuConfig
+      this.setState({stateMenuConfig:JSON.stringify(cardContents)});
       this.props.save(JSON.stringify(cardContents));
+      this.render();
     }
   
 }
