@@ -59,11 +59,14 @@ export default class PeopleDashboardWebPart extends BaseClientSideWebPart<IPeopl
               });
             });
           });
-        this.selectedList = listName;
+        this.selectedList = listName;        
         this.GetLists().then((options) => {
           this.dropDownOptions = options;
           this.context.propertyPane.refresh();
           this.context.statusRenderer.clearLoadingIndicator(this.domElement);
+          this.properties.selectList = listName;
+          this.properties.createNewList = "";          
+          this.context.propertyPane.refresh();          
           this.render();
         });
       }

@@ -246,6 +246,7 @@ private getListData() {
         {
           return(
             <div className={`${styles.peopleDashboard} ms-Grid-row`}>
+              <MessageBar messageBarType={MessageBarType.info } >Look and Feel in edit mode is tweaked to facilitate easy editing.</MessageBar>
             {
               this.props.webpartTitle.length > 0 &&
               <div className={`ms-fontSize-xl ${styles.margin10Bottom}`}>{this.props.webpartTitle}</div>
