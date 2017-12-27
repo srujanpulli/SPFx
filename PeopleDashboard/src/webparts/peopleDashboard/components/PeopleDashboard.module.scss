@@ -1,0 +1,121 @@
+.padding10
+{
+  padding: 10px;
+  // text-align: center;
+}
+.margin10Bottom
+{
+  margin-bottom: 10px;
+}
+.hoverBorder:hover{
+  background-color:  #f0f0f0;
+  padding-right: 10px;
+  .iconsShowOnHover
+  {
+    display: block;
+    margin-bottom: -32px;
+    z-index:2;
+    position: relative;
+    background:#f6f6f6;
+  }
+  .redFont{
+    color: rgb(180, 5, 5);
+    background-color:  #fc2020;      
+  }
+}
+.iconPaddingTop5px
+{
+  padding-top: 5px;
+}
+.iconsShowOnHover
+{
+  display: none;
+}
+.peopleDashboard {
+  .personButton {
+    cursor: pointer;
+    max-width: 360px;
+    width: 100%;
+    margin:2px;
+    padding:5px;
+    background-color: #f6f6f6;
+    border: 1px solid #f6f6f6;
+    border-radius: 3px;
+    vertical-align: middle;
+    &:hover
+    {
+      border: 1px solid #d8d8d8;
+    }
+    .personImageWrapper
+    {
+      height: 100%;
+      width: 100%;
+      border-radius: 40px;
+      .personImage
+      {
+        vertical-align: middle;        
+      }
+    }
+  }
+  .personButtonMini {
+    cursor: pointer;
+    margin-bottom:4px;
+    // padding-left:5px;
+    vertical-align: middle;
+    &:hover
+    {
+      // border: 1px solid #d8d8d8;
+      background-color: #f6f6f6;
+    }
+  }
+  .container {
+    max-width: 700px;
+    margin: 0px auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .row {
+    padding: 20px;
+  }
+
+  .listItem {
+    max-width: 715px;
+    margin: 5px auto 5px auto;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .button {
+    // Our button
+    text-decoration: none;
+    height: 32px;
+
+    // Primary Button
+    min-width: 80px;
+    background-color: "[theme:themePrimary, default:#0078d7]";
+    border-color: "[theme:themePrimary, default:#0078d7]";
+    color: #ffffff;
+
+    // Basic Button
+    outline: transparent;
+    position: relative;
+    font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 16px;
+
+    .label {
+      font-weight: 600;
+      font-size: 14px;
+      height: 32px;
+      line-height: 32px;
+      margin: 0 4px;
+      vertical-align: top;
+      display: inline-block;
+    }
+  }
+}

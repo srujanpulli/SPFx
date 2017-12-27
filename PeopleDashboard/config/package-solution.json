@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "people-dashboard-client-side-solution",
+    "id": "3f59f9df-313d-4f6a-b7a3-974193078d4c",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/people-dashboard.sppkg"
+  }
+}
