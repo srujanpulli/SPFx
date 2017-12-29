@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "tabbed-links-client-side-solution",
+    "id": "36f4f9a9-19b5-45a1-b5bd-8ed250c53a57",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/tabbed-links.sppkg"
+  }
+}

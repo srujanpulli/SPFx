@@ -1,0 +1,18 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "tabbed-links-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/tabbedLinks/TabbedLinksWebPart.js",
+          "manifest": "./src/webparts/tabbedLinks/TabbedLinksWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "TabbedLinksWebPartStrings": "lib/webparts/tabbedLinks/loc/{locale}.js"
+  }
+}

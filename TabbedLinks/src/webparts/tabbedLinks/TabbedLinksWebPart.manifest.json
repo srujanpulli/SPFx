@@ -1,0 +1,26 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "50499443-e4a7-41c2-a051-52f77fd1870b",
+  "alias": "TabbedLinksWebPart",
+  "componentType": "WebPart",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2,
+
+  // If true, the component can only be installed on sites where Custom Script is allowed.
+  // Components that allow authors to embed arbitrary script code should set this to true.
+  // https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f
+  "requiresCustomScript": false,
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
+    "group": { "default": "Other" },
+    "title": { "default": "Tabbed Links" },
+    "description": { "default": "A simple webpart to show links grouped as tabs." },
+    "officeFabricIconFontName": "More",
+    "properties": {
+      "menuConfig": "{\"cards\":[{\"heading\":\"heading1\",\"links\":[{\"name\":\"Link1\",\"iconName\":\"Home\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":false},{\"name\":\"Link2\",\"iconName\":\"Accept\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":false},{\"name\":\"Link3\",\"iconName\":\"Help\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":false}]},{\"heading\":\"heading2\",\"links\":[{\"name\":\"Link1\",\"iconName\":\"Airplane\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":false},{\"name\":\"Link2\",\"iconName\":\"BusSolid\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true},{\"name\":\"Link3\",\"iconName\":\"Car\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true}]},{\"heading\":\"heading3\",\"links\":[{\"name\":\"Link1\",\"iconName\":\"Chat\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true},{\"name\":\"Link2\",\"iconName\":\"Download\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true},{\"name\":\"Link3\",\"iconName\":\"ChromeBackMirrored\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true}]},{\"heading\":\"heading4\",\"links\":[{\"name\":\"Link1\",\"iconName\":\"Contact\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true},{\"name\":\"Link2\",\"iconName\":\"Cycling\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true},{\"name\":\"Link3\",\"iconName\":\"Mail\",\"link\":\"https://spwestpros.blogspot.com\",\"openInNewTab\":true}]}]}"
+    }
+  }]
+}

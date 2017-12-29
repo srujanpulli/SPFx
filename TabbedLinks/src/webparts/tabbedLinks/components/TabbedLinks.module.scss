@@ -1,0 +1,205 @@
+.tabbedLinks {
+  // START menu classes
+  .heading{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #005a9e;
+    font-size: 16px;
+    // border-left: 2px solid grey;
+    }
+    .redFont{
+      color: rgb(180, 5, 5);
+    }
+    .paddingLeft10px{
+      padding-left: 10px !important;
+    }
+    .marginTop10px{
+      margin-top: 10px !important;
+    }
+    .links{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #393939;
+      font-size: 14px;
+      list-style-type: none;   
+      padding-left: 5px; 
+    }
+    .hoverBorder:hover{
+      background-color:  #f0f0f0;
+      padding-right: 10px;
+      .iconPaddingTop5px
+      {
+        display: block;
+      }
+      .redFont{
+        color: rgb(180, 5, 5);
+        background-color:  #f0f0f0;      
+      }
+    }
+    .iconPaddingTop5px
+    {
+      padding-top: 5px;
+      display: none;
+    }
+  
+  // END menu classes
+    .round
+    {
+      width:50px;
+      height: 50px;
+      border-radius: 25px;
+      background-color: orange;
+    }
+    .burgerBarClose {
+      height: 60px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      &:hover
+      {
+        .close{
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .close {
+      display: block;
+      width: 32px;
+      height: 32px;
+      transition: transform .2s ease-in-out;
+  }
+  .burgerBarClose:hover {
+    .close{
+      transform: rotate(180deg);
+    }
+  }
+  .close:before {
+      content: "";
+      position: absolute;
+      display: block;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 32px;
+      height: 0;
+      border-top: 1px solid rgba(0,0,0,0.5);
+      transform: rotate(45deg);
+      transform-origin: center;
+  }
+  .close:after {
+      content: "";
+      position: absolute;
+      display: block;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 32px;
+      height: 0;
+      border-top: 1px solid rgba(0,0,0,0.5);
+      transform: rotate(-45deg);
+      transform-origin: center;
+  }
+    .megaButton
+    {
+      height: 60px;
+      .burgerBar {
+        background: transparent;
+        position: relative;
+        height: 30px;
+        width: 50px;
+        transition: 0.2s ease all;
+        }
+      .burgerBar:before, .burgerBar:after {
+        background-color: #fff;
+        backface-visibility: hidden;
+        content: "";
+        height: 2px;
+        left: 0;
+        transition: 0.75s;
+        width: 50px;
+        transition: 0.2s ease all;      
+      }
+      .burgerBar:before {
+        box-shadow: #fff 0 14px 0 0;
+        position: absolute;
+        top: 0;
+      }
+      .burgerBar:after {
+        position: absolute;
+        top: calc(100% - 2px);
+      }
+      &:hover
+      {
+        .burgerBar{
+          margin-top: 4px;
+          transition: 0.1s ease all;
+          width: 48px;
+          margin-left: 1px;
+          margin-right: 1px;
+        }
+        .burgerBar:before {
+          box-shadow: #fff 0 12px 0 0;
+          transition: 0.1s ease all;   
+          width: 48px;   
+        }
+        .burgerBar:after {
+          top: calc(100% - 6px);
+          transition: 0.1s ease all;
+          width: 48px;
+        }
+      }
+    }
+    
+  .container {
+    max-width: 95%;
+    margin: 0px auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .row {
+    padding: 20px;
+  }
+
+  .listItem {
+    max-width: 715px;
+    margin: 5px auto 5px auto;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .button {
+    // Our button
+    text-decoration: none;
+    height: 32px;
+
+    // Primary Button
+    min-width: 80px;
+    background-color: "[theme:themePrimary, default:#0078d7]";
+    border-color: "[theme:themePrimary, default:#0078d7]";
+    color: #ffffff;
+
+    // Basic Button
+    outline: transparent;
+    position: relative;
+    font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 16px;
+
+    .label {
+      font-weight: 600;
+      font-size: 14px;
+      height: 32px;
+      line-height: 32px;
+      margin: 0 4px;
+      vertical-align: top;
+      display: inline-block;
+    }
+  }
+}

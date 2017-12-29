@@ -1,0 +1,1 @@
+            <PrimaryButton onClick={() => {this.props._savelEditMenu(JSON.parse(this.state.txtCardContents)); this.setState({"exportConfigIsPanelOpen":false}); }  } style={ { 'marginRight': '8px' } } >
