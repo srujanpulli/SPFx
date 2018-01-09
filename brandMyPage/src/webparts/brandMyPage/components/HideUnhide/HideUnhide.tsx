@@ -590,7 +590,7 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
         }
 
         //Start page navigation triggers
-        $("body").bind("DOMSubtreeModified", () => {
+        function mutationObserverCallBack(changes, mutationObserver) {
             if (window.location.href.indexOf("?Mode=Edit") > -1) {
                 $("#divWPLoaded").show();
             }
@@ -699,6 +699,14 @@ export default class HideUnhide extends React.Component<IHideUnhideProps, {}> {
             else {
                 
             }
+            }// end mutationObserverCallBack
+
+            var observer = new MutationObserver(mutationObserverCallBack);
+            observer.observe( document.getElementsByTagName("body")[0], {
+                attributes: true,
+                attributeFilter: ["class"],
+                childList: true,
+                subtree: true,
             });
              
         
